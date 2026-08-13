@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年8月13日</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 14px; opacity: 0.85; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .chip.up { color: #dc2626; }
+    .chip.down { color: #059669; }
+    .chip.highlight { background: #dbeafe; color: #1e40af; }
+    .chip.warn { background: #fef3c7; color: #92400e; }
+
+    .source {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .source a {
+      color: #1a56db;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 12px; }
+      header { padding: 24px 18px; }
+      header h1 { font-size: 20px; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>航运日报</h1>
+      <div class="meta">2026年8月13日 星期四 | 重点关注：霍尔木兹通航量跌至3个月新低、沙特石油"地中海大转向"、MSC 8401TEU船舟山半沉没、马士基AE19恢复苏伊士、SeaLead破产清算</div>
+    </header>
+
+    <!-- ① 船司动态 -->
+    <div class="section">
+      <div class="section-title">1️⃣ 船司动态</div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">MSC Silvana VIII舟山半沉没：8401TEU集装箱船施救失败，台风二次冲击打捞雪上加霜</div>
+          <span class="tag red">重大事故</span>
+        </div>
+        <div class="card-body">
+          <p>8月11日The Loadstar报道，MSC旗下8,401TEU集装箱船"MSC Silvana VIII"在浙江舟山海域搁浅后持续下沉，多次施救失败。该船2006年建造、332米、94,489总吨，原部署于远东-南美航线，6月22日抵达舟山国舰岛船厂区修理。7月11日台风"巴威"来袭期间，船舶在未完成修理、无正常动力的情况下离开泊位，横移至岱山附近海域并疑似两次触底——先在岱山附近触礁，后在大衢岛西端再次触碰海底标记物。</p>
+          <div class="data-chips">
+            <span class="chip highlight">8,401 TEU / 332米 / 2006年建造</span>
+            <span class="chip warn">7/11台风"巴威"期间搁浅，疑似两次触底</span>
+            <span class="chip warn">8/4施救失败，8/6船体大面积下沉</span>
+            <span class="chip warn">机舱+多个货舱进水，船尾严重沉没</span>
+            <span class="chip">已抽除约3,000吨燃油</span>
+            <span class="chip">8/7卫星显示油污带延伸数海里</span>
+            <span class="chip warn">台风"白海豚"8/9-10再次冲击施救区域</span>
+            <span class="chip">所在海域水深40-50米，存在完全沉没风险</span>
+            <span class="chip">MSC至今未发表公开声明</span>
+          </div>
+          <p>事故引发业界对该船维护和检验合规性的质疑——该船已服役20年，恰逢船级社要求的五年特别检验周期。拖船最初曾将船舶拖离，但恶劣天气导致二次搁浅于另一位置。截至8月9日，船舶所在海域水深达40-50米，存在完全滑入深水区沉没的可能性。台风"白海豚"（Dolphin）8月9-10日登陆浙江至福建沿海，最大风力14级，使本已艰难的施救雪上加霜。<b>MSC迄今未发布任何公开声明</b>，事故原因、水下结构损伤程度及后续打捞方案均未确认。舟山作为全球最大船舶修理中心之一，此次事故也引发对修船期间安全管理规程的审视。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://ship247.com/market-insights/msc-box-ship-sinking-after-attempt-to-escape-typhoon" target="_blank">Ship247/The Loadstar</a>、<a href="https://www.marineinsight.com/video-8401-teu-container-ship-sinks-off-zhoushan-after-salvage-efforts-fail" target="_blank">Marine Insight</a>、<a href="https://mykn.kuehne-nagel.com/news/article/c4b7c720-b1d7-4d16-8c62-d11be699f78f" target="_blank">Kuehne+Nagel</a>
+        </div>
+      </div>
+
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">马士基&赫伯罗特AE19正式恢复苏伊士运河航行：双子星红海复航范围再扩，2万TEU巨轮驶向苏伊士</div>
+          <span class="tag green">复航扩大</span>
+        </div>
+        <div class="card-body">
+          <p>8月10日，马士基与赫伯罗特联合宣布对"双子星"合作框架下的AE19航线实施结构性调整：<b>即刻取消好望角绕航，全面恢复经红海和苏伊士运河通行</b>。调整自"Berlin Maersk"轮（17,480TEU，2025年建造）628W航次起生效，该船目前在TPP港口，预计9月8日通行苏伊士运河。调整后AE19航线连接亚洲、中东及地中海，挂靠新港—青岛—釜山—宁波—上海—丹戎帕拉帕斯—吉达—苏伊士运河—塞得港—丹吉尔。</p>
+          <div class="data-chips">
+            <span class="chip highlight">AE19即刻恢复苏伊士运河通行</span>
+            <span class="chip highlight">"Berlin Maersk" 17,480TEU 628W航次启动</span>
+            <span class="chip highlight">AE15同步新增吉达挂靠（Madison Maersk 632W）</span>
+            <span class="chip warn">20,568TEU"Manchester Maersk"AE2/NE1亚欧主干线西行苏伊士</span>
+            <span class="chip">马士基自7月起已恢复4条航线（AE15→MECL→WAF6→AE19）</span>
+            <span class="chip warn">全面东西网络回归仍无时间表</span>
+            <span class="chip">红海安全风险并未完全消除</span>
+            <span class="chip">复航释放绕航占用的有效运力，运价或承压</span>
+          </div>
+          <p>更值得关注的是，20,568TEU的"Manchester Maersk"轮正在执行AE2/NE1亚洲-北欧航次并计划西行通过苏伊士运河，预计8月15日通行——<b>这是目前首个西行方向重返苏伊士运河的西北欧航线航次</b>。若后续更多AE2/NE1船舶采用相同航路，意味着双子星重返红海范围可能从亚洲-地中海航线延伸至最核心的亚欧主干线。马士基强调，公司持续评估安全形势，但目前尚无全面恢复东西向网络经苏伊士运河的具体时间表。行业层面，<b>若更多亚洲-欧洲航线恢复苏伊士通行，将直接释放此前被绕航占用的大量运力</b>，等效运力增加有望缓解部分航线紧张，但亚洲-欧洲航线运价可能面临调整压力。EC期货盘面已呈现近强远弱格局——EC2608收涨1.81%至3032.5点，但EC2610放量下挫4.55%至1604.5点。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.163.com/dy/article/L40GGNE8051985LJ.html" target="_blank">航运界/网易</a>、<a href="https://www.163.com/dy/article/L43IANKM0514C1PI.html" target="_blank">信德海事/网易</a>、<a href="https://k.sina.com.cn/article_5953190046_162d6789e06703p70w.html" target="_blank">新浪财经/维运网</a>、<a href="https://t.10jqka.com.cn/pid_673674032.shtml" target="_blank">同花顺/日间航行</a>
+        </div>
+      </div>
+
+      <div class="card teal">
+        <div class="card-header">
+          <div class="card-title">SeaLead Shipping停止运营启动清算：全球前13大班轮被OFAC三波制裁压垮，制裁工具重塑集运格局</div>
+          <span class="tag blue">行业洗牌</span>
+        </div>
+        <div class="card-body">
+          <p>总部位于新加坡的集装箱班轮公司海领船务（SeaLead Shipping）因美国OFAC多轮制裁，已于7月底提交自愿清算申请，8月3日任命鼎晋（Admiralty Asia Partners）合伙人Cosimo Borrelli为清算人。该公司2017年成立，高峰时全球运力排名第13位，运营53艘租赁船舶/超20.8万TEU，主营波斯湾及亚洲-地中海-红海航线。<b>三波制裁在12个月内将其从行业新星推向清算终结</b>：2025年7月第一波制裁其16艘租赁船舶→2026年4月第二波"Economic Fury"行动锁定关联实体→2026年7月第三波直接制裁SeaLead本体及印度、马绍尔群岛、阿联酋子公司。</p>
+          <div class="data-chips">
+            <span class="chip highlight">全球前13大班轮公司停止运营</span>
+            <span class="chip highlight">高峰53艘/20.8万TEU → 清算时仅4-8艘/约1万TEU</span>
+            <span class="chip warn">三波OFAC制裁（2025/7→2026/4→2026/7）</span>
+            <span class="chip warn">与伊朗Shamkhani网络关联被制裁</span>
+            <span class="chip">净资产约3,740万美元，无长期债务</span>
+            <span class="chip">2021年曾开通中国-美西ALX直航</span>
+            <span class="chip warn">亚洲-红海/亚洲-地中海航线运力撤出</span>
+            <span class="chip warn">Aare Lines/Hansa Shipping/Lubeck Shipping等同被制裁</span>
+            <span class="chip">制裁前已跌出Alphaliner百强</span>
+          </div>
+          <p>OFAC指控SeaLead与伊朗人Mohammad Hossein Shamkhani（伊朗最高领袖高级顾问、前革命卫队海军上将Ali Shamkhani之子）控制的"庞大航运帝国"存在关联，涉及向伊朗和也门胡塞武装运输货物。美国司法部3月已提起1,530万美元民事没收诉讼。SeaLead的倒下<b>开创了OFAC以"船舶→子公司→公司本体"三阶段模板瓦解中型班轮公司的先例</b>——制裁不再仅是执法工具，而是重塑全球集运格局的战略手段。同被制裁的Aare Lines、Hansa Shipping、Lubeck Shipping、Volta Shipping和WeFreight Shipping均面临类似风险。<b>对于亚洲-红海/亚洲-中东航线而言，SeaLead运力撤出将进一步收紧本已紧张的舱位供给</b>，中国联合航运等区域内承运人有望受益于产能缺口。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.163.com/dy/article/L3OD9RUF0530KEJV.html" target="_blank">中国航务周刊/网易</a>、<a href="https://dy.163.com/article/L3LGQV6B0534WH9H.html" target="_blank">壹航运/网易</a>、<a href="https://www.trasportoeuropa.it/english/sealead-shipping-enters-liquidation-after-us-sanctions" target="_blank">TrasportoEuropa/Lloyd's List</a>、<a href="https://navilinkglobal.com/news/the-worlds-13th-largest-container-line-just-collapsed-iran-sanctions-killed-it" target="_blank">NaviLink Global</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 港口动态&油运市场 -->
+    <div class="section">
+      <div class="section-title">2️⃣ 港口动态 &amp; 油运市场</div>
+
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">霍尔木兹海峡通航量跌至3个月新低：伊朗提五项重开条件，特朗普称"完全控制"，OPEC下调需求预期</div>
+          <span class="tag purple">地缘博弈</span>
+        </div>
+        <div class="card-body">
+          <p>8月13日，伊朗"波斯湾海峡管理局"12日晚声明霍尔木兹海峡仍然关闭，在伊朗提出的条件被接受前不会重新开放。当天监测数据显示，<b>仅8艘船只12日过境霍尔木兹海峡</b>，远低于本轮美伊冲突爆发前的日均120-130艘。Kpler数据显示截至8月12日的5天内日均仅13艘过境，<b>接近5月12日以来最低水平</b>。伊朗最高国家安全委员会11日提出五项开放条件：美国结束海上封锁、解除对伊制裁、撤军、战争赔偿等。路透社援引伊朗消息人士称伊美最近在达成新协议方面"没有进展"。</p>
+          <div class="data-chips">
+            <span class="chip highlight">8月12日仅8艘船过境（vs战前日均120-130艘）</span>
+            <span class="chip highlight">Kpler 5日均值13艘/日，3个月最低</span>
+            <span class="chip warn">伊朗五条件：解除封锁+解除制裁+撤军+赔偿</span>
+            <span class="chip warn">特朗普称美"完全控制"海峡</span>
+            <span class="chip warn">伊美"没有进展"，谈判陷入僵局</span>
+            <span class="chip down">OPEC下调2026需求增长预期：78→58万桶/日</span>
+            <span class="chip">布伦特 ~$89.69/桶（+0.88%）</span>
+            <span class="chip">WTI ~$83.96/桶（+0.91%）</span>
+            <span class="chip">红海胡塞12日袭击货船致6人死亡</span>
+          </div>
+          <p>矛盾信号持续撕裂市场预期：特朗普声称"完全控制"海峡，美国中央司令部称美军继续对伊朗实施海上封锁，美国能源部长赖特则称部分船只"以隐蔽方式穿越水道"导致过境数据被低估。与此同时，也门胡塞武装12日在曼德海峡袭击一艘货船<b>造成6人死亡</b>——这是逾一年来红海航运遇袭事件首次报告人员死亡。数小时后美军向一艘试图突破伊朗港口封锁的集装箱船发射导弹。<b>OPEC在12日月报中再次下调2026年全球石油需求增长预期至58万桶/日</b>（前值78万桶/日），但地缘风险溢价仍在支撑油价——尽管需求预期恶化，布伦特仍维持在$89上方，WTI逼近$84。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://finance.sina.com.cn/roll/2026-08-13/doc-ininecsr3424443.shtml" target="_blank">新浪财经/中新网</a>、<a href="https://www.163.com/dy/article/L46BMGPD05561FZU.html" target="_blank">网易/硅屿手记</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 国际海运贸易分析 -->
+    <div class="section">
+      <div class="section-title">3️⃣ 国际海运贸易分析</div>
+
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-title">沙特石油"地中海大转向"：Sumed管道出口翻倍至230万桶/日，海湾多国斥资数十亿美元扩建绕霍尔木兹管道</div>
+          <span class="tag orange">格局重塑</span>
+        </div>
+        <div class="card-body">
+          <p>8月13日腾讯新闻报道，Kpler数据显示<b>8月经埃及地中海港口西迪凯里尔出口的沙特石油规模较上月翻了一番多</b>，从约100万桶/日增至约230万桶/日。西迪凯里尔通过Sumed输油管道与红海港口艾因苏赫纳相连——满载VLCC吃水过深无法通过苏伊士运河，因此在艾因苏赫纳将一半原油泵入管道，通过苏伊士运河后于西迪凯里尔重新装载。Kpler大宗商品研究主管Matt Smith表示："这不是短期决定，而是战略或市场动态发生的明显变化。"与此形成鲜明对比的是，<b>截至8月3日当周经延布港穿越曼德海峡出口的沙特原油从7月20日当周的1,100万桶骤降至130万桶，降幅近90%</b>。</p>
+          <div class="data-chips">
+            <span class="chip highlight">Sumed出口翻倍：100万→230万桶/日</span>
+            <span class="chip highlight">曼德海峡出口骤降90%：1,100万→130万桶/周</span>
+            <span class="chip warn">7/20胡塞宣布封锁为分水岭</span>
+            <span class="chip warn">沙特阿美CEO：有多通道替代方案</span>
+            <span class="chip warn">绕行非洲比经曼德多花25天</span>
+            <span class="chip">VLCC在艾因苏赫纳部分卸油→管道→西迪凯里尔重装</span>
+            <span class="chip highlight">阿联酋富查伊拉新管道：绕行能力将翻倍至360万桶/日</span>
+            <span class="chip highlight">沙特东西管道扩建：+100-200万桶/日</span>
+            <span class="chip">科威特/伊拉克/约旦管道计划推进中</span>
+          </div>
+          <p>沙特阿美CEO Amin Nasser在8月4日财报电话会上明确表示利雅得拥有避开红海南部和曼德海峡的替代方案，可通过Sumed管道和苏伊士运河进入地中海——但对于沙特通常供应的亚洲客户，油轮必须绕行非洲，航程更长、成本更高，<b>比经曼德海峡出口多花约25天</b>。与此同时，据新加坡《联合早报》8月13日报道，波斯湾多国正斥资数十亿美元建设绕开霍尔木兹海峡的输油管道：<b>阿联酋富查伊拉新管道将绕行能力提高一倍至360万桶/日</b>；沙特东西输油管道（1,201公里）正扩建100-200万桶/日运力并考虑建设第二条平行成品油管道；科威特正与沙特商讨连接红海或阿曼港口的管道；伊拉克-约旦重启搁置管道计划（100万桶/日至亚喀巴港）。<b>即使美伊最终停火，波斯湾产油国已意识到过度依赖单一运输通道的风险不可承受</b>——这些耗资数十亿美元、需数年完工的项目将从结构性层面重塑全球石油物流版图，长远看也可能削弱伊朗在地区的影响力。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://new.qq.com/rain/a/20260813A094E800?refer=cp_1009" target="_blank">腾讯新闻</a>、<a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_2346a7d276345052" target="_blank">中新经纬/联合早报</a>
+        </div>
+      </div>
+
+      <div class="card teal">
+        <div class="card-header">
+          <div class="card-title">巴拿马运河吃水第五轮下调至47.5英尺，达飞附加费将涨至$500/TEU，美东供应链承压加剧</div>
+          <span class="tag blue">结构性常态</span>
+        </div>
+        <div class="card-body">
+          <p>巴拿马运河管理局（ACP）宣布8月26日起新巴拿马型船闸最大吃水下调至48.0英尺，9月3日起进一步降至47.5英尺（14.48米）——这是今年第四、五轮吃水收紧，从7月初的49.5英尺已连续削减2英尺。加通湖水位持续走低是核心原因，厄尔尼诺现象可能达到"强等级"并持续至2027年初春。与此同时，<b>达飞（CMA CGM）宣布9月起将巴拿马运河附加费从$320/TEU上调至$500/TEU</b>，赫伯罗特$130/TEU（8/15起）、MSC $100/TEU（8/19起）已陆续生效——四大船司附加费差异达3.2倍。</p>
+          <div class="data-chips">
+            <span class="chip highlight">吃水第五轮下调：8/26→48.0ft，9/3→47.5ft</span>
+            <span class="chip highlight">达飞附加费9月涨至$500/TEU（原$320）</span>
+            <span class="chip warn">7月初49.5ft→9月3日47.5ft（累计-2ft）</span>
+            <span class="chip warn">13,000-15,500TEU船每减0.5ft吃水-500-800TEU</span>
+            <span class="chip">赫伯罗特$130/TEU（8/15起）</span>
+            <span class="chip">MSC $100/TEU（8/19起）</span>
+            <span class="chip warn">厄尔尼诺或达"强等级"，持续至2027初春</span>
+            <span class="chip">本次不影响每日通行船舶数量</span>
+          </div>
+          <p>ACP强调本轮调整不影响每日通行船舶数量，仅纳入水资源管理策略框架，核心目标是在保留淡水资源前提下保障2026年旱季运营稳定性。但对大型集装箱船而言，吃水限制意味着无法满载通过运河——<b>每减少0.5英尺吃水，13,000-15,500TEU船舶装载能力下降500-800TEU</b>。船司需通过减载、调整航线或支付额外费用维持服务，相关成本正通过附加费向货主转嫁，从"临时应急"转向"结构性常态"。47.5英尺被业内称为"令人恐惧的数字"——一旦触及该阈值，美东港口供应链将面临系统性压力。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.hyqfocus.com/jsp/model.jsp?id=39883&modelType=1" target="_blank">海运圈聚焦</a>、<a href="https://www.phaata.com/en/logistics-market/market-news" target="_blank">Phaata</a>、<a href="https://www.163.com/dy/article/L446GHNG05568W0A.html" target="_blank">网易</a>、<a href="https://www.cuiqq.com/newsdetail/17691" target="_blank">壹航运/催全球</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      航运日报 · 每日精选3-5条高价值航运动态 | 由 WorkBuddy 自动生成<br>
+      <span style="font-size: 11px;">市场数据快照：BDI 3,046点(+3.75% WoW) · BCI 5,001(+4.67%) · SCFI 3,276(+2.2%) · 波斯湾线$5,258/TEU(+7.4%) · VLCC中东-中国$44.26万/日(+8.4%) · 布伦特~$89.69 · WTI~$83.96</span>
+    </div>
+  </div>
+</body>
+</html>
