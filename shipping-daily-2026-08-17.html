@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年8月17日</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 14px; opacity: 0.85; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .chip.up { color: #dc2626; }
+    .chip.down { color: #059669; }
+    .chip.highlight { background: #dbeafe; color: #1e40af; }
+    .chip.warn { background: #fef3c7; color: #92400e; }
+
+    .source {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .source a {
+      color: #1a56db;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+
+    .market-section {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .market-section h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 12px;
+    }
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .market-item {
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .market-item .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+    .market-item .value { font-size: 15px; font-weight: 700; color: #1e293b; }
+    .market-item .value.up { color: #dc2626; }
+    .market-item .value.down { color: #059669; }
+    .market-item .sub { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 12px; }
+      header { padding: 24px 18px; }
+      header h1 { font-size: 20px; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>航运日报</h1>
+      <div class="meta">2026年8月17日 星期一 | 重点关注：霍尔木兹谈判破裂美宣布"无限期"封锁、胡塞曼德海峡袭船致6死、三大集运巨头酝酿2万TEU级订单潮、马士基赫伯罗特AE19恢复苏伊士、赫伯罗特Q1亏损+ZIM并购遇阻</div>
+    </header>
+
+    <!-- 市场速览 -->
+    <div class="market-section">
+      <h3>市场速览</h3>
+      <div class="market-grid">
+        <div class="market-item">
+          <div class="label">BDI</div>
+          <div class="value up">2,863 <span style="font-size:12px">+0.67%</span></div>
+          <div class="sub">BCI 4,538(+1.54%) / BPI 2,228(-1.50%)</div>
+        </div>
+        <div class="market-item">
+          <div class="label">SCFI</div>
+          <div class="value up">3,276.14 <span style="font-size:12px">+2.19%</span></div>
+          <div class="sub">美强欧弱格局延续</div>
+        </div>
+        <div class="market-item">
+          <div class="label">布伦特原油</div>
+          <div class="value up">$88.82 <span style="font-size:12px">+0.34%</span></div>
+          <div class="sub">WTI $81.47(-1.13%)</div>
+        </div>
+        <div class="market-item">
+          <div class="label">VLCC均$</div>
+          <div class="value">$172,617/天</div>
+          <div class="sub">中东-远东$559,559(+2%)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ① 船司动态 -->
+    <div class="section">
+      <div class="section-title">1️⃣ 船司动态</div>
+
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">全球三大集运巨头酝酿30-60艘2万TEU级LNG双燃料超大型箱船订单潮，2029集中交付窗口</div>
+          <span class="tag purple">超级订单</span>
+        </div>
+        <div class="card-body">
+          <p>8月14日，Shipping Gazette及多家船舶经纪机构报道，全球前三大班轮运营商——MSC、马士基、达飞（CMA CGM）正同步推进20000TEU级超大型集装箱船新建项目，<b>每家拟订造10-20艘，动力方案均倾向LNG双燃料</b>。若全部落地，本轮总订单量将达30-60艘，成为2026年以来规模最大的一波超大型箱船集中订造。目前至少4家中国船厂参与商务洽谈，正式合同预计夏后签署。</p>
+          <div class="data-chips">
+            <span class="chip highlight">MSC：已向恒力重工下单至多20艘2万TEU LNG双燃料</span>
+            <span class="chip highlight">马士基：2月新时代造船8艘18,600TEU($1.9亿/艘)</span>
+            <span class="chip highlight">达飞：6月恒力重工批量6,000TEU级</span>
+            <span class="chip warn">全球箱船订单/运力比超38%（2008年来最高）</span>
+            <span class="chip warn">2029上半年起集中交付</span>
+            <span class="chip">MSC手持订单151艘/260万TEU</span>
+            <span class="chip">马士基手持90艘/120万TEU</span>
+            <span class="chip">达飞手持157艘/172万TEU</span>
+          </div>
+          <p>值得注意的是，此次三巨头集体采购超大型船舶，是在行业大船订造意愿阶段性回落的背景下出现的——Veson Nautical年中报告显示2026上半年超大型箱船订单同比下滑18%，Xclusiv统计今年仅38艘超大型订单（vs支线184艘/灵便型91艘）。头部企业超大型箱船在手订单占现役船队比例已突破70%，<b>但三巨头仍逆势加码，反映出对2029年全球贸易增长及大船规模效应不可替代性的长期押注</b>。BIMCO预测2026-2027年运力供给增速3.0%-3.5%将超过需求增速，新订单叠加可能加剧中长期运力过剩压力。不过当前高运价环境（Drewry WCI $4,166/FEU，22个月高位）为下单提供了充足的现金流支撑。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.rivieramm.com/news-content-hub/worlds-top-three-container-lines-prepare-mega-orders-for-20000-teu-newbuildings-89616" target="_blank">Riviera Maritime</a>、<a href="https://www.imarine.cn/240663.html" target="_blank">海事服务网</a>、<a href="https://www.theconveyor.co/p/msc-containerships-order-china-hengli" target="_blank">The Conveyor</a>、<a href="http://shippingazette.com/" target="_blank">Shipping Gazette</a>
+        </div>
+      </div>
+
+      <div class="card teal">
+        <div class="card-header">
+          <div class="card-title">马士基&赫伯罗特AE19/SE4正式恢复苏伊士运河航线，红海复航步伐扩大但风险并存</div>
+          <span class="tag green">航线恢复</span>
+        </div>
+        <div class="card-body">
+          <p>8月10日，马士基和赫伯罗特宣布Gemini Cooperation旗下AE19/SE4服务从绕行好望角结构性回归红海+苏伊士运河航线，即刻生效。17,480TEU"Berlin Maersk"执行首个西行航次（628W）。这是继7月AE15/SE3回归后，Gemini第二条结构性恢复苏伊士的服务。港序：新港→青岛→釜山→宁波→上海→丹戎港→吉达→苏伊士运河→塞得港→丹吉尔→塞得港→苏伊士→吉达→新加坡→新港。<b>20,568TEU"Manchester Maersk"也在AE2/NE1亚欧主干线预计8/15通行苏伊士</b>，驶往威廉港/不来梅哈芬/鹿特丹。</p>
+          <div class="data-chips">
+            <span class="chip highlight">AE19/SE4即刻恢复苏伊士（第4条Gemini服务）</span>
+            <span class="chip highlight">AE2/NE1亚欧主干线Manchester Maersk预计8/15通行</span>
+            <span class="chip warn">MSC仍全部绕好望角（最谨慎）</span>
+            <span class="chip warn">CMA CGM多条服务经苏伊士（最激进）</span>
+            <span class="chip">COSCO 3月起每周红海过境</span>
+            <span class="chip">马士基Q1利润同比暴跌$1.2B→$1亿</span>
+            <span class="chip">复航可缩短航程约4周/释放运力</span>
+          </div>
+          <p>复航与风险并存的矛盾格局极其突出：AE19航线恰好经过胡塞宣布封锁的沙特吉达港，而就在宣布复航的同一时段（8/9-10），胡塞袭击了沙特吉赞炼油厂和也门Mocha港，造成11人死亡。<b>TrasportoEuropa分析指出，马士基可能在"商业效率"与"安全风险"之间做出了计算性冒险</b>——Q1利润暴跌迫使CEO必须通过缩短航程、降低燃油成本来恢复效率。马士基明确表示目前无意将全部东西网络回归苏伊士，但每多一条服务回归，市场有效运力就多释放一些，中期可能对现货运价形成下行压力。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://trans.info/en/gemini-red-sea-2-495607" target="_blank">Trans.info</a>、<a href="https://www.trasportoeuropa.it/english/maersk-relaunches-suez-despite-houthi-attacks" target="_blank">TrasportoEuropa</a>、<a href="https://www.clecat.org/news/newsletters/gemini-expands-return-to-suez-canal-route" target="_blank">CLECAT</a>、<a href="https://www.freight-academy.com/en/news/cosco-reopens-red-sea-maersk-hapag-lloyd-suez-20260812195240" target="_blank">Freight Academy</a>
+        </div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-title">赫伯罗特Q1亏损2.19亿欧元，42亿美元收购ZIM遭以色列多部门联合阻击</div>
+          <span class="tag orange">财报与并购</span>
+        </div>
+        <div class="card-body">
+          <p>赫伯罗特（Hapag-Lloyd）5月13日公布的Q1 2026财报显示，集团净利润为<b>-2.56亿美元（-2.19亿欧元）</b>，而去年同期盈利4.46亿欧元。班轮运输收入降至48亿美元，平均运费$1,330/TEU（同比-9.5%），运量3.2百万TEU（同比-0.7%基本持平）。CEO Habben Jansen坦言"unsatisfactory"，归因于恶劣天气扰动+霍尔木兹海峡封锁导致的运营中断。与此同时，<b>2月签署的42亿美元收购ZIM案正遭遇以色列监管层面越来越大的阻力</b>。</p>
+          <div class="data-chips">
+            <span class="chip highlight">Q1净利润 -€219M（去年同期+€446M）</span>
+            <span class="chip highlight">运费 $1,330/TEU（-9.5% YoY）</span>
+            <span class="chip highlight">ZIM收购价 $42亿（ZIM股东4/30已批准）</span>
+            <span class="chip warn">以色列航运局二度反对</span>
+            <span class="chip warn">国防部/经济部/交通部/农业部均反对</span>
+            <span class="chip warn">9月9日八部委联合会议（推迟后）</span>
+            <span class="chip">承诺设ZIM Israel（16艘船/200员工/10年保障）</span>
+            <span class="chip">ZIM当前债务约$29亿</span>
+            <span class="chip">2026全年EBITDA指引 $11-31亿</span>
+          </div>
+          <p>以色列航运与港务局负责人Tzadok Radker提交第二份意见书，坚持反对立场，核心关切是<b>拟拆分的"ZIM Israel"缺乏真正的运营独立性</b>——仍将依赖赫伯罗特获取运力、国际航线和关键市场准入。赫伯罗特和FIMI已提交约600页材料，并获安永、BCG及前航运局长背书，但国防部、经济部、交通部、农业部等多个部门均表示反对。若交易被否，FIMI不会上诉，但赫伯罗特可能考虑法律行动。<b>这将是全球集运业整合格局的关键变量——若成功，赫伯罗特将跃升全球第五大班轮</b>。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.hapag-lloyd.com/en/company/ir/financial-news/financial-news.iry-2026.irid-516263811.html" target="_blank">Hapag-Lloyd IR</a>、<a href="https://container-news.com/hapag-lloyds-4-2-billion-zim-deal-faces-growing-opposition-in-israel/" target="_blank">Container News</a>、<a href="https://shippingtelegraph.com/container-news/hapag-lloyd-posts-q1-unsatisfactory-result-and-maersk-keeps-hormuz-transits-suspended" target="_blank">Shipping Telegraph</a>、<a href="https://www.elestrechodigital.com/en/2026/05/13/hapag-lloyd-registers-losses-in-the-first-quarter-of-2026-due-to-the-fall-in-freight-rates-and-operational-disruptions-in-the-middle-east" target="_blank">El Estrecho Digital</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 港口动态与油运市场 -->
+    <div class="section">
+      <div class="section-title">2️⃣ 港口动态与油运市场</div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">霍尔木兹海峡谈判破裂：美宣布"无限期"海上封锁，周五仅2艘船通行、无原油船</div>
+          <span class="tag red">危机升级</span>
+        </div>
+        <div class="card-body">
+          <p>8月13-16日，围绕6月停火协议的谈判再度破裂。美国国防部长赫格塞思在访问巴拿马时公开表示，美军拥有足够资源<b>"无限期维持"对伊朗的海上封锁</b>。伊朗革命卫队海军司令阿里·阿兹马伊回应称海峡处于关闭状态，伊方"完全掌控"海峡内相关动态。Kpler数据显示，<b>周五可追踪到的霍尔木兹通行船只仅2艘</b>（一艘驶入伊朗水域的粮船、一艘空载散货船），当天<b>未见任何原油运输船通行</b>——战前日均通过船舶超过130艘。阿联酋证实ADNOC旗下两艘船周四晚穿越海峡时遭伊朗袭击。</p>
+          <div class="data-chips">
+            <span class="chip highlight">周五仅2艘船通行（战前日均130+艘）</span>
+            <span class="chip highlight">无原油运输船通行</span>
+            <span class="chip highlight">美防长："无限期维持"海上封锁</span>
+            <span class="chip warn">ADNOC两艘船遭袭</span>
+            <span class="chip warn">伊朗-阿曼"航行路线图"仅解决"怎么走"≠全面恢复</span>
+            <span class="chip warn">美财长贝森特预告下周"前所未有"经济措施</span>
+            <span class="chip">特朗普称将宣布霍尔木兹为"美国领土"</span>
+            <span class="chip up">布伦特 $88.82(+0.34%)</span>
+            <span class="chip down">WTI $81.47(-1.13%)</span>
+            <span class="chip">美国SPR降至2.983亿桶（1983年来最低）</span>
+          </div>
+          <p>伊朗与阿曼虽就一份"航行路线图"达成协议，但分析指出该路线图<b>仅解决"船怎么走"的技术问题，并非海峡全面恢复的政治承诺</b>。美财长贝森特8/16放话下周将公布"前所未有"的对伊经济措施，可能针对伊朗石油出口、航运、保险、支付结算及第三国购买方与影子船队。特朗普同时面临国内压力——高油价拖累支持率，或削弱共和党11月中期选举控制力。<b>分析认为，美国把伊朗经济勒得越紧，伊朗越有动力利用霍尔木兹这张"最值钱筹码"——封锁与反封锁的恶性循环正在自我强化</b>。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://mil.gmw.cn/2026-08/14/content_38943290.htm" target="_blank">光明网/央视新闻</a>、<a href="https://finance.sina.com.cn/roll/2026-08-14/doc-ininfrtu4261680.shtml" target="_blank">新浪财经</a>、<a href="https://news.sol.com.cn/html/2026-08-14/A728511BC4D7E4D69.shtml" target="_blank">航运在线</a>
+        </div>
+      </div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">胡塞曼德海峡袭船致6死，《麦加共同防务协议》首考失败，Mocha港停运</div>
+          <span class="tag red">红海危机</span>
+        </div>
+        <div class="card-body">
+          <p>8月11日，也门海岸警卫队声明称，胡塞武装当天上午在曼德海峡对埃及籍"塔哈马"号（Tihamah）货轮（挂坦桑尼亚旗）发动导弹袭击，<b>造成包括4名船员（3名巴基斯坦籍+1名印尼籍）和2名也门武装救援人员在内的6人死亡、10人受伤</b>。这是2月28日美伊开战以来胡塞袭船事件<b>首次出现人员遇难</b>。更恶劣的是，救援行动展开期间胡塞再次发射导弹实施<b>二次打击</b>，导致参与救援的也门武装人员出现伤亡。Eagle Intelligence海事战险周报将曼德海峡风险调升至ELEVATED（高位）；也门Mocha港因袭击宣布停运。</p>
+          <div class="data-chips">
+            <span class="chip highlight">6人死亡（4船员+2救援人员）</span>
+            <span class="chip highlight">美伊开战以来胡塞袭船首次人员遇难</span>
+            <span class="chip warn">救援期间二次导弹打击</span>
+            <span class="chip warn">曼德海峡风险升至ELEVATED</span>
+            <span class="chip warn">Mocha港宣布停运</span>
+            <span class="chip">遇袭船：埃及籍Tihamah（挂坦桑尼亚旗）</span>
+            <span class="chip">胡塞称袭击的是沙特军用运输船</span>
+            <span class="chip">巴基斯坦副总理谴责但仅"查明真相"未动武</span>
+          </div>
+          <p>沙特原借红海水道分流霍尔木兹能源出口，<b>曼德出事等于掐断中东能源"第二条命门"</b>。巴基斯坦作为《麦加共同防务协议》（沙特、土耳其、巴基斯坦签署，含类北约集体防御条款）签署方面临首次考验——3名巴公民死亡，但因协议执行细节空白、遇袭者为埃及运营商船而非巴本土，巴方仅"查明真相"未动武。<b>协议"首考"失败暴露了其"纸老虎"属性</b>：集体防御条款缺乏触发机制和执行细则，地区安全架构的威慑力远低于预期。胡塞方面则声称袭击的是沙特军用运输船，与也门政府说法存在分歧。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.toutiao.com/article/7672810979880632872/" target="_blank">央视新闻/今日头条</a>、<a href="https://new.qq.com/rain/a/20260812A02OE800" target="_blank">腾讯新闻</a>、<a href="http://intl.ce.cn/qqss/202608/t20260812_3142492.shtml" target="_blank">新华网/中国经济网</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 国际海运贸易分析 -->
+    <div class="section">
+      <div class="section-title">3️⃣ 国际海运贸易分析</div>
+
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">BDI结束连跌反弹至2863点，SCFI"美强欧弱"延续，波斯湾线逆势暴涨7.4%</div>
+          <span class="tag green">运价分析</span>
+        </div>
+        <div class="card-body">
+          <p>波罗的海干散货指数（BDI）8/16报2,863点（+0.67%/+19点），从8/13的2,844点低点反弹结束连跌。海岬型BCI报4,538点（+1.54%），C3航线（图巴朗→青岛）铁矿石运价约$31,200/天；巴拿马型BPI报2,228点（-1.50%）受南美粮食旺季尾声拖累。<b>干散货市场呈"大船强、小船弱"结构性分化</b>，铁矿石出货回暖支撑海岬型，但整体仍处旺季区间。</p>
+          <p>集运方面，SCFI综合指数维持3,276.14点高位（+2.19%），<b>"美强欧弱"格局延续</b>。美西$6,484/FEU（+4.09%）、美东$9,290/FEU（+2.61%）受返校季货量推动短期仍有韧性；欧洲线$2,964/TEU（-2.46%）缓跌，地中海$4,048/TEU（-3.36%）。<b>波斯湾线报$5,258/TEU逆势大涨7.4%</b>，受红海与霍尔木兹双重扰动支撑。CCFI约1,839.61点（-0.9%）。货代分析认为，美线高运价正吸引加班船入市，欧线9月若需求未回暖跌幅或扩大。</p>
+          <div class="data-chips">
+            <span class="chip highlight">BDI 2,863(+0.67%) 结束连跌</span>
+            <span class="chip highlight">SCFI 3,276.14(+2.19%)</span>
+            <span class="chip up">美西 $6,484/FEU(+4.09%)</span>
+            <span class="chip up">美东 $9,290/FEU(+2.61%)</span>
+            <span class="chip down">欧线 $2,964/TEU(-2.46%)</span>
+            <span class="chip down">地中海 $4,048/TEU(-3.36%)</span>
+            <span class="chip up">波斯湾 $5,258/TEU(+7.4%) 逆势暴涨</span>
+            <span class="chip">VLCC均$172,617/天(持平)</span>
+            <span class="chip up">中东-远东$559,559/天(+2%)</span>
+            <span class="chip">苏伊士型均$206,885/天(+13%)</span>
+            <span class="chip down">阿芙拉型$101,440/天(-4%)</span>
+          </div>
+          <p>油运市场方面，申万宏源8/15周报显示：VLCC平均运价$172,617/天基本持平，<b>中东-远东航线逆势+2%至$559,559/天</b>——波斯湾暗航（关闭AIS信号）货盘需求强劲，吸收运力支撑运价。红海-韩国$298,065/天（-1%），西非-中国$120,770/天（持平）。苏伊士型大涨13%至$206,885/天（西非-英国/欧陆+67%），阿芙拉型-4%至$101,440/天。<b>巴拿马运河预订船平均等待8-10天，效率损失有望推升各板块运费</b>。NOAA预测2026年底强/极强厄尔尼诺概率超90%，巴拿马吃水8/15降至48.5ft、8/26将降至48.0ft、9/3降至47.5ft。达飞宣布9/10起附加费从$320上调至$500/TEU（+56%），MSC 9/12起最高$376/箱。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://xueqiu.com/7385622870/405184568" target="_blank">申万宏源交运周报/雪球</a>、<a href="https://www.sse.net.cn/index/singleIndex?indexType=ctfi" target="_blank">上海航运交易所</a>、<a href="https://www.mingrifriends.com/thewire/thread/50228" target="_blank">VLCC运价/明日朋友</a>
+        </div>
+      </div>
+
+      <div class="card teal">
+        <div class="card-header">
+          <div class="card-title">中欧北极快航实现常态化周班运营，单程仅20天较苏伊士省20天</div>
+          <span class="tag blue">新航线</span>
+        </div>
+        <div class="card-body">
+          <p>8月15日19时，海杰航运（香港）有限公司"迪拜塔"轮从宁波舟山港穿山港区驶离，经由北极航道驶向欧洲，<b>标志着宁波舟山港中欧北极集装箱航线迈入通航季周班运营新阶段</b>。相较传统苏伊士运河40天航程，该航线单程仅需20天，为中欧贸易开辟快捷高效、绿色低碳的北向物流大通道。首航船舶装载储能柜、动力电池、光伏组件等高附加值热敏货物，依次停靠费利克斯托、鹿特丹、汉堡、格丁尼亚等欧洲港口。</p>
+          <div class="data-chips">
+            <span class="chip highlight">单程20天 vs 苏伊士40天（省50%）</span>
+            <span class="chip highlight">2026年计划至少8个航次</span>
+            <span class="chip highlight">投入7-8艘冰区加强型船舶</span>
+            <span class="chip warn">通航窗口7-10月（受冰情限制）</span>
+            <span class="chip">中长期目标：每年4个月稳定通航</span>
+            <span class="chip">货源：长三角光伏/储能/新能源零部件</span>
+            <span class="chip">与欧洲码头签订绿色通道协议</span>
+          </div>
+          <p>港航运营方已与欧洲合作码头签订绿色通道协议，船舶到港可优先靠泊作业。这一航线在中东地缘冲突持续扰动苏伊士运河和红海航线的背景下具有特殊战略意义——<b>北极航道不仅是效率优化选择，更是"去风险化"的替代通道</b>。中国船企6家以上已参与北极航道探路，投入2万TEU+140万DWT运力。FT报道去年全球建造167艘破冰级货轮创十年新高，2025年北方海路货运总量预计突破3700万吨。不过受自然冰情限制，年度通航窗口仅7-10月，中长期计划实现每年4个月稳定通航，<b>短期内尚无法替代苏伊士运河的主干地位，但作为旺季补充通道价值已获验证</b>。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://news.gmw.cn/2026-08/17/content_38946244.htm" target="_blank">光明日报</a>、<a href="https://finance.sina.com.cn/jjxw/2026-08-17/doc-iniqhxc7981255.shtml" target="_blank">新浪财经</a>、<a href="https://www.portseurope.com/category/countries/" target="_blank">Ports Europe</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      本日报由自动化系统生成 | 数据截至2026年8月17日 | 仅供行业参考，不构成投资建议
+    </div>
+  </div>
+</body>
+</html>
