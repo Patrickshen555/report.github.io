@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WK33-34 FAK运价履行分析 Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","微软雅黑",sans-serif;background:#f0f2f5;color:#333;padding:20px}
+.header{background:linear-gradient(135deg,#1F4E79,#2E75B6);color:#fff;padding:24px 32px;border-radius:12px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:24px;font-weight:700}
+.header .subtitle{font-size:14px;opacity:.85;margin-top:4px}
+.header .date{font-size:13px;opacity:.7}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.kpi-card{background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:4px solid #1F4E79}
+.kpi-card .label{font-size:13px;color:#666;margin-bottom:8px}
+.kpi-card .value{font-size:28px;font-weight:700;color:#1F4E79}
+.kpi-card .sub{font-size:12px;color:#999;margin-top:4px}
+.kpi-card.green{border-left-color:#4CAF50}.kpi-card.green .value{color:#4CAF50}
+.kpi-card.orange{border-left-color:#FF9800}.kpi-card.orange .value{color:#FF9800}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.chart-card{background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.chart-card.full{grid-column:1/-1}
+.chart-card h3{font-size:16px;color:#1F4E79;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #E8F0FE}
+.chart-container{position:relative;height:320px}
+.chart-container.tall{height:420px}
+.table-card{background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:20px}
+.table-card h3{font-size:16px;color:#1F4E79;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #E8F0FE}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#1F4E79;color:#fff;padding:8px 10px;text-align:center;font-weight:600}
+td{padding:6px 10px;border-bottom:1px solid #eee;text-align:center}
+tr:hover td{background:#f5f7fa}
+.type-fak{background:#E8F5E9}.type-partial{background:#FFF9C4}.type-nonfak{background:#FCE4EC}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.badge-cu{background:#E3F2FD;color:#1565C0}.badge-ul{background:#FFF3E0;color:#E65100}
+.positive{color:#f44336;font-weight:bold}.negative{color:#4CAF50;font-weight:bold}
+.legend-bar{display:flex;gap:14px;justify-content:center;margin-top:12px;font-size:12px;color:#666;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-swatch{display:inline-block;width:14px;height:14px;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="header">
+<div><h1>WK33-34 FAK运价履行情况分析</h1>
+<div class="subtitle">5个VVD | 红海航线 | Shipper维度</div></div>
+<div class="date">数据截至 2026-08-27</div>
+</div>
+<div class="kpi-row">
+<div class="kpi-card"><div class="label">总TEU</div><div class="value">9,623</div><div class="sub">5个完船VVD</div></div>
+<div class="kpi-card green"><div class="label">FAK TEU</div><div class="value">6,743</div><div class="sub">占比 70.1%</div></div>
+<div class="kpi-card orange"><div class="label">Non-FAK TEU</div><div class="value">2,880</div><div class="sub">占比 29.9%</div></div>
+<div class="kpi-card"><div class="label">客户数</div><div class="value">246</div><div class="sub">246家Shipper</div></div>
+</div>
+<div class="chart-grid">
+<div class="chart-card full"><h3>各VVD 定价水平对比（40尺 SAJED成交价 vs FAK价）</h3><div class="chart-container tall"><canvas id="priceChart"></canvas></div></div>
+</div>
+<div class="chart-grid">
+<div class="chart-card full"><h3>各VVD FAK履行占比（百分比堆叠）</h3><div class="chart-container"><canvas id="vvdChart"></canvas></div></div>
+</div>
+<div class="chart-grid">
+<div class="chart-card"><h3>客户类型分布</h3><div class="chart-container"><canvas id="typeChart"></canvas></div></div>
+<div class="chart-card"><h3>各口岸TEU与FAK占比</h3><div class="chart-container"><canvas id="polChart"></canvas></div></div>
+</div>
+<div class="table-card"><h3>VVD定价水平明细（按ETD排序，排除FAK未录入）</h3>
+<table><thead><tr><th>VVD</th><th>ETD</th><th>总TEU</th><th>成交价_40</th><th>FAK价_40</th><th>差价_40</th><th>差幅_40</th></tr></thead>
+<tbody><tr><td><strong>JRBM2629W</strong></td><td>2026-07-27</td><td>751</td><td>7772</td><td>7870</td><td class="negative">-98</td><td class="negative">-1.2%</td></tr>
+<tr><td><strong>BZCF2627W</strong></td><td>2026-07-30</td><td>4,064</td><td>8256</td><td>8368</td><td class="negative">-112</td><td class="negative">-1.3%</td></tr>
+<tr><td><strong>CSQC2630W</strong></td><td>2026-08-06</td><td>2,297</td><td>8652</td><td>8701</td><td class="negative">-49</td><td class="negative">-0.6%</td></tr>
+<tr><td><strong>H8112631W</strong></td><td>2026-08-07</td><td>1,013</td><td>8505</td><td>8769</td><td class="negative">-264</td><td class="negative">-3.0%</td></tr>
+<tr><td><strong>CUYP2634W</strong></td><td>2026-08-22</td><td>1,498</td><td>9134</td><td>9278</td><td class="negative">-144</td><td class="negative">-1.6%</td></tr></tbody></table></div>
+<div class="table-card"><h3>VVD FAK履行总览</h3>
+<table><thead><tr><th>VVD</th><th>总TEU</th><th>FAK TEU</th><th>Non-FAK TEU</th><th>未录入TEU</th><th>FAK占比</th></tr></thead>
+<tbody><tr><td><strong>BZCF2627W</strong></td><td>4,064</td><td style="color:#4CAF50;font-weight:600">2,967</td><td style="color:#f44336">940</td><td style="color:#9E9E9E">157</td><td><strong>73.0%</strong></td></tr>
+<tr><td><strong>CSQC2630W</strong></td><td>2,297</td><td style="color:#4CAF50;font-weight:600">1,637</td><td style="color:#f44336">660</td><td style="color:#9E9E9E">0</td><td><strong>71.3%</strong></td></tr>
+<tr><td><strong>CUYP2634W</strong></td><td>1,498</td><td style="color:#4CAF50;font-weight:600">1,120</td><td style="color:#f44336">354</td><td style="color:#9E9E9E">24</td><td><strong>74.8%</strong></td></tr>
+<tr><td><strong>H8112631W</strong></td><td>1,013</td><td style="color:#4CAF50;font-weight:600">573</td><td style="color:#f44336">440</td><td style="color:#9E9E9E">0</td><td><strong>56.6%</strong></td></tr>
+<tr><td><strong>JRBM2629W</strong></td><td>751</td><td style="color:#4CAF50;font-weight:600">446</td><td style="color:#f44336">305</td><td style="color:#9E9E9E">0</td><td><strong>59.4%</strong></td></tr>
+<tr style="background:#BDD7EE;font-weight:700"><td>合计</td><td>9,623</td><td style="color:#2E7D32">6,743</td><td>2,880</td><td>-</td><td><strong>70.1%</strong></td></tr></tbody></table></div>
+<div class="table-card"><h3>口岸 x VVD 交叉FAK占比热力图</h3>
+<table style="table-layout:fixed"><thead><tr><th style="width:70px">口岸</th><th style="padding:8px 6px">BZCF2627W</th><th style="padding:8px 6px">CSQC2630W</th><th style="padding:8px 6px">CUYP2634W</th><th style="padding:8px 6px">H8112631W</th><th style="padding:8px 6px">JRBM2629W</th></tr></thead>
+<tbody><tr><td style="background:#E8F0FE;font-weight:bold;padding:8px;white-space:nowrap">CNTAO</td><td style="background:#66BB6A;color:#fff;padding:8px 6px;font-weight:600">66.7%<br><span style="font-size:10px;font-weight:normal;opacity:.9">1150T / FAK 767T</span></td><td style="background:#FFA726;color:#fff;padding:8px 6px;font-weight:600">46.1%<br><span style="font-size:10px;font-weight:normal;opacity:.9">986T / FAK 455T</span></td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td></tr>
+<tr><td style="background:#E8F0FE;font-weight:bold;padding:8px;white-space:nowrap">CNNAS</td><td style="background:#66BB6A;color:#fff;padding:8px 6px;font-weight:600">64.1%<br><span style="font-size:10px;font-weight:normal;opacity:.9">771T / FAK 494T</span></td><td style="background:#2E7D32;color:#fff;padding:8px 6px;font-weight:600">93.6%<br><span style="font-size:10px;font-weight:normal;opacity:.9">576T / FAK 539T</span></td><td style="background:#FFA726;color:#fff;padding:8px 6px;font-weight:600">57.8%<br><span style="font-size:10px;font-weight:normal;opacity:.9">677T / FAK 391T</span></td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td></tr>
+<tr><td style="background:#E8F0FE;font-weight:bold;padding:8px;white-space:nowrap">CNNGB</td><td style="background:#66BB6A;color:#fff;padding:8px 6px;font-weight:600">77.0%<br><span style="font-size:10px;font-weight:normal;opacity:.9">844T / FAK 650T</span></td><td style="background:#2E7D32;color:#fff;padding:8px 6px;font-weight:600">87.2%<br><span style="font-size:10px;font-weight:normal;opacity:.9">719T / FAK 627T</span></td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#66BB6A;color:#fff;padding:8px 6px;font-weight:600">60.0%<br><span style="font-size:10px;font-weight:normal;opacity:.9">235T / FAK 141T</span></td></tr>
+<tr><td style="background:#E8F0FE;font-weight:bold;padding:8px;white-space:nowrap">CNSHA</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#2E7D32;color:#fff;padding:8px 6px;font-weight:600">91.5%<br><span style="font-size:10px;font-weight:normal;opacity:.9">797T / FAK 729T</span></td><td style="background:#66BB6A;color:#fff;padding:8px 6px;font-weight:600">63.4%<br><span style="font-size:10px;font-weight:normal;opacity:.9">670T / FAK 425T</span></td><td style="background:#FFA726;color:#fff;padding:8px 6px;font-weight:600">47.0%<br><span style="font-size:10px;font-weight:normal;opacity:.9">236T / FAK 111T</span></td></tr>
+<tr><td style="background:#E8F0FE;font-weight:bold;padding:8px;white-space:nowrap">CNSHK</td><td style="background:#2E7D32;color:#fff;padding:8px 6px;font-weight:600">99.2%<br><span style="font-size:10px;font-weight:normal;opacity:.9">952T / FAK 944T</span></td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#66BB6A;color:#fff;padding:8px 6px;font-weight:600">67.2%<br><span style="font-size:10px;font-weight:normal;opacity:.9">256T / FAK 172T</span></td></tr>
+<tr><td style="background:#E8F0FE;font-weight:bold;padding:8px;white-space:nowrap">CNXMN</td><td style="background:#FF7043;color:#fff;padding:8px 6px;font-weight:600">39.5%<br><span style="font-size:10px;font-weight:normal;opacity:.9">129T / FAK 51T</span></td><td style="background:#2E7D32;color:#fff;padding:8px 6px;font-weight:600">100.0%<br><span style="font-size:10px;font-weight:normal;opacity:.9">16T / FAK 16T</span></td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#FFA726;color:#fff;padding:8px 6px;font-weight:600">43.1%<br><span style="font-size:10px;font-weight:normal;opacity:.9">343T / FAK 148T</span></td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td></tr>
+<tr><td style="background:#E8F0FE;font-weight:bold;padding:8px;white-space:nowrap">CNSWA</td><td style="background:#2E7D32;color:#fff;padding:8px 6px;font-weight:600">100.0%<br><span style="font-size:10px;font-weight:normal;opacity:.9">61T / FAK 61T</span></td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td><td style="background:#f5f5f5;color:#bbb;padding:8px 6px">-</td></tr></tbody></table>
+<div class="legend-bar">
+<span class="legend-item"><span class="legend-swatch" style="background:#2E7D32"></span>≥80%</span>
+<span class="legend-item"><span class="legend-swatch" style="background:#66BB6A"></span>60-79%</span>
+<span class="legend-item"><span class="legend-swatch" style="background:#FFA726"></span>40-59%</span>
+<span class="legend-item"><span class="legend-swatch" style="background:#FF7043"></span>20-39%</span>
+<span class="legend-item"><span class="legend-swatch" style="background:#f44336"></span>&lt;20%</span>
+<span class="legend-item"><span class="legend-swatch" style="background:#f5f5f5;border:1px solid #ddd"></span>无货量</span>
+</div>
+<p style="text-align:center;font-size:11px;color:#999;margin-top:8px">单元格：FAK占比%（TEU / FAK TEU）</p>
+</div>
+<div class="table-card"><h3>TOP15客户货量排名</h3>
+<table><thead><tr><th>#</th><th>客户名称</th><th>对接代理</th><th>总TEU</th><th>FAK TEU</th><th>FAK占比</th></tr></thead>
+<tbody><tr><td>1</td><td style="text-align:left">CHINA UNITED LINES LTD</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>658</strong></td><td>520</td><td class="type-partial"><strong>79.0%</strong></td></tr>
+<tr><td>2</td><td style="text-align:left">United Ocean Internationa</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>415</strong></td><td>86</td><td class="type-partial"><strong>20.7%</strong></td></tr>
+<tr><td>3</td><td style="text-align:left">SINOTRANS CENTRAL CHINA C</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>354</strong></td><td>277</td><td class="type-partial"><strong>78.2%</strong></td></tr>
+<tr><td>4</td><td style="text-align:left">GUANGZHOU KD INTL LOG LTD</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>346</strong></td><td>299</td><td class="type-partial"><strong>86.4%</strong></td></tr>
+<tr><td>5</td><td style="text-align:left">HONHANN SUPPLY CHAIN CO.,</td><td><span class="badge badge-ul">UL-联合物流</span></td><td><strong>278</strong></td><td>238</td><td class="type-partial"><strong>85.6%</strong></td></tr>
+<tr><td>6</td><td style="text-align:left">Hainan Midea Internationa</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>267</strong></td><td>70</td><td class="type-partial"><strong>26.2%</strong></td></tr>
+<tr><td>7</td><td style="text-align:left">COSCO SHIPPING LOGISTICS </td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>257</strong></td><td>192</td><td class="type-partial"><strong>74.7%</strong></td></tr>
+<tr><td>8</td><td style="text-align:left">YQN South-Logistics (Shan</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>199</strong></td><td>141</td><td class="type-partial"><strong>70.9%</strong></td></tr>
+<tr><td>9</td><td style="text-align:left">SHENZHEN S&R INTERNATIONA</td><td><span class="badge badge-ul">UL-联合物流</span></td><td><strong>192</strong></td><td>185</td><td class="type-fak"><strong>96.4%</strong></td></tr>
+<tr><td>10</td><td style="text-align:left">WIDE-TRANS INTERNATIONAL </td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>185</strong></td><td>69</td><td class="type-partial"><strong>37.3%</strong></td></tr>
+<tr><td>11</td><td style="text-align:left">UNITED OCEAN INTERNATIONA</td><td><span class="badge badge-ul">UL-联合物流</span></td><td><strong>183</strong></td><td>26</td><td class="type-partial"><strong>14.2%</strong></td></tr>
+<tr><td>12</td><td style="text-align:left">GUANGZHOU FOCUS GLOBAL LO</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>179</strong></td><td>126</td><td class="type-partial"><strong>70.4%</strong></td></tr>
+<tr><td>13</td><td style="text-align:left">UNICORN SUPPLY CHAIN (SHE</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>171</strong></td><td>57</td><td class="type-partial"><strong>33.3%</strong></td></tr>
+<tr><td>14</td><td style="text-align:left">ONTOP LOGISTICS CO.,LTD</td><td><span class="badge badge-ul">UL-联合物流</span></td><td><strong>169</strong></td><td>169</td><td class="type-fak"><strong>100.0%</strong></td></tr>
+<tr><td>15</td><td style="text-align:left">Worldwide Logistics Co.,L</td><td><span class="badge badge-cu">CU-立联</span></td><td><strong>166</strong></td><td>60</td><td class="type-partial"><strong>36.1%</strong></td></tr></tbody></table></div>
+<script>
+const data = {"vvd": [{"vvd": "BZCF2627W", "total": 4064, "fak": 2967, "nonfak": 940, "unrec": 157, "ratio": 73.0}, {"vvd": "CSQC2630W", "total": 2297, "fak": 1637, "nonfak": 660, "unrec": 0, "ratio": 71.3}, {"vvd": "CUYP2634W", "total": 1498, "fak": 1120, "nonfak": 354, "unrec": 24, "ratio": 74.8}, {"vvd": "H8112631W", "total": 1013, "fak": 573, "nonfak": 440, "unrec": 0, "ratio": 56.6}, {"vvd": "JRBM2629W", "total": 751, "fak": 446, "nonfak": 305, "unrec": 0, "ratio": 59.4}], "pol": [{"pol": "CNTAO", "total": 2136, "fak": 1222, "ratio": 57.2}, {"pol": "CNNAS", "total": 2024, "fak": 1424, "ratio": 70.4}, {"pol": "CNNGB", "total": 1798, "fak": 1418, "ratio": 78.9}, {"pol": "CNSHA", "total": 1703, "fak": 1265, "ratio": 74.3}, {"pol": "CNSHK", "total": 1208, "fak": 1116, "ratio": 92.4}, {"pol": "CNXMN", "total": 488, "fak": 215, "ratio": 44.1}, {"pol": "CNSWA", "total": 61, "fak": 61, "ratio": 100.0}], "pv": [{"pol": "CNTAO", "vvd": "BZCF2627W", "total": 1150, "fak": 767, "ratio": 66.7}, {"pol": "CNTAO", "vvd": "CSQC2630W", "total": 986, "fak": 455, "ratio": 46.1}, {"pol": "CNNAS", "vvd": "BZCF2627W", "total": 771, "fak": 494, "ratio": 64.1}, {"pol": "CNNAS", "vvd": "CSQC2630W", "total": 576, "fak": 539, "ratio": 93.6}, {"pol": "CNNAS", "vvd": "CUYP2634W", "total": 677, "fak": 391, "ratio": 57.8}, {"pol": "CNNGB", "vvd": "BZCF2627W", "total": 844, "fak": 650, "ratio": 77.0}, {"pol": "CNNGB", "vvd": "CSQC2630W", "total": 719, "fak": 627, "ratio": 87.2}, {"pol": "CNNGB", "vvd": "JRBM2629W", "total": 235, "fak": 141, "ratio": 60.0}, {"pol": "CNSHA", "vvd": "CUYP2634W", "total": 797, "fak": 729, "ratio": 91.5}, {"pol": "CNSHA", "vvd": "H8112631W", "total": 670, "fak": 425, "ratio": 63.4}, {"pol": "CNSHA", "vvd": "JRBM2629W", "total": 236, "fak": 111, "ratio": 47.0}, {"pol": "CNSHK", "vvd": "BZCF2627W", "total": 952, "fak": 944, "ratio": 99.2}, {"pol": "CNSHK", "vvd": "JRBM2629W", "total": 256, "fak": 172, "ratio": 67.2}, {"pol": "CNXMN", "vvd": "BZCF2627W", "total": 129, "fak": 51, "ratio": 39.5}, {"pol": "CNXMN", "vvd": "CSQC2630W", "total": 16, "fak": 16, "ratio": 100.0}, {"pol": "CNXMN", "vvd": "H8112631W", "total": 343, "fak": 148, "ratio": 43.1}, {"pol": "CNSWA", "vvd": "BZCF2627W", "total": 61, "fak": 61, "ratio": 100.0}], "top": [{"name": "CHINA UNITED LINES LTD", "total": 658, "fak": 520, "ratio": 79.0, "company": "CU"}, {"name": "United Ocean Internationa", "total": 415, "fak": 86, "ratio": 20.7, "company": "CU"}, {"name": "SINOTRANS CENTRAL CHINA C", "total": 354, "fak": 277, "ratio": 78.2, "company": "CU"}, {"name": "GUANGZHOU KD INTL LOG LTD", "total": 346, "fak": 299, "ratio": 86.4, "company": "CU"}, {"name": "HONHANN SUPPLY CHAIN CO.,", "total": 278, "fak": 238, "ratio": 85.6, "company": "UL"}, {"name": "Hainan Midea Internationa", "total": 267, "fak": 70, "ratio": 26.2, "company": "CU"}, {"name": "COSCO SHIPPING LOGISTICS ", "total": 257, "fak": 192, "ratio": 74.7, "company": "CU"}, {"name": "YQN South-Logistics (Shan", "total": 199, "fak": 141, "ratio": 70.9, "company": "CU"}, {"name": "SHENZHEN S&R INTERNATIONA", "total": 192, "fak": 185, "ratio": 96.4, "company": "UL"}, {"name": "WIDE-TRANS INTERNATIONAL ", "total": 185, "fak": 69, "ratio": 37.3, "company": "CU"}, {"name": "UNITED OCEAN INTERNATIONA", "total": 183, "fak": 26, "ratio": 14.2, "company": "UL"}, {"name": "GUANGZHOU FOCUS GLOBAL LO", "total": 179, "fak": 126, "ratio": 70.4, "company": "CU"}, {"name": "UNICORN SUPPLY CHAIN (SHE", "total": 171, "fak": 57, "ratio": 33.3, "company": "CU"}, {"name": "ONTOP LOGISTICS CO.,LTD", "total": 169, "fak": 169, "ratio": 100.0, "company": "UL"}, {"name": "Worldwide Logistics Co.,L", "total": 166, "fak": 60, "ratio": 36.1, "company": "CU"}], "types": [{"name": "FAK", "count": 136}, {"name": "部分FAK", "count": 69}, {"name": "Non-FAK", "count": 25}, {"name": "FAK价格未录入", "count": 16}], "total_teu": 9623, "total_fak": 6743, "total_cust": 246, "price": [{"vvd": "JRBM2629W", "etd": "2026-07-27", "total": 751, "oft40": 7772, "fak40": 7870, "diff40": -98, "diff40_pct": -1.2}, {"vvd": "BZCF2627W", "etd": "2026-07-30", "total": 4064, "oft40": 8256, "fak40": 8368, "diff40": -112, "diff40_pct": -1.3}, {"vvd": "CSQC2630W", "etd": "2026-08-06", "total": 2297, "oft40": 8652, "fak40": 8701, "diff40": -49, "diff40_pct": -0.6}, {"vvd": "H8112631W", "etd": "2026-08-07", "total": 1013, "oft40": 8505, "fak40": 8769, "diff40": -264, "diff40_pct": -3.0}, {"vvd": "CUYP2634W", "etd": "2026-08-22", "total": 1498, "oft40": 9134, "fak40": 9278, "diff40": -144, "diff40_pct": -1.6}]};
+
+new Chart(document.getElementById('priceChart'),{
+  type:'bar',
+  data:{
+    labels:data.price.map(function(p){return p.vvd+' ('+(p.etd||'-')+')'}),
+    datasets:[
+      {label:'40尺成交价',data:data.price.map(function(p){return p.oft40}),backgroundColor:'rgba(255,167,38,0.7)',borderColor:'#E65100',borderWidth:1,order:2},
+      {label:'40尺FAK价',data:data.price.map(function(p){return p.fak40}),type:'line',borderColor:'#1565C0',backgroundColor:'rgba(66,165,245,0.1)',borderWidth:3,pointRadius:0,pointHitRadius:10,fill:false,order:1,tension:0}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{tooltip:{callbacks:{label:function(ctx){var p=data.price[ctx.dataIndex];if(ctx.dataset.label==='40尺成交价')return '成交价:'+p.oft40+' FAK:'+p.fak40+' 差:'+(p.diff40>0?'+':'')+p.diff40+' ('+p.diff40_pct+'%)';return ctx.dataset.label+':'+ctx.parsed.y}}}},
+    scales:{y:{min:7500,max:9500,title:{display:true,text:'USD'}}}
+  }
+});
+
+const vvdFakPct = data.vvd.map(function(v){return Math.round(v.fak/v.total*1000)/10});
+const vvdNonfakPct = data.vvd.map(function(v){return Math.round(v.nonfak/v.total*1000)/10});
+const vvdUnrecPct = data.vvd.map(function(v){return Math.round(v.unrec/v.total*1000)/10});
+new Chart(document.getElementById('vvdChart'), {
+  type: 'bar',
+  data: {
+    labels: data.vvd.map(function(v){return v.vvd+' ('+v.total+'T)'}),
+    datasets: [
+      {label:'FAK%',data:vvdFakPct,backgroundColor:'#4CAF50'},
+      {label:'Non-FAK%',data:vvdNonfakPct,backgroundColor:'#f44336'},
+      {label:'未录入%',data:vvdUnrecPct,backgroundColor:'#9E9E9E'}
+    ]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,
+    plugins:{tooltip:{callbacks:{label:function(ctx){var v=data.vvd[ctx.dataIndex];var m={'FAK%':v.fak,'Non-FAK%':v.nonfak,'未录入%':v.unrec};return ctx.dataset.label+': '+ctx.parsed.y+'% ('+(m[ctx.dataset.label]||0)+'T)'}}}},
+    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,max:100,ticks:{callback:function(v){return v+'%'}}}}
+  }
+});
+
+new Chart(document.getElementById('typeChart'), {
+  type: 'doughnut',
+  data: {labels: data.types.map(function(t){return t.name}),datasets: [{data: data.types.map(function(t){return t.count}),backgroundColor:['#4CAF50','#FFF9C4','#f44336','#E0E0E0'],borderColor:['#388E3C','#FBC02D','#D32F2F','#9E9E9E'],borderWidth:1}]},
+  options: {responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+});
+
+new Chart(document.getElementById('polChart'), {
+  type: 'bar',
+  data: {
+    labels: data.pol.map(function(p){return p.pol}),
+    datasets: [
+      {label:'总TEU',data:data.pol.map(function(p){return p.total}),backgroundColor:'#42A5F5',yAxisID:'y',order:2},
+      {label:'FAK TEU',data:data.pol.map(function(p){return p.fak}),backgroundColor:'#66BB6A',yAxisID:'y',order:2},
+      {label:'FAK占比%',data:data.pol.map(function(p){return p.ratio}),type:'line',borderColor:'#FF9800',borderWidth:2,pointRadius:5,pointBackgroundColor:data.pol.map(function(p){return p.ratio>=60?'#4CAF50':p.ratio>=30?'#FF9800':'#f44336'}),yAxisID:'y1',order:1}
+    ]
+  },
+  options: {
+    responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},
+    scales:{y:{type:'linear',position:'left',title:{display:true,text:'TEU'},beginAtZero:true},y1:{type:'linear',position:'right',title:{display:true,text:'FAK占比%'},beginAtZero:true,max:100,ticks:{callback:function(v){return v+'%'}},grid:{drawOnChartArea:false}}}
+  }
+});
+</script>
+</body>
+</html>
