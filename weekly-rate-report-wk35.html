@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中联航运 · 周度运价汇报</title>
+<style>
+  :root{
+    --navy:#0f2f6b;
+    --blue:#1d5fc0;
+    --blue-light:#eaf1fb;
+    --ink:#1f2a3d;
+    --gray:#6b7a90;
+    --line:#e3e9f2;
+    --bg:#f4f6fa;
+    --card:#ffffff;
+    --up:#d93030;      /* 涨 / 高于基准 - 红 */
+    --down:#12a150;    /* 跌 / 低于基准 - 绿 */
+    --flat:#8a94a6;    /* 平 */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;
+    padding:24px 0 40px;
+  }
+  .page{max-width:1320px;margin:0 auto;padding:0 24px}
+
+  /* ===== 顶部 ===== */
+  .banner{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);
+    color:#fff;border-radius:14px;padding:26px 32px;
+    display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;
+    box-shadow:0 6px 18px rgba(15,47,107,.18);
+  }
+  .banner h1{font-size:24px;letter-spacing:1px;font-weight:700}
+  .banner .sub{margin-top:6px;font-size:13px;opacity:.85}
+  .banner .meta{text-align:right;font-size:13px;line-height:1.9}
+  .banner .meta b{font-size:17px}
+  .banner .badge-demo{
+    display:inline-block;background:rgba(255,255,255,.18);border:1px dashed rgba(255,255,255,.6);
+    padding:2px 10px;border-radius:20px;font-size:12px;margin-left:8px;vertical-align:2px;
+  }
+  .banner .badge-done{
+    display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.6);
+    padding:2px 10px;border-radius:20px;font-size:12px;margin-left:8px;vertical-align:2px;
+  }
+  .toolbar{display:flex;justify-content:flex-end;gap:8px;margin:14px 0 6px}
+  .btn-print{
+    background:#fff;border:1px solid var(--line);color:var(--navy);border-radius:8px;
+    padding:7px 16px;font-size:13px;cursor:pointer;
+  }
+  .btn-print:hover{background:var(--blue-light)}
+
+  /* ===== KPI 卡 ===== */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  .kpi{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;box-shadow:0 2px 8px rgba(31,42,61,.05);
+  }
+  .kpi .t{font-size:13px;color:var(--gray);margin-bottom:6px}
+  .kpi .v{font-size:26px;font-weight:700;color:var(--navy)}
+  .kpi .v small{font-size:13px;font-weight:400;color:var(--gray)}
+  .kpi .d{font-size:12.5px;margin-top:6px}
+
+  /* ===== 重点提炼条 ===== */
+  .keypts{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .kp{
+    flex:1;min-width:210px;background:#f4f7fc;border:1px solid #dbe6f5;border-left:4px solid var(--blue);
+    border-radius:8px;padding:10px 14px;
+  }
+  .kp.hot{border-left-color:#c0392b;background:#fdf3f2;border-color:#f2d4d0}
+  .kp.warm{border-left-color:#e2a83e;background:#fdf8ef;border-color:#f0e2c8}
+  .kp .kt{font-size:12px;color:var(--gray);margin-bottom:3px;font-weight:600}
+  .kp .kv{font-size:16px;font-weight:700;color:var(--navy)}
+  .kp .kv small{font-size:12px;font-weight:400;color:var(--gray)}
+  .kp .kd{font-size:12px;color:#37475e;margin-top:3px}
+  .kp .kd b{color:#c0392b}
+  /* 表内重点单元格 */
+  .hot-cell{color:#c0392b;font-weight:700}
+  .warm-cell{color:#b9770e;font-weight:700}
+
+  /* ===== 区块 ===== */
+  section{margin-top:26px}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .sec-head .no{
+    background:var(--navy);color:#fff;width:26px;height:26px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  }
+  .sec-head h2{font-size:18px;color:var(--navy)}
+  .sec-head .hint{font-size:12.5px;color:var(--gray)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px rgba(31,42,61,.05)}
+  .card h3{font-size:15px;color:var(--ink);margin-bottom:14px;padding-left:10px;border-left:4px solid var(--blue)}
+
+  /* ===== 表格 ===== */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{
+    background:var(--blue-light);color:var(--navy);text-align:left;font-weight:600;
+    padding:9px 12px;white-space:nowrap;border-bottom:2px solid #c9d8ef;
+  }
+  td{padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody tr:hover{background:#f8fafd}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  th.num{text-align:right}
+  .route{font-weight:600;color:var(--ink)}
+  .up{color:var(--up);font-weight:600}
+  .down{color:var(--down);font-weight:600}
+  .flat{color:var(--flat)}
+  .chip{display:inline-block;padding:1px 10px;border-radius:20px;font-size:12.5px;font-weight:600}
+  .chip.up{background:#fdeaea;color:var(--up)}
+  .chip.down{background:#e7f6ee;color:var(--down)}
+  .chip.flat{background:#eef0f4;color:var(--flat)}
+  .chip.pending{background:#fdf3e0;color:#b9770e}
+  .total-row{background:#eef3fb !important;font-weight:700}
+  .total-row td{color:var(--navy)}
+
+  /* ===== 布局 ===== */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+
+  /* ===== 客户反馈卡 ===== */
+  .fb{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+    box-shadow:0 2px 8px rgba(31,42,61,.05);
+  }
+  .fb .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .fb .route{font-size:14px}
+  .fb .txt{font-size:13px;color:var(--gray);min-height:52px}
+  .fb .adv{margin-top:10px;font-size:12.5px;color:var(--navy);background:var(--blue-light);border-radius:8px;padding:6px 10px}
+
+  /* ===== CSS 柱状图 ===== */
+  .bars{display:flex;flex-direction:column;gap:14px}
+  .bar-row{display:grid;grid-template-columns:150px 1fr 1fr;gap:10px;align-items:center}
+  .bar-row .lab{font-size:13px;color:var(--ink);font-weight:600;white-space:nowrap}
+  .bar-group{position:relative;height:46px}
+  .bar-track{
+    position:absolute;left:0;top:0;height:18px;border-radius:4px;
+    display:flex;align-items:center;justify-content:flex-end;padding-right:8px;
+    color:#fff;font-size:12px;font-weight:600;min-width:64px;
+  }
+  .bar-track.cul{top:0;background:linear-gradient(90deg,var(--blue),#3b7cd6)}
+  .bar-track.mkt{top:26px;background:#c3d3ec;color:var(--navy)}
+  .bar-legend{display:flex;gap:16px;margin-bottom:10px;font-size:12.5px;color:var(--gray)}
+  .bar-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+  /* ===== SVG 图 ===== */
+  .chart-box{width:100%;height:auto}
+  .chart-title{font-size:13px;color:var(--gray);margin-bottom:6px}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--gray);margin-bottom:8px}
+  .legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+
+  /* ===== 占位样式（预留） ===== */
+  .pending-box{
+    background:repeating-linear-gradient(45deg,#fdf6ec,#fdf6ec 12px,#f9efdd 12px,#f9efdd 24px);
+    border:1.5px dashed #d9a94e;border-radius:12px;padding:18px 20px;color:#8a6420;
+    font-size:13px;margin-top:14px;
+  }
+  .pending-box b{color:#6d4e12}
+
+  /* ===== 底部备注 ===== */
+  .notes{margin-top:26px;background:#fffbe9;border:1px solid #f0e3b8;border-radius:12px;padding:16px 20px;font-size:12.5px;color:#6d5f2e}
+  .notes b{color:#4a421f}
+  .notes ul{margin:6px 0 0 18px}
+  .footer{margin-top:22px;text-align:center;font-size:12px;color:var(--gray)}
+
+  /* ===== 打印 ===== */
+  @media print{
+    body{background:#fff;padding:0}
+    .btn-print{display:none}
+    .card,.kpi,.fb,.banner{box-shadow:none}
+    .page{max-width:100%}
+  }
+  @media (max-width:1100px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid2,.grid3{grid-template-columns:1fr}
+    .bar-row{grid-template-columns:120px 1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== 顶部标题区 ===================== -->
+  <div class="banner">
+    <div>
+      <h1>中联航运 · 周度运价汇报 <span class="badge-done">当周运价已填充</span></h1>
+      <div class="sub">当周运价：红海 / 中东两大专题 ｜ WK33-34 完船航次运价复盘</div>
+    </div>
+    <div class="meta">
+      汇报周次：<b>WK35（08-31 ~ 09-04）</b><br>
+      汇报人：市场部　｜　数据日期：2026-09-01（01.09.27 版）
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn-print" onclick="window.print()">🖨 打印 / 导出 PDF</button>
+  </div>
+
+  <!-- ===================== 本周重点速览 ===================== -->
+  <div class="keypts" style="margin-top:18px">
+    <div class="kp">
+      <div class="kt">红海 · 华南 ｜ 价差</div>
+      <div class="kv">+$500 <small>（+5.3%）</small></div>
+      <div class="kd">CUL $10,000 vs 市场 $9,500，高于市场均价；竞争报价最高 <b>$10,600</b>（CMA），仍有跟进空间</div>
+    </div>
+    <div class="kp hot">
+      <div class="kt">红海 · 马来西亚 ｜ 溢价最大</div>
+      <div class="kv">+$1,200 <small>（+17.6%）</small></div>
+      <div class="kd">CUL $8,000 vs 市场 $6,800，溢价最深装货港；下周市场预测 <b>+$200</b> 至 $7,000</div>
+    </div>
+    <div class="kp hot">
+      <div class="kt">中东 · 华东 / 马来西亚 ｜ 最强涨价信号</div>
+      <div class="kv">+$1,800 <small>（华东下周预测涨幅）</small></div>
+      <div class="kd">下周市场预测：华东升至 <b>$9,000</b>（+$1,800）、马来跳升至 <b>$7,700</b>（+$700）；华南 $9,300（+$700）</div>
+    </div>
+    <div class="kp warm">
+      <div class="kt">完船复盘 · WK33-34 ｜ 实收 vs 当时市场</div>
+      <div class="kv">−1.8% <small>（−$158）</small></div>
+      <div class="kd">实收 $8,476 vs 加权市场 $8,634，整体略低于市场成交</div>
+    </div>
+  </div>
+
+  <!-- ===================== 专题一：红海 R.SEA – SA JED ===================== -->
+  <section>
+    <div class="sec-head">
+      <span class="no">一</span>
+      <h2>红海专题 · R.SEA – SA JED</h2>
+      <span class="hint">装货港：华南 · 华东 · 泰国 · 马来西亚 ｜ 01.09.27 报告</span>
+    </div>
+
+    <div class="keypts" style="margin-bottom:16px">
+      <div class="kp">
+        <div class="kt">重点 ① 华南 / 华东：高于市场，旺季高位坚挺</div>
+        <div class="kv">$10,000 <small>40' · 华南溢价 +$500 / 华东 +$600</small></div>
+        <div class="kd">华南 +$500（+5.3%）、华东 +$600（+6.5%）；竞争报价 CMA <b>$10,600</b> / WHL·PIL $9,500；下周预测华南持平 $9,500、华东回落至 $9,000（−$200）</div>
+      </div>
+      <div class="kp hot">
+        <div class="kt">重点 ② 马来西亚：溢价最深</div>
+        <div class="kv">+$1,200 <small>（+17.6%）</small></div>
+        <div class="kd">CUL $8,000 vs 市场 $6,800，为红海侧溢价最深装货港；下周市场预测 <b>+$200</b> 至 $7,000</div>
+      </div>
+      <div class="kp warm">
+        <div class="kt">重点 ③ 泰国：溢价 $1,000</div>
+        <div class="kv">+$1,000 <small>（+14.3%）</small></div>
+        <div class="kd">CUL $8,000 vs 市场 $7,000，仅次于马来西亚；下周市场预测持平 $7,000</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>红海（R.SEA – SA JED）运价表</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>装货港</th>
+            <th class="num">CUL 20'</th>
+            <th class="num">CUL 40'</th>
+            <th class="num">市场 20'</th>
+            <th class="num">市场 40'</th>
+            <th class="num">价差 40'（CUL−市场）</th>
+            <th class="num">下周预测 20'</th>
+            <th class="num">下周预测 40'</th>
+            <th class="num">预测环比 20' / 40'</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="route">华南 South China</td>
+            <td class="num">$6,750</td><td class="num">$10,000</td>
+            <td class="num">$6,300</td><td class="num">$9,500</td>
+            <td class="num up">+$500（+5.3%）</td>
+            <td class="num">$6,300</td><td class="num">$9,500</td><td class="num flat">持平 / 持平</td>
+          </tr>
+          <tr>
+            <td class="route">华东 Central China</td>
+            <td class="num">$6,200</td><td class="num">$9,800</td>
+            <td class="num">$6,200</td><td class="num">$9,200</td>
+            <td class="num up">+$600（+6.5%）</td>
+            <td class="num">$6,000</td><td class="num">$9,000</td><td class="num down">−$200 / −$200</td>
+          </tr>
+          <tr>
+            <td class="route">泰国 Thailand</td>
+            <td class="num">$5,500</td><td class="num">$8,000</td>
+            <td class="num">$5,000</td><td class="num">$7,000</td>
+            <td class="num up">+$1,000（+14.3%）</td>
+            <td class="num">$5,000</td><td class="num">$7,000</td><td class="num flat">持平 / 持平</td>
+          </tr>
+          <tr>
+            <td class="route">马来西亚 Malaysia</td>
+            <td class="num">$5,200</td><td class="num">$8,000</td>
+            <td class="num">$4,500</td><td class="num">$6,800</td>
+            <td class="num up"><span class="hot-cell">+$1,200（+17.6%）</span></td>
+            <td class="num">$4,700</td><td class="num">$7,000</td><td class="num up"><span class="hot-cell">+$200 / +$200</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--gray);margin-top:10px">
+        注：市场价为 Daily Rate Reporting（01.09.27 版）CMA / PIL 等航商报价均值（C–D 列），CUL 为挂牌价（F–G 列）；下周预测为 WK36 市场预测值（K–L 列，20'/40'）。
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ===================== 专题二：中东 M.E.G – AE JEA ===================== -->
+  <section>
+    <div class="sec-head">
+      <span class="no">二</span>
+      <h2>中东专题 · M.E.G – AE JEA</h2>
+      <span class="hint">装货港：华南 · 华东 · 泰国 · 马来西亚 ｜ 01.09.27 报告</span>
+    </div>
+
+    <div class="keypts" style="margin-bottom:16px">
+      <div class="kp">
+        <div class="kt">重点 ① 华南 / 华东：全面高于市场，下周全线看涨</div>
+        <div class="kv">+$200~+$800 <small>40' · 高于市场</small></div>
+        <div class="kd">华南 +$200（+2.3%）、华东 +$800（+11.1%）；下周市场预测华南 <b>$9,300</b>（+$700）、华东 <b>$9,000</b>（+$1,800），全线看涨</div>
+      </div>
+      <div class="kp">
+        <div class="kt">重点 ② 泰国：溢价最深</div>
+        <div class="kv">+$1,800 <small>（+26.5%）</small></div>
+        <div class="kd">CUL $8,600 vs 市场 $6,800，中东侧溢价最深装货港；下周市场预测升至 <b>$7,500</b>（+$700），仍有收敛空间</div>
+      </div>
+      <div class="kp hot">
+        <div class="kt">重点 ③ 华东 / 马来西亚：下周最强涨价信号</div>
+        <div class="kv">+$1,800 <small>（华东 40' 预测涨幅）</small></div>
+        <div class="kd">华东下周预测 <b>$9,000</b>（+$1,800）为全线最强；马来 $7,000 与市场持平、下周预测跳升至 <b>$7,700</b>（+$700），建议关注舱位与客户沟通节奏</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>中东（M.E.G – AE JEA）运价表</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>装货港</th>
+            <th class="num">CUL 20'</th>
+            <th class="num">CUL 40'</th>
+            <th class="num">市场 20'</th>
+            <th class="num">市场 40'</th>
+            <th class="num">价差 40'（CUL−市场）</th>
+            <th class="num">下周预测 20'</th>
+            <th class="num">下周预测 40'</th>
+            <th class="num">预测环比 20' / 40'</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="route">华南 South China</td>
+            <td class="num">$7,800</td><td class="num">$8,800</td>
+            <td class="num">$7,600</td><td class="num">$8,600</td>
+            <td class="num up">+$200（+2.3%）</td>
+            <td class="num">$8,000</td><td class="num">$9,300</td><td class="num up"><span class="hot-cell">+$400 / +$700</span></td>
+          </tr>
+          <tr>
+            <td class="route">华东 Central China</td>
+            <td class="num">$7,000</td><td class="num">$8,000</td>
+            <td class="num">$6,300</td><td class="num">$7,200</td>
+            <td class="num up">+$800（+11.1%）</td>
+            <td class="num"><span class="hot-cell">$7,800</span></td><td class="num"><span class="hot-cell">$9,000</span></td><td class="num up"><span class="hot-cell">+$1,500 / +$1,800</span></td>
+          </tr>
+          <tr>
+            <td class="route">泰国 Thailand</td>
+            <td class="num">$7,050</td><td class="num">$8,600</td>
+            <td class="num">$5,400</td><td class="num">$6,800</td>
+            <td class="num up"><span class="hot-cell">+$1,800（+26.5%）</span></td>
+            <td class="num">$6,400</td><td class="num">$7,500</td><td class="num up">+$1,000 / +$700</td>
+          </tr>
+          <tr>
+            <td class="route">马来西亚 Malaysia</td>
+            <td class="num">$5,500</td><td class="num">$7,000</td>
+            <td class="num">$5,500</td><td class="num">$7,000</td>
+            <td class="num flat">持平</td>
+            <td class="num">$6,700</td><td class="num">$7,700</td><td class="num up">+$1,200 / +$700</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--gray);margin-top:10px">
+        注：市场价为 Daily Rate Reporting（01.09.27 版）航商报价均值；<b>泰国 CUL 高于市场 +$1,800（+26.5%）为中东侧溢价最深</b>；下周预测（K–L 列，20'/40'）中 <b>华东 $9,000（+$1,800）</b> 为全线最强涨价信号。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== 第三部分：WK33-34 完船航次复盘（真实数据） ===================== -->
+  <section>
+    <div class="sec-head">
+      <span class="no">三</span>
+      <h2>WK33-34 完船航次 · 运价复盘</h2>
+      <span class="hint">柱：FAK 占比 ｜ 线：FAK 挂牌价 / 当时市场价（40尺 SAJED）｜ 5 个完船 VVD</span>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>WK33-34 完船航次 · FAK 占比与运价对比</h3>
+      <div class="legend">
+        <span><span style="display:inline-block;width:12px;height:12px;background:#c9d9f0;border:1px solid #a9c2e4;border-radius:3px;margin-right:5px;vertical-align:-1px"></span>FAK 占比（柱，左轴）</span>
+        <span><span class="dot" style="background:#1d5fc0"></span>FAK 挂牌价 40'（线，右轴）</span>
+        <span><span class="dot" style="background:#e2a83e"></span>当时市场价 40'（线，右轴）</span>
+      </div>
+      <svg class="chart-box" viewBox="0 0 800 385" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="各航次FAK占比与FAK挂牌价及市场价对比">
+        <!-- 网格线：左轴 0-100% 对应右轴 $7,500-$9,500 -->
+        <g stroke="#e3e9f2" stroke-width="1">
+          <line x1="70" y1="50" x2="730" y2="50"/>
+          <line x1="70" y1="120" x2="730" y2="120"/>
+          <line x1="70" y1="190" x2="730" y2="190"/>
+          <line x1="70" y1="260" x2="730" y2="260"/>
+          <line x1="70" y1="330" x2="730" y2="330"/>
+        </g>
+        <g fill="#6b7a90" font-size="11" text-anchor="end">
+          <text x="62" y="38">FAK占比</text>
+          <text x="62" y="54">100%</text><text x="62" y="124">75%</text>
+          <text x="62" y="194">50%</text><text x="62" y="264">25%</text>
+          <text x="62" y="334">0%</text>
+        </g>
+        <g fill="#6b7a90" font-size="11" text-anchor="start">
+          <text x="738" y="38">USD/40'</text>
+          <text x="738" y="54">$9,500</text><text x="738" y="124">$9,000</text>
+          <text x="738" y="194">$8,500</text><text x="738" y="264">$8,000</text>
+          <text x="738" y="334">$7,500</text>
+        </g>
+        <!-- 柱：FAK 占比 -->
+        <g>
+          <rect x="112" y="163.7" width="56" height="166.3" fill="#c9d9f0" stroke="#a9c2e4"><title>JRBM2629W FAK占比 59.4%</title></rect>
+          <rect x="252" y="125.6" width="56" height="204.4" fill="#c9d9f0" stroke="#a9c2e4"><title>BZCF2627W FAK占比 73.0%</title></rect>
+          <rect x="392" y="130.4" width="56" height="199.6" fill="#c9d9f0" stroke="#a9c2e4"><title>CSQC2630W FAK占比 71.3%</title></rect>
+          <rect x="532" y="171.5" width="56" height="158.5" fill="#c9d9f0" stroke="#a9c2e4"><title>H8112631W FAK占比 56.6%</title></rect>
+          <rect x="672" y="120.6" width="56" height="209.4" fill="#c9d9f0" stroke="#a9c2e4"><title>CUYP2634W FAK占比 74.8%</title></rect>
+        </g>
+        <!-- 柱内占比标签 -->
+        <g fill="#0f2f6b" font-size="12" text-anchor="middle" font-weight="700">
+          <text x="140" y="180.7">59.4%</text><text x="280" y="142.6">73.0%</text>
+          <text x="420" y="147.4">71.3%</text><text x="560" y="188.5">56.6%</text>
+          <text x="700" y="137.6">74.8%</text>
+        </g>
+        <!-- 线1：FAK 挂牌价 -->
+        <polyline points="140,278.2 280,208.5 420,161.9 560,152.3 700,79.4" fill="none" stroke="#1d5fc0" stroke-width="2.5"/>
+        <g fill="#1d5fc0" stroke="#ffffff" stroke-width="1.5">
+          <circle cx="140" cy="278.2" r="4"/><circle cx="280" cy="208.5" r="4"/>
+          <circle cx="420" cy="161.9" r="4"/><circle cx="560" cy="152.3" r="4"/>
+          <circle cx="700" cy="79.4" r="4"/>
+        </g>
+        <!-- 线2：当时市场价 -->
+        <polyline points="140,154.9 280,174.9 420,194.9 560,152.5 700,146.5" fill="none" stroke="#e2a83e" stroke-width="2.5"/>
+        <g fill="#e2a83e" stroke="#ffffff" stroke-width="1.5">
+          <circle cx="140" cy="154.9" r="4"/><circle cx="280" cy="174.9" r="4"/>
+          <circle cx="420" cy="194.9" r="4"/><circle cx="560" cy="152.5" r="4"/>
+          <circle cx="700" cy="146.5" r="4"/>
+        </g>
+        <!-- 价格标签（白色描边保证可读） -->
+        <g fill="#1d5fc0" font-size="10.5" text-anchor="middle" font-weight="700" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">
+          <text x="140" y="269">7870</text><text x="280" y="199">8368</text>
+          <text x="433" y="158" text-anchor="start">8701</text><text x="560" y="143">8769</text>
+          <text x="700" y="70">9290</text>
+        </g>
+        <g fill="#8a5a10" font-size="10.5" text-anchor="middle" font-weight="700" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">
+          <text x="140" y="171">8751</text><text x="280" y="191">8608</text>
+          <text x="420" y="211">8465</text><text x="560" y="169">8768</text>
+          <text x="700" y="163">8811</text>
+        </g>
+        <!-- X轴标签 -->
+        <g fill="#1f2a3d" font-size="11.5" text-anchor="middle" font-weight="600">
+          <text x="140" y="352">JRBM2629W</text><text x="280" y="352">BZCF2627W</text>
+          <text x="420" y="352">CSQC2630W</text><text x="560" y="352">H8112631W</text>
+          <text x="700" y="352">CUYP2634W</text>
+        </g>
+        <g fill="#6b7a90" font-size="10" text-anchor="middle">
+          <text x="140" y="366">07-27</text><text x="280" y="366">07-30</text>
+          <text x="420" y="366">08-06</text><text x="560" y="366">08-07</text>
+          <text x="700" y="366">08-22</text>
+        </g>
+      </svg>
+      <p style="font-size:12px;color:var(--gray);margin-top:8px">
+        注：整体 FAK 履行占比 <b>70.1%</b>（TEU 加权）；FAK 挂牌价 / 当时市场价均为红海 SAJED 40 尺 TEU 加权口径。
+        当时市场价来源：CSQC / H811 用 07.08 报告 WK31 市场均价（同周可比）；JRBM / BZCF 因 7 月底无对应报告，以 WK31 近似；CUYP 用 21.08 报告 WK33（同周）。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== 备注 ===================== -->
+  <div class="notes">
+    <b>口径与来源说明：</b>
+    <ul>
+      <li>完船数据来源：<b>FAK PERCENT 分析\WK33-34\WK33_WK34_FAK分析_Shipper版_v4.xlsx</b>（含 CNQZH 补录），Shipper 维度，红海航线 5 个 VVD；</li>
+      <li>价格口径：40 尺加权均价（USD），与 WK33_WK34_FAK_Dashboard 保持一致；</li>
+      <li>当周运价数据来源：<b>Daily Rate Reporting.xlsx（01.09.27 版）</b>——列口径：C–D = 当周市场均价（CMA/PIL）、F–G = CUL 挂牌价、K–L = 下周（WK36）市场预测；</li>
+      <li>当周运价展示口径：<b>分「红海 SAJED」「中东 AEJEA」两大专题，按装货港（华南 / 华东 / 泰国 / 马来西亚）展示</b>；市场价为航商报价均值（C–D 列）、CUL 为挂牌价（F–G 列）、下周预测为 WK36 市场预测值（K–L 列）；</li>
+      <li>「当时市场价」口径：CSQC2630W / H8112631W 用 07.08 报告 WK31 市场均价（同周可比）；JRBM2629W / BZCF2627W 因 7 月底无对应报告，以 07.08 报告 WK31 市场均价近似；CUYP2634W 用 21.08 报告 WK33 市场均价（同周）；均为 TEU 加权计算；</li>
+      <li>运价单位：USD/20GP、USD/40GP（40尺价已含 20 尺折算，20尺按 ×2 折算口径）。</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    中联航运（CULINES）市场部 · 周度运价汇报 ｜ 内部资料，请勿外传
+  </div>
+</div>
+</body>
+</html>
