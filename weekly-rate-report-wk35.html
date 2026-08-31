@@ -14,10 +14,7 @@
     --line:#e3e9f2;
     --bg:#f4f6fa;
     --card:#ffffff;
-    --up:#d93030;      /* 涨 / 高于基准 - 红 */
-    --down:#12a150;    /* 跌 / 低于基准 - 绿 */
-    --flat:#8a94a6;    /* 平 */
-  }
+    --up:#d93030;          --down:#12a150;        --flat:#8a94a6;      }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
@@ -26,8 +23,7 @@
   }
   .page{max-width:1320px;margin:0 auto;padding:0 24px}
 
-  /* ===== 顶部 ===== */
-  .banner{
+    .banner{
     background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);
     color:#fff;border-radius:14px;padding:26px 32px;
     display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;
@@ -52,8 +48,7 @@
   }
   .btn-print:hover{background:var(--blue-light)}
 
-  /* ===== KPI 卡 ===== */
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
   .kpi{
     background:var(--card);border:1px solid var(--line);border-radius:12px;
     padding:16px 20px;box-shadow:0 2px 8px rgba(31,42,61,.05);
@@ -63,8 +58,7 @@
   .kpi .v small{font-size:13px;font-weight:400;color:var(--gray)}
   .kpi .d{font-size:12.5px;margin-top:6px}
 
-  /* ===== 重点提炼条 ===== */
-  .keypts{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .keypts{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
   .kp{
     flex:1;min-width:210px;background:#f4f7fc;border:1px solid #dbe6f5;border-left:4px solid var(--blue);
     border-radius:8px;padding:10px 14px;
@@ -76,12 +70,10 @@
   .kp .kv small{font-size:12px;font-weight:400;color:var(--gray)}
   .kp .kd{font-size:12px;color:#37475e;margin-top:3px}
   .kp .kd b{color:#c0392b}
-  /* 表内重点单元格 */
-  .hot-cell{color:#c0392b;font-weight:700}
+    .hot-cell{color:#c0392b;font-weight:700}
   .warm-cell{color:#b9770e;font-weight:700}
 
-  /* ===== 区块 ===== */
-  section{margin-top:26px}
+    section{margin-top:26px}
   .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
   .sec-head .no{
     background:var(--navy);color:#fff;width:26px;height:26px;border-radius:8px;
@@ -93,8 +85,7 @@
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px rgba(31,42,61,.05)}
   .card h3{font-size:15px;color:var(--ink);margin-bottom:14px;padding-left:10px;border-left:4px solid var(--blue)}
 
-  /* ===== 表格 ===== */
-  table{width:100%;border-collapse:collapse;font-size:13.5px}
+    table{width:100%;border-collapse:collapse;font-size:13.5px}
   th{
     background:var(--blue-light);color:var(--navy);text-align:left;font-weight:600;
     padding:9px 12px;white-space:nowrap;border-bottom:2px solid #c9d8ef;
@@ -115,12 +106,10 @@
   .total-row{background:#eef3fb !important;font-weight:700}
   .total-row td{color:var(--navy)}
 
-  /* ===== 布局 ===== */
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
 
-  /* ===== 客户反馈卡 ===== */
-  .fb{
+    .fb{
     background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
     box-shadow:0 2px 8px rgba(31,42,61,.05);
   }
@@ -129,8 +118,7 @@
   .fb .txt{font-size:13px;color:var(--gray);min-height:52px}
   .fb .adv{margin-top:10px;font-size:12.5px;color:var(--navy);background:var(--blue-light);border-radius:8px;padding:6px 10px}
 
-  /* ===== CSS 柱状图 ===== */
-  .bars{display:flex;flex-direction:column;gap:14px}
+    .bars{display:flex;flex-direction:column;gap:14px}
   .bar-row{display:grid;grid-template-columns:150px 1fr 1fr;gap:10px;align-items:center}
   .bar-row .lab{font-size:13px;color:var(--ink);font-weight:600;white-space:nowrap}
   .bar-group{position:relative;height:46px}
@@ -144,28 +132,24 @@
   .bar-legend{display:flex;gap:16px;margin-bottom:10px;font-size:12.5px;color:var(--gray)}
   .bar-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 
-  /* ===== SVG 图 ===== */
-  .chart-box{width:100%;height:auto}
+    .chart-box{width:100%;height:auto}
   .chart-title{font-size:13px;color:var(--gray);margin-bottom:6px}
   .legend{display:flex;gap:18px;font-size:12.5px;color:var(--gray);margin-bottom:8px}
   .legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 
-  /* ===== 占位样式（预留） ===== */
-  .pending-box{
+    .pending-box{
     background:repeating-linear-gradient(45deg,#fdf6ec,#fdf6ec 12px,#f9efdd 12px,#f9efdd 24px);
     border:1.5px dashed #d9a94e;border-radius:12px;padding:18px 20px;color:#8a6420;
     font-size:13px;margin-top:14px;
   }
   .pending-box b{color:#6d4e12}
 
-  /* ===== 底部备注 ===== */
-  .notes{margin-top:26px;background:#fffbe9;border:1px solid #f0e3b8;border-radius:12px;padding:16px 20px;font-size:12.5px;color:#6d5f2e}
+    .notes{margin-top:26px;background:#fffbe9;border:1px solid #f0e3b8;border-radius:12px;padding:16px 20px;font-size:12.5px;color:#6d5f2e}
   .notes b{color:#4a421f}
   .notes ul{margin:6px 0 0 18px}
   .footer{margin-top:22px;text-align:center;font-size:12px;color:var(--gray)}
 
-  /* ===== VVD 完船分析弹窗 ===== */
-  .vvd-hit{cursor:pointer}
+    .vvd-hit{cursor:pointer}
   .vvd-hit:hover{fill:rgba(29,95,192,.08)}
   .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,47,107,.55);display:none;align-items:flex-start;justify-content:center;z-index:1000;padding:40px 16px;overflow-y:auto}
   .modal-overlay.show{display:flex}
@@ -199,8 +183,7 @@
   .comment-strip.good{background:#edf7f0;border-left-color:#12a150;color:#14512e}
   .comment-strip.bad{background:#fdf0ef;border-left-color:#c0392b;color:#8e2a20}
 
-  /* ===== 打印 ===== */
-  @media print{
+    @media print{
     body{background:#fff;padding:0}
     .btn-print{display:none}
     .card,.kpi,.fb,.banner{box-shadow:none}
@@ -217,8 +200,7 @@
 <body>
 <div class="page">
 
-  <!-- ===================== 顶部标题区 ===================== -->
-  <div class="banner">
+    <div class="banner">
     <div>
       <h1>中联航运 · 周度运价汇报 <span class="badge-done">当周运价已填充</span></h1>
       <div class="sub">当周运价：红海 / 中东两大专题 ｜ WK33-34 完船航次运价复盘</div>
@@ -233,8 +215,7 @@
     <button class="btn-print" onclick="window.print()">🖨 打印 / 导出 PDF</button>
   </div>
 
-  <!-- ===================== 本周重点速览 ===================== -->
-  <div class="keypts" style="margin-top:18px">
+    <div class="keypts" style="margin-top:18px">
     <div class="kp">
       <div class="kt">红海 · 华南 ｜ 价差</div>
       <div class="kv">+$500 <small>（+5.3%）</small></div>
@@ -257,8 +238,7 @@
     </div>
   </div>
 
-  <!-- ===================== 专题一：红海 R.SEA – SA JED ===================== -->
-  <section>
+    <section>
     <div class="sec-head">
       <span class="no">一</span>
       <h2>红海专题 · R.SEA – SA JED</h2>
@@ -337,8 +317,7 @@
 
   </section>
 
-  <!-- ===================== 专题二：中东 M.E.G – AE JEA ===================== -->
-  <section>
+    <section>
     <div class="sec-head">
       <span class="no">二</span>
       <h2>中东专题 · M.E.G – AE JEA</h2>
@@ -416,8 +395,7 @@
     </div>
   </section>
 
-  <!-- ===================== 第三部分：WK33-34 完船航次复盘（真实数据） ===================== -->
-  <section>
+    <section>
     <div class="sec-head">
       <span class="no">三</span>
       <h2>WK33-34 完船航次 · 运价复盘</h2>
@@ -432,8 +410,7 @@
         <span><span class="dot" style="background:#e2a83e"></span>当时市场价 40'（线，右轴）</span>
       </div>
       <svg class="chart-box" viewBox="0 0 800 385" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="各航次FAK占比与FAK挂牌价及市场价对比">
-        <!-- 网格线：左轴 0-100% 对应右轴 $7,500-$9,500 -->
-        <g stroke="#e3e9f2" stroke-width="1">
+                <g stroke="#e3e9f2" stroke-width="1">
           <line x1="70" y1="50" x2="730" y2="50"/>
           <line x1="70" y1="120" x2="730" y2="120"/>
           <line x1="70" y1="190" x2="730" y2="190"/>
@@ -452,36 +429,31 @@
           <text x="738" y="194">$8,500</text><text x="738" y="264">$8,000</text>
           <text x="738" y="334">$7,500</text>
         </g>
-        <!-- 柱：FAK 占比 -->
-        <g>
+                <g>
           <rect x="112" y="163.7" width="56" height="166.3" fill="#c9d9f0" stroke="#a9c2e4"><title>JRBM2629W FAK占比 59.4%</title></rect>
           <rect x="252" y="125.6" width="56" height="204.4" fill="#c9d9f0" stroke="#a9c2e4"><title>BZCF2627W FAK占比 73.0%</title></rect>
           <rect x="392" y="130.4" width="56" height="199.6" fill="#c9d9f0" stroke="#a9c2e4"><title>CSQC2630W FAK占比 71.3%</title></rect>
           <rect x="532" y="171.5" width="56" height="158.5" fill="#c9d9f0" stroke="#a9c2e4"><title>H8112631W FAK占比 56.6%</title></rect>
           <rect x="672" y="120.6" width="56" height="209.4" fill="#c9d9f0" stroke="#a9c2e4"><title>CUYP2634W FAK占比 74.8%</title></rect>
         </g>
-        <!-- 柱内占比标签 -->
-        <g fill="#0f2f6b" font-size="12" text-anchor="middle" font-weight="700">
+                <g fill="#0f2f6b" font-size="12" text-anchor="middle" font-weight="700">
           <text x="140" y="180.7">59.4%</text><text x="280" y="142.6">73.0%</text>
           <text x="420" y="147.4">71.3%</text><text x="560" y="188.5">56.6%</text>
           <text x="700" y="137.6">74.8%</text>
         </g>
-        <!-- 线1：FAK 挂牌价 -->
-        <polyline points="140,278.2 280,208.5 420,161.9 560,152.3 700,79.4" fill="none" stroke="#1d5fc0" stroke-width="2.5"/>
+                <polyline points="140,278.2 280,208.5 420,161.9 560,152.3 700,79.4" fill="none" stroke="#1d5fc0" stroke-width="2.5"/>
         <g fill="#1d5fc0" stroke="#ffffff" stroke-width="1.5">
           <circle cx="140" cy="278.2" r="4"/><circle cx="280" cy="208.5" r="4"/>
           <circle cx="420" cy="161.9" r="4"/><circle cx="560" cy="152.3" r="4"/>
           <circle cx="700" cy="79.4" r="4"/>
         </g>
-        <!-- 线2：当时市场价 -->
-        <polyline points="140,154.9 280,174.9 420,194.9 560,152.5 700,146.5" fill="none" stroke="#e2a83e" stroke-width="2.5"/>
+                <polyline points="140,154.9 280,174.9 420,194.9 560,152.5 700,146.5" fill="none" stroke="#e2a83e" stroke-width="2.5"/>
         <g fill="#e2a83e" stroke="#ffffff" stroke-width="1.5">
           <circle cx="140" cy="154.9" r="4"/><circle cx="280" cy="174.9" r="4"/>
           <circle cx="420" cy="194.9" r="4"/><circle cx="560" cy="152.5" r="4"/>
           <circle cx="700" cy="146.5" r="4"/>
         </g>
-        <!-- 价格标签（白色描边保证可读） -->
-        <g fill="#1d5fc0" font-size="10.5" text-anchor="middle" font-weight="700" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">
+                <g fill="#1d5fc0" font-size="10.5" text-anchor="middle" font-weight="700" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">
           <text x="140" y="269">7870</text><text x="280" y="199">8368</text>
           <text x="433" y="158" text-anchor="start">8701</text><text x="560" y="143">8769</text>
           <text x="700" y="70">9290</text>
@@ -491,8 +463,7 @@
           <text x="420" y="211">8465</text><text x="560" y="169">8768</text>
           <text x="700" y="163">8811</text>
         </g>
-        <!-- X轴标签 -->
-        <g fill="#1f2a3d" font-size="11.5" text-anchor="middle" font-weight="600">
+                <g fill="#1f2a3d" font-size="11.5" text-anchor="middle" font-weight="600">
           <text x="140" y="352">JRBM2629W</text><text x="280" y="352">BZCF2627W</text>
           <text x="420" y="352">CSQC2630W</text><text x="560" y="352">H8112631W</text>
           <text x="700" y="352">CUYP2634W</text>
@@ -502,8 +473,7 @@
           <text x="420" y="366">08-06</text><text x="560" y="366">08-07</text>
           <text x="700" y="366">08-22</text>
         </g>
-        <!-- 点击热区：弹出该航次完船分析 -->
-        <g fill="transparent" pointer-events="all">
+                <g fill="transparent" pointer-events="all">
           <rect class="vvd-hit" x="108" y="42" width="64" height="316" data-vvd="JRBM2629W"><title>点击查看 JRBM2629W 完船分析</title></rect>
           <rect class="vvd-hit" x="248" y="42" width="64" height="316" data-vvd="BZCF2627W"><title>点击查看 BZCF2627W 完船分析</title></rect>
           <rect class="vvd-hit" x="388" y="42" width="64" height="316" data-vvd="CSQC2630W"><title>点击查看 CSQC2630W 完船分析</title></rect>
@@ -518,8 +488,7 @@
     </div>
   </section>
 
-  <!-- ===================== 备注 ===================== -->
-  <div class="notes">
+    <div class="notes">
     <b>口径与来源说明：</b>
     <ul>
       <li>完船数据来源：<b>FAK PERCENT 分析\WK33-34\WK33_WK34_FAK分析_Shipper版_v4.xlsx</b>（含 CNQZH 补录），Shipper 维度，红海航线 5 个 VVD；</li>
@@ -531,8 +500,7 @@
     </ul>
   </div>
 
-  <!-- VVD 完船分析弹窗 -->
-  <div class="modal-overlay" id="vvdModal" onclick="if(event.target===this)closeVvdModal()">
+    <div class="modal-overlay" id="vvdModal" onclick="if(event.target===this)closeVvdModal()">
     <div class="modal-box">
       <button class="modal-close" onclick="closeVvdModal()" title="关闭">×</button>
       <div id="modalBody"></div>
@@ -545,7 +513,6 @@
 </div>
 
 <script>
-// ===== VVD 完船分析弹窗逻辑（数据同 WK33_WK34_FAK_Dashboard）=====
 var VVD_DATA = {
   "vvd": [
     {"vvd":"JRBM2629W","total":751,"fak":446,"nonfak":305,"unrec":0,"ratio":59.4},
@@ -602,12 +569,10 @@ function vvdModalHtml(vvd){
     +metric("FAK TEU",fmtN(v.fak),"green")
     +metric("FAK占比",v.ratio+"%",v.ratio>=80?"green":(v.ratio>=60?"":"red"))
     +metric("未录入",v.unrec>0?fmtN(v.unrec):"-",v.unrec>0?"orange":"");
-  // FAK占比对比条（含整体均值线）
   var ratioBar='<div class="mbar-row"><span class="mlabel">FAK占比</span>'
     +'<div class="mbar-track"><div class="mbar-fill" style="width:'+Math.min(100,v.ratio)+'%;background:'+heatBg2(v.ratio)+'"></div>'
     +'<div class="mbar-marker" style="left:'+GLOBAL_RATIO+'%"><span class="mk-label">均值'+GLOBAL_RATIO.toFixed(1)+'%</span></div></div>'
     +'<span class="mbar-val">'+v.ratio+'%</span></div>';
-  // 价格对比条（成交价 / FAK挂牌价 / 当时市场价）
   var priceBar="";
   if(pr){
     var P0=7000,P1=9500;
@@ -628,12 +593,10 @@ function vvdModalHtml(vvd){
       +'<span class="mbar-val">$'+fmtN(mkt)+'</span></div>'):"")
       +'<div class="gap-note '+gapCls+'">'+(pr.diff40<0?"▼":"▲")+' '+gapTxt+'</div>'+mktNote;
   }
-  // 口岸明细（按占比降序）
   var portRows="";
   for(var i=pvs.length-1;i>=0;i--){var p=pvs[i];
     portRows+='<tr><td style="text-align:left"><strong>'+POL_NAME[p.pol]+'</strong> ('+p.pol+')</td><td>'+fmtN(p.total)+'</td><td>'+fmtN(p.fak)+'</td>'
       +'<td style="background:'+heatBg2(p.ratio)+';color:#fff;font-weight:600">'+p.ratio+'%</td></tr>';}
-  // 点评短句
   var cmt,cmtCls;
   if(v.ratio>=80){cmt="FAK 履行优秀，建议推广该航次经验。";cmtCls="good";}
   else if(v.ratio>=60){cmt="整体达标，重点推动 Non-FAK 货量向 FAK 转化。";cmtCls="";}
