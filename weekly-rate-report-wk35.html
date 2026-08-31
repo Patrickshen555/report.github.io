@@ -164,12 +164,48 @@
   .notes ul{margin:6px 0 0 18px}
   .footer{margin-top:22px;text-align:center;font-size:12px;color:var(--gray)}
 
+  /* ===== VVD 完船分析弹窗 ===== */
+  .vvd-hit{cursor:pointer}
+  .vvd-hit:hover{fill:rgba(29,95,192,.08)}
+  .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,47,107,.55);display:none;align-items:flex-start;justify-content:center;z-index:1000;padding:40px 16px;overflow-y:auto}
+  .modal-overlay.show{display:flex}
+  .modal-box{background:#fff;border-radius:12px;max-width:900px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.35);padding:26px 34px;position:relative;margin:auto}
+  .modal-close{position:absolute;top:10px;right:14px;background:#c0392b;color:#fff;border:none;border-radius:50%;width:30px;height:30px;font-size:18px;cursor:pointer;line-height:1}
+  .modal-title{font-size:19px;color:var(--navy);font-weight:700;margin-bottom:2px}
+  .modal-sub{font-size:12px;color:var(--gray);margin-bottom:14px}
+  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+  .metric{background:#f4f7fc;border-radius:8px;padding:10px 12px;border-left:3px solid var(--blue)}
+  .metric .m-label{font-size:11px;color:var(--gray)}
+  .metric .m-val{font-size:17px;font-weight:700;color:var(--navy);margin-top:2px}
+  .metric.green{border-left-color:#12a150}.metric.green .m-val{color:#12a150}
+  .metric.orange{border-left-color:#e2a83e}.metric.orange .m-val{color:#b97613}
+  .metric.red{border-left-color:#c0392b}.metric.red .m-val{color:#c0392b}
+  .bar-compare{background:#f8fafd;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:12px}
+  .mbar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px}
+  .mbar-row:last-child{margin-bottom:0}
+  .mlabel{width:96px;text-align:right;color:var(--gray);flex-shrink:0}
+  .mbar-track{flex:1;height:15px;background:#eef1f5;border-radius:8px;position:relative}
+  .mbar-fill{height:100%;border-radius:8px;background:#66BB6A}
+  .mbar-fill.mprice{background:#e2a83e}
+  .mbar-fill.mprice.fak{background:#42A5F5}
+  .mbar-fill.mprice.mkt{background:#e2a83e;opacity:.65}
+  .mbar-marker{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--navy);z-index:2}
+  .mbar-marker .mk-label{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--navy);white-space:nowrap}
+  .mbar-val{width:66px;font-weight:700;color:var(--ink);flex-shrink:0;text-align:right}
+  .gap-note{font-size:11.5px;margin:4px 0 0 104px;font-weight:600}
+  .gap-note.bad{color:#c0392b}.gap-note.good{color:#12a150}
+  .modal-box h4{color:var(--navy);margin:14px 0 8px;font-size:13px}
+  .comment-strip{background:#fdf8ef;border-left:4px solid #e2a83e;padding:9px 12px;border-radius:0 8px 8px 0;font-size:12px;margin-top:12px;line-height:1.6}
+  .comment-strip.good{background:#edf7f0;border-left-color:#12a150;color:#14512e}
+  .comment-strip.bad{background:#fdf0ef;border-left-color:#c0392b;color:#8e2a20}
+
   /* ===== 打印 ===== */
   @media print{
     body{background:#fff;padding:0}
     .btn-print{display:none}
     .card,.kpi,.fb,.banner{box-shadow:none}
     .page{max-width:100%}
+    .modal-overlay{display:none!important}
   }
   @media (max-width:1100px){
     .kpis{grid-template-columns:repeat(2,1fr)}
@@ -385,7 +421,7 @@
     <div class="sec-head">
       <span class="no">三</span>
       <h2>WK33-34 完船航次 · 运价复盘</h2>
-      <span class="hint">柱：FAK 占比 ｜ 线：FAK 挂牌价 / 当时市场价（40尺 SAJED）｜ 5 个完船 VVD</span>
+      <span class="hint">柱：FAK 占比 ｜ 线：FAK 挂牌价 / 当时市场价（40尺 SAJED）｜ 💡 点击航次可查看完船情况分析</span>
     </div>
 
     <div class="card" style="margin-top:0">
@@ -466,6 +502,14 @@
           <text x="420" y="366">08-06</text><text x="560" y="366">08-07</text>
           <text x="700" y="366">08-22</text>
         </g>
+        <!-- 点击热区：弹出该航次完船分析 -->
+        <g fill="transparent" pointer-events="all">
+          <rect class="vvd-hit" x="108" y="42" width="64" height="316" data-vvd="JRBM2629W"><title>点击查看 JRBM2629W 完船分析</title></rect>
+          <rect class="vvd-hit" x="248" y="42" width="64" height="316" data-vvd="BZCF2627W"><title>点击查看 BZCF2627W 完船分析</title></rect>
+          <rect class="vvd-hit" x="388" y="42" width="64" height="316" data-vvd="CSQC2630W"><title>点击查看 CSQC2630W 完船分析</title></rect>
+          <rect class="vvd-hit" x="528" y="42" width="64" height="316" data-vvd="H8112631W"><title>点击查看 H8112631W 完船分析</title></rect>
+          <rect class="vvd-hit" x="668" y="42" width="64" height="316" data-vvd="CUYP2634W"><title>点击查看 CUYP2634W 完船分析</title></rect>
+        </g>
       </svg>
       <p style="font-size:12px;color:var(--gray);margin-top:8px">
         注：整体 FAK 履行占比 <b>70.1%</b>（TEU 加权）；FAK 挂牌价 / 当时市场价均为红海 SAJED 40 尺 TEU 加权口径。
@@ -487,9 +531,134 @@
     </ul>
   </div>
 
+  <!-- VVD 完船分析弹窗 -->
+  <div class="modal-overlay" id="vvdModal" onclick="if(event.target===this)closeVvdModal()">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeVvdModal()" title="关闭">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
   <div class="footer">
     中联航运（CULINES）市场部 · 周度运价汇报 ｜ 内部资料，请勿外传
   </div>
 </div>
+
+<script>
+// ===== VVD 完船分析弹窗逻辑（数据同 WK33_WK34_FAK_Dashboard）=====
+var VVD_DATA = {
+  "vvd": [
+    {"vvd":"JRBM2629W","total":751,"fak":446,"nonfak":305,"unrec":0,"ratio":59.4},
+    {"vvd":"BZCF2627W","total":4064,"fak":2967,"nonfak":940,"unrec":157,"ratio":73.0},
+    {"vvd":"CSQC2630W","total":2297,"fak":1637,"nonfak":660,"unrec":0,"ratio":71.3},
+    {"vvd":"H8112631W","total":1013,"fak":573,"nonfak":440,"unrec":0,"ratio":56.6},
+    {"vvd":"CUYP2634W","total":1498,"fak":1120,"nonfak":378,"unrec":0,"ratio":74.8}
+  ],
+  "price": [
+    {"vvd":"JRBM2629W","etd":"2026-07-27","oft40":7772,"fak40":7870,"diff40":-98,"diff40_pct":-1.2},
+    {"vvd":"BZCF2627W","etd":"2026-07-30","oft40":8256,"fak40":8368,"diff40":-112,"diff40_pct":-1.3},
+    {"vvd":"CSQC2630W","etd":"2026-08-06","oft40":8652,"fak40":8701,"diff40":-49,"diff40_pct":-0.6},
+    {"vvd":"H8112631W","etd":"2026-08-07","oft40":8505,"fak40":8769,"diff40":-264,"diff40_pct":-3.0},
+    {"vvd":"CUYP2634W","etd":"2026-08-22","oft40":9134,"fak40":9290,"diff40":-156,"diff40_pct":-1.7}
+  ],
+  "mkt": {"JRBM2629W":8751,"BZCF2627W":8608,"CSQC2630W":8465,"H8112631W":8768,"CUYP2634W":8811},
+  "pv": [
+    {"pol":"CNTAO","vvd":"BZCF2627W","total":1150,"fak":767,"ratio":66.7},
+    {"pol":"CNTAO","vvd":"CSQC2630W","total":986,"fak":455,"ratio":46.1},
+    {"pol":"CNNAS","vvd":"BZCF2627W","total":771,"fak":494,"ratio":64.1},
+    {"pol":"CNNAS","vvd":"CSQC2630W","total":576,"fak":539,"ratio":93.6},
+    {"pol":"CNNAS","vvd":"CUYP2634W","total":677,"fak":391,"ratio":57.8},
+    {"pol":"CNNGB","vvd":"BZCF2627W","total":844,"fak":650,"ratio":77.0},
+    {"pol":"CNNGB","vvd":"CSQC2630W","total":719,"fak":627,"ratio":87.2},
+    {"pol":"CNNGB","vvd":"JRBM2629W","total":235,"fak":141,"ratio":60.0},
+    {"pol":"CNSHA","vvd":"CUYP2634W","total":797,"fak":729,"ratio":91.5},
+    {"pol":"CNSHA","vvd":"H8112631W","total":670,"fak":425,"ratio":63.4},
+    {"pol":"CNSHA","vvd":"JRBM2629W","total":236,"fak":111,"ratio":47.0},
+    {"pol":"CNSHK","vvd":"BZCF2627W","total":952,"fak":944,"ratio":99.2},
+    {"pol":"CNSHK","vvd":"JRBM2629W","total":256,"fak":172,"ratio":67.2},
+    {"pol":"CNXMN","vvd":"BZCF2627W","total":129,"fak":51,"ratio":39.5},
+    {"pol":"CNXMN","vvd":"CSQC2630W","total":16,"fak":16,"ratio":100.0},
+    {"pol":"CNXMN","vvd":"H8112631W","total":343,"fak":148,"ratio":43.1},
+    {"pol":"CNSWA","vvd":"BZCF2627W","total":61,"fak":61,"ratio":100.0},
+    {"pol":"CNQZH","vvd":"CUYP2634W","total":24,"fak":0,"ratio":0.0}
+  ],
+  "total_teu": 9623, "total_fak": 6743
+};
+var POL_NAME={"CNTAO":"青岛","CNNAS":"南沙","CNNGB":"宁波","CNSHA":"上海","CNSHK":"蛇口","CNXMN":"厦门","CNSWA":"海口","CNQZH":"钦州"};
+var GLOBAL_RATIO=VVD_DATA.total_fak/VVD_DATA.total_teu*100;
+function fmtN(n){return (n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");}
+function heatBg2(r){return r>=80?"#2E7D32":r>=60?"#66BB6A":r>=40?"#FFA726":r>=20?"#FF7043":"#f44336";}
+function getVvd(vvd){for(var i=0;i<VVD_DATA.vvd.length;i++){if(VVD_DATA.vvd[i].vvd===vvd)return VVD_DATA.vvd[i];}return null;}
+function getPrice(vvd){for(var i=0;i<VVD_DATA.price.length;i++){if(VVD_DATA.price[i].vvd===vvd)return VVD_DATA.price[i];}return null;}
+function vvdModalHtml(vvd){
+  var v=getVvd(vvd);if(!v)return "<p>未找到该航次数据</p>";
+  var pr=getPrice(vvd);
+  var mkt=VVD_DATA.mkt[vvd];
+  var pvs=[];for(var i=0;i<VVD_DATA.pv.length;i++){if(VVD_DATA.pv[i].vvd===vvd)pvs.push(VVD_DATA.pv[i]);}
+  pvs.sort(function(a,b){return a.ratio-b.ratio;});
+  var worst=pvs[0];
+  var metric=function(label,val,cls){return '<div class="metric '+cls+'"><div class="m-label">'+label+'</div><div class="m-val">'+val+'</div></div>';};
+  var metrics=metric("总TEU",fmtN(v.total),"")
+    +metric("FAK TEU",fmtN(v.fak),"green")
+    +metric("FAK占比",v.ratio+"%",v.ratio>=80?"green":(v.ratio>=60?"":"red"))
+    +metric("未录入",v.unrec>0?fmtN(v.unrec):"-",v.unrec>0?"orange":"");
+  // FAK占比对比条（含整体均值线）
+  var ratioBar='<div class="mbar-row"><span class="mlabel">FAK占比</span>'
+    +'<div class="mbar-track"><div class="mbar-fill" style="width:'+Math.min(100,v.ratio)+'%;background:'+heatBg2(v.ratio)+'"></div>'
+    +'<div class="mbar-marker" style="left:'+GLOBAL_RATIO+'%"><span class="mk-label">均值'+GLOBAL_RATIO.toFixed(1)+'%</span></div></div>'
+    +'<span class="mbar-val">'+v.ratio+'%</span></div>';
+  // 价格对比条（成交价 / FAK挂牌价 / 当时市场价）
+  var priceBar="";
+  if(pr){
+    var P0=7000,P1=9500;
+    var w=function(x){return Math.max(4,Math.min(100,(x-P0)/(P1-P0)*100));};
+    var gapCls=pr.diff40<0?"bad":"good";
+    var gapTxt=pr.diff40<0?("成交价较FAK挂牌价低 $"+Math.abs(pr.diff40)+"（"+pr.diff40_pct+"%）")
+                         :("成交价较FAK挂牌价高 $"+pr.diff40+"（+"+pr.diff40_pct+"%）");
+    var mktDiff=mkt?pr.oft40-mkt:null;
+    var mktNote=mkt?('<div class="gap-note '+(mktDiff<0?"bad":"good")+'">'+(mktDiff<0?"▼":"▲")+' 实收较当时市场价 '+(mktDiff<0?"低":"高")+' $'+Math.abs(mktDiff)+'（'+(mktDiff>0?"+":"")+(Math.round(mktDiff/mkt*1000)/10)+'%）</div>'):"";
+    priceBar='<div class="mbar-row"><span class="mlabel">40尺成交价</span>'
+      +'<div class="mbar-track"><div class="mbar-fill mprice" style="width:'+w(pr.oft40)+'%"></div></div>'
+      +'<span class="mbar-val">$'+fmtN(pr.oft40)+'</span></div>'
+      +'<div class="mbar-row"><span class="mlabel">40尺FAK挂牌价</span>'
+      +'<div class="mbar-track"><div class="mbar-fill mprice fak" style="width:'+w(pr.fak40)+'%"></div></div>'
+      +'<span class="mbar-val">$'+fmtN(pr.fak40)+'</span></div>'
+      +(mkt?('<div class="mbar-row"><span class="mlabel">40尺当时市场价</span>'
+      +'<div class="mbar-track"><div class="mbar-fill mprice mkt" style="width:'+w(mkt)+'%"></div></div>'
+      +'<span class="mbar-val">$'+fmtN(mkt)+'</span></div>'):"")
+      +'<div class="gap-note '+gapCls+'">'+(pr.diff40<0?"▼":"▲")+' '+gapTxt+'</div>'+mktNote;
+  }
+  // 口岸明细（按占比降序）
+  var portRows="";
+  for(var i=pvs.length-1;i>=0;i--){var p=pvs[i];
+    portRows+='<tr><td style="text-align:left"><strong>'+POL_NAME[p.pol]+'</strong> ('+p.pol+')</td><td>'+fmtN(p.total)+'</td><td>'+fmtN(p.fak)+'</td>'
+      +'<td style="background:'+heatBg2(p.ratio)+';color:#fff;font-weight:600">'+p.ratio+'%</td></tr>';}
+  // 点评短句
+  var cmt,cmtCls;
+  if(v.ratio>=80){cmt="FAK 履行优秀，建议推广该航次经验。";cmtCls="good";}
+  else if(v.ratio>=60){cmt="整体达标，重点推动 Non-FAK 货量向 FAK 转化。";cmtCls="";}
+  else {cmt="履行率偏低，重点复盘 "+POL_NAME[worst.pol]+"（"+worst.ratio+"%）。";cmtCls="bad";}
+  var tags=[];
+  if(pr&&pr.diff40<0)tags.push("成交价低于FAK挂牌价，溢价未回收");
+  if(v.unrec>0)tags.push("未录入 "+v.unrec+"T，需补录");
+  if(tags.length)cmt+=" | "+tags.join(" | ");
+  var html='<div class="modal-title">'+vvd+' 完船情况分析</div>'
+    +'<div class="modal-sub">ETD '+(pr?(pr.etd||"-"):"-")+' | 红海航线 | Shipper维度</div>'
+    +'<div class="metric-grid">'+metrics+'</div>'
+    +'<div class="bar-compare">'+ratioBar+priceBar+'</div>'
+    +'<h4>口岸装货明细</h4>'
+    +'<table><thead><tr><th>口岸</th><th>总TEU</th><th>FAK TEU</th><th>FAK占比</th></tr></thead><tbody>'+portRows+'</tbody></table>'
+    +'<div class="comment-strip '+cmtCls+'"><b>点评：</b>'+cmt+'</div>'
+    +'<div style="font-size:11px;color:#999;margin-top:10px">数据同 WK33_WK34_FAK_Dashboard；当时市场价为 Daily Rate Reporting 同周 / 近似口径（详见页脚备注）。</div>';
+  return html;
+}
+function openVvdModal(vvd){document.getElementById("modalBody").innerHTML=vvdModalHtml(vvd);document.getElementById("vvdModal").classList.add("show");}
+function closeVvdModal(){document.getElementById("vvdModal").classList.remove("show");}
+document.addEventListener("click",function(e){
+  var t=e.target.closest?e.target.closest(".vvd-hit"):null;
+  if(t)openVvdModal(t.getAttribute("data-vvd"));
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeVvdModal();});
+</script>
 </body>
 </html>
