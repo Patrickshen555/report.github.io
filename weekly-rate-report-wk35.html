@@ -14,7 +14,7 @@
     --line:#e3e9f2;
     --bg:#f4f6fa;
     --card:#ffffff;
-    --up:#d93030;          --down:#12a150;        --flat:#8a94a6;      }
+    --up:var(--ink);        --down:#d93030;        --flat:var(--ink);    }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
@@ -70,7 +70,7 @@
   .kp .kv small{font-size:12px;font-weight:400;color:var(--gray)}
   .kp .kd{font-size:12px;color:#37475e;margin-top:3px}
   .kp .kd b{color:#c0392b}
-    .hot-cell{color:#c0392b;font-weight:700}
+    .hot-cell{color:var(--ink);font-weight:700;background:#fdeaea !important}
   .warm-cell{color:#b9770e;font-weight:700}
 
     section{margin-top:26px}
@@ -99,8 +99,8 @@
   .down{color:var(--down);font-weight:600}
   .flat{color:var(--flat)}
   .chip{display:inline-block;padding:1px 10px;border-radius:20px;font-size:12.5px;font-weight:600}
-  .chip.up{background:#fdeaea;color:var(--up)}
-  .chip.down{background:#e7f6ee;color:var(--down)}
+  .chip.up{background:#eef0f4;color:var(--up)}
+  .chip.down{background:#fdeaea;color:var(--down)}
   .chip.flat{background:#eef0f4;color:var(--flat)}
   .chip.pending{background:#fdf3e0;color:#b9770e}
   .total-row{background:#eef3fb !important;font-weight:700}
