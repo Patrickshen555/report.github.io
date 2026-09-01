@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MKT Report (WK31-34)</title>
+<style>
+  :root{
+    --navy:#0f2f6b;
+    --blue:#1d5fc0;
+    --blue-light:#eaf1fb;
+    --ink:#1f2a3d;
+    --gray:#6b7a90;
+    --line:#e3e9f2;
+    --bg:#f4f6fa;
+    --card:#ffffff;
+    --down:#d93030;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;
+    padding:24px 0 40px;
+  }
+  .page{max-width:1320px;margin:0 auto;padding:0 24px}
+  .banner{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);
+    color:#fff;border-radius:14px;padding:26px 32px;
+    display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;
+    box-shadow:0 6px 18px rgba(15,47,107,.18);
+  }
+  .banner h1{font-size:24px;letter-spacing:1px;font-weight:700}
+  .banner .sub{margin-top:6px;font-size:13px;opacity:.85}
+  .banner .meta{text-align:right;font-size:13px;line-height:1.9}
+  .banner .meta b{font-size:17px}
+  .toolbar{display:flex;justify-content:flex-end;gap:8px;margin:14px 0 6px}
+  .btn-print{
+    background:#fff;border:1px solid var(--line);color:var(--navy);border-radius:8px;
+    padding:7px 16px;font-size:13px;cursor:pointer;
+  }
+  .btn-print:hover{background:var(--blue-light)}
+  section{margin-top:26px}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .sec-head .no{
+    background:var(--navy);color:#fff;width:26px;height:26px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  }
+  .sec-head h2{font-size:18px;color:var(--navy)}
+  .sec-head .hint{font-size:12.5px;color:var(--gray)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px rgba(31,42,61,.05)}
+  .card h3{font-size:15px;color:var(--ink);margin-bottom:14px;padding-left:10px;border-left:4px solid var(--blue)}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--gray);margin-bottom:8px;flex-wrap:wrap}
+  .legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .legend .sq{display:inline-block;width:12px;height:12px;border:1px solid #a9c2e4;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .chart-box{width:100%;height:auto;display:block}
+  .pending-box{
+    background:repeating-linear-gradient(45deg,#fdf6ec,#fdf6ec 12px,#f9efdd 12px,#f9efdd 24px);
+    border:1.5px dashed #d9a94e;border-radius:12px;padding:18px 20px;color:#8a6420;
+    font-size:13px;margin-top:14px;
+  }
+  .pending-box b{color:#6d4e12}
+  .data-hint{fill:#8a6420;font-size:14px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{
+    background:var(--blue-light);color:var(--navy);text-align:left;font-weight:600;
+    padding:9px 12px;white-space:nowrap;border-bottom:2px solid #c9d8ef;
+  }
+  td{padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td.free{background:#fbfaf4;color:var(--gray);font-size:12.5px;cursor:text;min-width:70px}
+  td.free:focus{outline:none;background:#fff7e8;box-shadow:inset 0 0 0 1.5px #e0c07e;color:var(--ink)}
+  tbody tr:hover{background:#f8fafd}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  th.num{text-align:right}
+  .route{font-weight:600;color:var(--ink)}
+  .up{color:var(--ink);font-weight:600}
+  .down{color:#d93030;font-weight:600}
+  .flat{color:var(--ink)}
+  .hot-cell{color:var(--ink);font-weight:700;background:#fdeaea !important}
+  .analysis{
+    background:#fbfcfe;border:1.5px dashed #b9c9e4;border-radius:10px;
+    padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.85;
+  }
+  .analysis:hover{border-color:var(--blue)}
+  .analysis:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(29,95,192,.12)}
+  .analysis .at{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
+  .analysis .at .tip{font-size:11.5px;font-weight:400;color:var(--gray)}
+  .analysis p{margin:6px 0}
+  .analysis b{color:var(--navy)}
+  .analysis .tag{display:inline-block;background:var(--blue-light);color:var(--navy);border-radius:6px;padding:0 8px;font-size:12px;font-weight:600;margin-right:6px}
+  .heat-wrap{overflow-x:auto;margin-top:2px;border-radius:8px;border:1px solid var(--line);padding-bottom:8px}
+  table.heat{width:max-content;border-collapse:collapse;table-layout:fixed;font-size:11px}
+  table.heat th{background:var(--navy);color:#fff;padding:9px 6px;font-weight:600;font-size:12px;line-height:1.45;border:1px solid #0d2a61;min-width:108px}
+  table.heat th:first-child{min-width:76px;max-width:76px;position:sticky;left:0;z-index:2}
+  table.heat th .wktag{font-size:9.5px;font-weight:400;opacity:.85;margin-top:2px}
+  table.heat td{border:1px solid var(--line);min-width:108px}
+  td.pol-cell{background:var(--blue-light);font-weight:700;padding:8px 10px;white-space:nowrap;vertical-align:middle;min-width:76px;max-width:76px;position:sticky;left:0;z-index:1}
+  td.pol-cell .pname{font-size:13px;color:var(--navy)}
+  td.pol-cell .pcode{font-size:10px;color:var(--gray);font-weight:600;margin-top:2px}
+  td.hcell{padding:7px 8px;color:#fff;vertical-align:middle;line-height:1.55}
+  td.hcell .l1{font-size:11px;font-weight:700;white-space:nowrap}
+  td.hcell .l2{font-size:11px;font-weight:400;opacity:.95;white-space:nowrap;margin-top:2px}
+  td.hcell.empty{background:#f5f5f5;color:#bbb;text-align:center;font-size:14px}
+  .footer{margin-top:22px;text-align:center;font-size:12px;color:var(--gray)}
+  @media print{
+    body{background:#fff;padding:0}
+    .btn-print{display:none}
+    .card,.banner{box-shadow:none}
+    .page{max-width:100%}
+  }
+
+  .sub-group{display:flex;flex-direction:column;gap:18px}
+  .sub-tbl{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .sub-title{background:linear-gradient(90deg,var(--blue-light) 0%,#fff 100%);padding:9px 14px;font-size:14px;font-weight:700;color:var(--navy);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+  .wk-badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px}
+  .wk-prev{background:#6b7a90}
+  .wk-cur{background:var(--blue)}
+  .wk-next{background:#e2a83e}
+  .sub-note{font-size:12px;font-weight:400;color:var(--gray);margin-left:4px}
+  td.multi{white-space:normal;line-height:1.7;min-width:180px;font-size:12px}
+  td.num.free{background:#fbfaf4;color:var(--gray)}
+  td.num.free:focus{outline:none;background:#fff7e8;box-shadow:inset 0 0 0 1.5px #e0c07e;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <div>
+      <h1>MKT Report</h1>
+      <div class="sub">Rate Table (Last/Current/Next Week · Red Sea / Middle East) + 4-Week Review (WK31-34) | R.SEA – SA JED · M.E.G – AE JEA</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn-print" onclick="window.print()">🖨 Print / Export PDF</button>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">1</span>
+      <h2>Red Sea Rate Table · R.SEA – SA JED</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Red Sea (R.SEA – SA JED) Rate Table: Last / Current / Next Week</h3>
+      <div class="sub-group">
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-prev">WK34</span>Last Week</div>
+<table><thead><tr><th>POL</th>
+<th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th>
+<th class="num">CUL-Deal 20'</th><th class="num">CUL-Deal 40'</th>
+<th>Other Carriers</th>
+</tr></thead><tbody>
+<tr><td class="route">South China</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$10,000</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">PIL $7,100/$10,450<br>CMA $7,250/$10,900<br>HPL $5,813/$9,013</td>
+</tr>
+<tr><td class="route">Central China</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$9,800</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">WHL $6,200/$9,200<br>Zhong Gu $6,000/$9,000<br>PIL $6,500/$9,500</td>
+</tr>
+<tr><td class="route">Thailand</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$8,000</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">CMA $7,700/$10,000<br>PIL $7,000/$11,000<br>HPL/MSK $4,500/$6,100</td>
+</tr>
+<tr><td class="route">Malaysia</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$8,000</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">—</td>
+</tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-cur">WK35</span>Current Week</div>
+<table><thead><tr><th>POL</th>
+<th class="num">Market 20'</th><th class="num">Market 40'</th>
+<th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th>
+</tr></thead><tbody>
+<tr><td class="route">South China</td>
+<td class="num">$6,500</td><td class="num">$10,000</td>
+<td class="num">$6,750</td><td class="num">$10,000</td>
+</tr>
+<tr><td class="route">Central China</td>
+<td class="num">$6,500</td><td class="num">$9,500</td>
+<td class="num">$6,200</td><td class="num">$9,800</td>
+</tr>
+<tr><td class="route">Thailand</td>
+<td class="num">$6,000</td><td class="num">$8,000</td>
+<td class="num">$5,500</td><td class="num">$8,000</td>
+</tr>
+<tr><td class="route">Malaysia</td>
+<td class="num">$4,500</td><td class="num">$6,800</td>
+<td class="num">$5,200</td><td class="num">$8,000</td>
+</tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-next">WK36</span>Next Week</div>
+<table><thead><tr><th>POL</th>
+<th class="num">Forecast 20'</th><th class="num">Forecast 40'</th>
+<th>remark</th>
+</tr></thead><tbody>
+<tr><td class="route">South China</td>
+<td class="num">$6,300</td><td class="num">$9,500</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+<tr><td class="route">Central China</td>
+<td class="num">$6,400</td><td class="num">$9,600</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+<tr><td class="route">Thailand</td>
+<td class="num">$5,000</td><td class="num">$7,000</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+<tr><td class="route">Malaysia</td>
+<td class="num">$4,700</td><td class="num">$7,000</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+</tbody></table></div>
+      </div>
+
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Rate Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Last Week (WK34)</span> South China CUL-FAK $10,000 flat to market, 20' +$250 vs market; Central China CUL $9,800 vs $9,500 (+$300); Thailand 40' flat, 20' -$500; Malaysia premium widest <b>+$1,200 (+17.6%)</b>.</p>
+        <p><span class="tag">② Current Week (WK35)</span> Market forecast down across the board: South China $9,500 (-$500), Central China $9,600, Thailand $7,000, Malaysia $7,000; CUL-FAK TBD, track pricing pace.</p>
+        <p><span class="tag">③ Competition</span> South China PIL $10,450 / CMA $10,900 above market avg; Thailand CMA $10,000 / PIL $11,000 high, HPL/MSK $6,100 low to grab cargo, spread wide.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">2</span>
+      <h2>Middle East Rate Table · M.E.G – AE JEA</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Middle East (M.E.G – AE JEA) Rate Table: Last / Current / Next Week</h3>
+      <div class="sub-group">
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-prev">WK34</span>Last Week</div>
+<table><thead><tr><th>POL</th>
+<th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th>
+<th class="num">CUL-Deal 20'</th><th class="num">CUL-Deal 40'</th>
+<th>Other Carriers</th>
+</tr></thead><tbody>
+<tr><td class="route">South China</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$8,800</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">MSC $7,600/$8,600<br>ESL $7,700/$8,900</td>
+</tr>
+<tr><td class="route">Central China</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$8,000</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">ONE $5,800/$7,200<br>MSK $6,100/$6,600<br>MSC $5,900/$7,100</td>
+</tr>
+<tr><td class="route">Thailand</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$6,200</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">CMA $7,600/$8,900<br>ESL $5,200/$6,500<br>MSC/MSK $6,100/$7,300</td>
+</tr>
+<tr><td class="route">Malaysia</td>
+<td class="num free" contenteditable="true">—</td><td class="num">$6,200</td>
+<td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td>
+<td class="free multi" contenteditable="true">—</td>
+</tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-cur">WK35</span>Current Week</div>
+<table><thead><tr><th>POL</th>
+<th class="num">Market 20'</th><th class="num">Market 40'</th>
+<th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th>
+</tr></thead><tbody>
+<tr><td class="route">South China</td>
+<td class="num">$7,600</td><td class="num">$8,600</td>
+<td class="num">$7,800</td><td class="num">$8,800</td>
+</tr>
+<tr><td class="route">Central China</td>
+<td class="num">$7,400</td><td class="num">$8,000</td>
+<td class="num">$7,500</td><td class="num">$8,500</td>
+</tr>
+<tr><td class="route">Thailand</td>
+<td class="num">$7,200</td><td class="num">$8,900</td>
+<td class="num">$5,200</td><td class="num">$6,200</td>
+</tr>
+<tr><td class="route">Malaysia</td>
+<td class="num">$5,000</td><td class="num">$6,200</td>
+<td class="num">$5,200</td><td class="num">$6,200</td>
+</tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-next">WK36</span>Next Week</div>
+<table><thead><tr><th>POL</th>
+<th class="num">Forecast 20'</th><th class="num">Forecast 40'</th>
+<th>remark</th>
+</tr></thead><tbody>
+<tr><td class="route">South China</td>
+<td class="num">$7,600</td><td class="num">$8,600</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+<tr><td class="route">Central China</td>
+<td class="num">$7,600</td><td class="num">$8,600</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+<tr><td class="route">Thailand</td>
+<td class="num">$5,200</td><td class="num">$6,200</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+<tr><td class="route">Malaysia</td>
+<td class="num">$6,700</td><td class="num">$7,700</td>
+<td class="free" contenteditable="true">—</td>
+</tr>
+</tbody></table></div>
+      </div>
+
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Rate Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Last Week (WK34)</span> South China CUL-FAK $8,800 vs market $8,600 (+$200); Central China $8,500 vs $8,000 (+$500); Thailand inverted widest <b>-$2,700 (-30.3%)</b>, CUL $6,200 far below market $8,900.</p>
+        <p><span class="tag">② Current Week (WK35)</span> Market forecast: South/Central China $8,600 flat, Thailand $6,200 held, Malaysia <b>$7,700</b> (+$1,500) strongest hike signal.</p>
+        <p><span class="tag">③ Competition</span> South China MSC/ESL $8,600/$8,900; Central China ONE $7,200, MSK $6,600, MSC $7,100 spread wide; Thailand CMA $8,900 high, ESL $6,500 low.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">3</span>
+      <h2>4-Week Rate Review · WK31-34</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Weekly Completed VVD: USD/40' SAJED</h3>
+      <div class="legend">
+        <span><span class="sq" style="background:#c9d9f0"></span>FAK Ratio (bar, left %)</span>
+        <span><span class="dot" style="background:#1d5fc0"></span>CUL FAK (line, right)</span>
+        <span><span class="dot" style="background:#2e9e5b"></span>CUL Deal (line, right)</span>
+      </div>
+      <svg class="chart-box" id="chartSvg" viewBox="0 0 860 410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="4-Week Rate Review Chart">
+        <g id="chartPlot"></g>
+      </svg>
+      <div class="pending-box" id="dataHint">
+        <b>Data to be filled:</b> Please provide WK31-34 weekly completed VVD FAK ratio and two rate types (SAJED 40' port avg: CUL FAK / CUL Deal). Fill in the vvds array of DATA at the bottom and refresh to auto-render.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">4</span>
+      <h2>Completed Voyages by POL · SAJED 40'</h2>
+    </div>
+    <div class="card" style="margin-top:0">
+      <h3>POL × Voyage Heatmap: FAK Ratio (bg) with FAK / Non-FAK Volume & Price</h3>
+      <div class="heat-wrap">
+        <table class="heat" id="heatTable"></table>
+      </div>
+      <div class="legend" style="margin-top:10px;justify-content:center">
+        <span><span class="sq" style="background:#2E7D32"></span>FAK ≥80%</span>
+        <span><span class="sq" style="background:#66BB6A"></span>60-79%</span>
+        <span><span class="sq" style="background:#FFA726"></span>40-59%</span>
+        <span><span class="sq" style="background:#FF7043"></span>20-39%</span>
+        <span><span class="sq" style="background:#f44336"></span>&lt;20%</span>
+        <span><span class="sq" style="background:#f5f5f5;border:1px solid #ddd"></span>No Volume</span>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--gray);text-align:center">
+        Basis: SAJED 40' | FAK Ratio = FAK TEU / total SAJED 40' TEU of POL/voyage | FAK Price = list | Non-FAK Price = deal avg (TEU-weighted)
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    CULINES Marketing · MKT Report | Internal Use Only
+  </div>
+</div>
+
+<script>
+var DATA = {
+  "weeks": [
+    {"wk":"WK31","vvds":[
+      {"vvd":"MBBG2627W","ratio":98.6,"mkt":9500,"fak":6701,"oft":6714},
+      {"vvd":"FUYU2630W","ratio":86.0,"mkt":9500,"fak":7407,"oft":7509},
+      {"vvd":"CUYP2632W","ratio":85.9,"mkt":9500,"fak":8700,"oft":8553},
+    ]},
+    {"wk":"WK32","vvds":[
+      {"vvd":"BZCF2627W","ratio":77.5,"mkt":9700,"fak":8453,"oft":8239},
+      {"vvd":"H8112631W","ratio":44.9,"mkt":9700,"fak":8726,"oft":8505},
+      {"vvd":"JRBM2629W","ratio":90.8,"mkt":9700,"fak":7896,"oft":7727},
+    ]},
+    {"wk":"WK33","vvds":[
+      {"vvd":"CSQC2630W","ratio":71.0,"mkt":10000,"fak":8660,"oft":8656},
+      {"vvd":"CUYP2634W","ratio":73.8,"mkt":10000,"fak":9124,"oft":9145},
+    ]},
+    {"wk":"WK34","vvds":[
+      {"vvd":"HMBM2628W","ratio":76.3,"mkt":10000,"fak":8080,"oft":7955},
+      {"vvd":"ZGHZ2630W","ratio":85.7,"mkt":10000,"fak":8070,"oft":7956},
+      {"vvd":"CUHC2631W","ratio":89.7,"mkt":10000,"fak":8600,"oft":8692},
+      {"vvd":"ZG162631W","ratio":85.0,"mkt":10000,"fak":9576,"oft":9590},
+    ]},
+  ]
+};
+var W = 860, H = 410;
+var M = {top:40, right:66, bottom:56, left:62};
+var PW = W - M.left - M.right;
+var P0 = 6500, P1 = 10500;
+var groupW = PW / DATA.weeks.length;
+var yRatio = function(r){ return 330 - r * 2.8; };
+var yPrice = function(p){ return 330 - (p - P0) / (P1 - P0) * 280; };
+var NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent){
+  var e = document.createElementNS(NS, tag);
+  for(var k in attrs) e.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(e);
+  return e;
+}
+function render(){
+  var plot = document.getElementById("chartPlot");
+  plot.innerHTML = "";
+  var hasAny = false;
+  DATA.weeks.forEach(function(w){ if(w.vvds.length) hasAny = true; });
+  document.getElementById("dataHint").style.display = hasAny ? "none" : "block";
+  var i, j;
+  var gridYs = [330,260,190,120,50];
+  var gridPs = [6500,7500,8500,9500,10500];
+  for(i=0;i<gridYs.length;i++){
+    el("line",{x1:M.left,y1:gridYs[i],x2:M.left+PW,y2:gridYs[i],stroke:"#e3e9f2","stroke-width":1},plot);
+  }
+  var fakYs = [50,120,190,260,330];
+  var fakLs = ["100%","75%","50%","25%","0%"];
+  for(i=0;i<fakYs.length;i++){
+    el("text",{x:M.left-8,y:fakYs[i]+4,"text-anchor":"end","font-size":11,fill:"#6b7a90"},plot).textContent=fakLs[i];
+  }
+  for(i=0;i<gridYs.length;i++){
+    el("text",{x:M.left+PW+8,y:gridYs[i]+4,"text-anchor":"start","font-size":11,fill:"#6b7a90"},plot).textContent="$"+gridPs[i].toLocaleString();
+  }
+  el("text",{x:14,y:40,"font-size":11,fill:"#6b7a90"},plot).textContent="FAK Ratio";
+  el("text",{x:M.left+PW+62,y:40,"font-size":11,fill:"#6b7a90","text-anchor":"end"},plot).textContent="USD/40'";
+  /* VVD -> total TEU volume map (aggregated from heat data) */
+  var vvdTeu = {};
+  HEAT_VVDS.forEach(function(h){
+    var tot = 0;
+    for(var pol in h.pols){
+      tot += (h.pols[pol].fak_teu || 0) + (h.pols[pol].nf_teu || 0);
+    }
+    vvdTeu[h.vvd] = Math.round(tot);
+  });
+  /* tooltip container (4 rows: VVD / FAK / Deal / Volume) */
+  var tipG = el("g",{style:"opacity:0;pointer-events:none;transition:opacity .15s"},plot);
+  var tipBg = el("rect",{x:0,y:0,width:188,height:88,rx:8,fill:"#1f2a3d",opacity:.96},tipG);
+  var tipBar = el("rect",{x:0,y:0,width:4,height:88,rx:2,fill:"#1d5fc0"},tipG);
+  var tipVvd = el("text",{x:14,y:19,"font-size":11.5,fill:"#fff","font-weight":700},tipG);
+  var tipPct = el("text",{x:14,y:38,"font-size":11.5,fill:"#8ec5ff"},tipG);
+  var tipPrice = el("text",{x:14,y:57,"font-size":11.5,fill:"#8ed4a8"},tipG);
+  var tipTeu = el("text",{x:14,y:76,"font-size":11.5,fill:"#cfe0f5"},tipG);
+  var TW=188, TH=88;
+  DATA.weeks.forEach(function(w,wi){
+    var gx = M.left + wi*groupW;
+    var n = w.vvds.length;
+    var slots = [];
+    for(j=0;j<n;j++){
+      var x = gx + 20 + (j+1) * ((groupW-40)/(n+1));
+      slots.push(x);
+    }
+    el("text",{x:gx+groupW/2,y:H-14,"text-anchor":"middle","font-size":14,fill:"#0f2f6b","font-weight":700},plot).textContent=w.wk;
+    if(n===0){
+      el("text",{x:gx+groupW/2,y:190,"text-anchor":"middle","font-size":12,fill:"#b9c3d4","font-weight":600},plot).textContent="Data to be filled";
+    }
+    var v = w.vvds;
+    for(j=0;j<n;j++){
+      var vvd = v[j];
+      var x = slots[j];
+      var bw = Math.min(44, (groupW-40)/(n+1) * 0.55);
+      var yTop = yRatio(vvd.ratio);
+      var bar = el("rect",{x:x-bw/2,y:yTop,width:bw,height:330-yTop,fill:"#c9d9f0",stroke:"#a9c2e4",style:"cursor:pointer;transition:fill .15s"},plot);
+      /* FAK ratio label: above bar top, dark, 10px/700 */
+      el("text",{x:x,y:yTop-6,"text-anchor":"middle","font-size":10,fill:"#0f2f6b","font-weight":700},plot).textContent=Math.round(vvd.ratio)+"%";
+      var vvdLabel = vvd.vvd.substr(0,4) + vvd.vvd.substr(6);
+      el("text",{x:x,y:343,"text-anchor":"end","font-size":9,fill:"#1f2a3d","font-weight":600,transform:"rotate(-45, "+x+", 343)"},plot).textContent=vvdLabel;
+      (function(pt, b){
+        b.addEventListener("mouseenter",function(){
+          b.setAttribute("fill","#9ab8e8");
+          tipVvd.textContent = pt.wk + " · " + pt.vvd;
+          tipPct.textContent = "FAK: $" + pt.fak.toLocaleString();
+          tipPrice.textContent = "Deal: $" + pt.oft.toLocaleString();
+          tipTeu.textContent = "Volume: " + pt.teu.toLocaleString() + " TEU";
+          var tx = pt.x + 10, ty = pt.yTop - TH - 8;
+          if(tx + TW > M.left + PW) tx = pt.x - TW - 10;
+          if(ty < M.top) ty = pt.yTop + 12;
+          tipBg.setAttribute("x",tx); tipBg.setAttribute("y",ty);
+          tipBar.setAttribute("x",tx); tipBar.setAttribute("y",ty);
+          tipVvd.setAttribute("x",tx+14); tipVvd.setAttribute("y",ty+19);
+          tipPct.setAttribute("x",tx+14); tipPct.setAttribute("y",ty+38);
+          tipPrice.setAttribute("x",tx+14); tipPrice.setAttribute("y",ty+57);
+          tipTeu.setAttribute("x",tx+14); tipTeu.setAttribute("y",ty+76);
+          tipG.style.opacity = 1;
+        });
+        b.addEventListener("mouseleave",function(){
+          b.setAttribute("fill","#c9d9f0");
+          tipG.style.opacity = 0;
+        });
+      })({wk:w.wk, vvd:vvd.vvd, ratio:vvd.ratio, fak:vvd.fak, oft:vvd.oft, teu:vvdTeu[vvd.vvd]||0, x:x, yTop:yTop}, bar);
+    }
+  });
+  var series = [
+    {key:"fak", color:"#1d5fc0", label:"CUL FAK"},
+    {key:"oft", color:"#2e9e5b", label:"CUL Deal"}
+  ];
+  series.forEach(function(s){
+    var pts = [];
+    var n = 0;
+    DATA.weeks.forEach(function(w,wi){
+      var gx = M.left + wi*groupW;
+      var v = w.vvds;
+      for(j=0;j<v.length;j++){
+        var x = gx + 20 + (j+1) * ((groupW-40)/(v.length+1));
+        var p = v[j][s.key];
+        if(p==null) continue;
+        pts.push([x, yPrice(p)]);
+        n++;
+      }
+    });
+    if(!n) return;
+    var d = pts.map(function(pt,i){ return (i?"L":"M")+pt[0].toFixed(1)+","+pt[1].toFixed(1); }).join(" ");
+    el("path",{d:d,fill:"none",stroke:s.color,"stroke-width":2.5},plot);
+    pts.forEach(function(pt){
+      el("circle",{cx:pt[0],cy:pt[1],r:4,fill:s.color,stroke:"#fff","stroke-width":1.5},plot);
+    });
+  });
+  if(!hasAny){
+    el("text",{x:M.left+PW/2,y:190,"text-anchor":"middle","font-size":15,fill:"#8a6420","font-weight":600},plot).textContent="WK31-34 Data to be filled";
+  }
+  /* tooltip moved to end of plot, above bars/lines (SVG last=topmost) */
+  plot.appendChild(tipG);
+}
+
+/* ===== Table 2: Completed Voyages by POL · SAJED 40' ===== */
+var HEAT_VVDS = [
+  {"vvd":"MBBG2627W","wk":"WK31","date":"08-04","pols":{
+    "CNSHA":{"fak_pct":97.1,"fak_teu":102.0,"fak_price":6600,"nf_pct":2.9,"nf_teu":3.0,"nf_price":6600.0},
+    "CNSHK":{"fak_pct":100.0,"fak_teu":90.0,"fak_price":7000,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNNGB":{"fak_pct":100.0,"fak_teu":82.0,"fak_price":6500,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+  }},
+  {"vvd":"FUYU2630W","wk":"WK31","date":"08-06","pols":{
+    "CNNAS":{"fak_pct":100.0,"fak_teu":135.0,"fak_price":7400,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNSHK":{"fak_pct":100.0,"fak_teu":266.0,"fak_price":7400,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNXMN":{"fak_pct":40.0,"fak_teu":14.0,"fak_price":7600,"nf_pct":60.0,"nf_teu":21.0,"nf_price":7495.2},
+  }},
+  {"vvd":"CUYP2632W","wk":"WK31","date":"08-08","pols":{
+    "CNNAS":{"fak_pct":82.7,"fak_teu":489.0,"fak_price":8700,"nf_pct":17.3,"nf_teu":102.0,"nf_price":7999.0},
+  }},
+  {"vvd":"BZCF2627W","wk":"WK32","date":"08-13","pols":{
+    "CNNAS":{"fak_pct":100.0,"fak_teu":296.0,"fak_price":8700,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNTAO":{"fak_pct":55.0,"fak_teu":420.0,"fak_price":7800,"nf_pct":45.0,"nf_teu":344.0,"nf_price":7459.9},
+    "CNSHK":{"fak_pct":99.2,"fak_teu":756.0,"fak_price":8700,"nf_pct":0.8,"nf_teu":6.0,"nf_price":8766.7},
+    "CNNGB":{"fak_pct":65.7,"fak_teu":243.0,"fak_price":8800,"nf_pct":34.3,"nf_teu":127.0,"nf_price":7154.3},
+    "CNXMN":{"fak_pct":39.5,"fak_teu":51.0,"fak_price":8000,"nf_pct":60.5,"nf_teu":78.0,"nf_price":7700.0},
+    "CNXGG":{"fak_pct":0.0,"fak_teu":0.0,"fak_price":null,"nf_pct":100.0,"nf_teu":12.0,"nf_price":6650.0},
+    "CNSWA":{"fak_pct":100.0,"fak_teu":54.0,"fak_price":7600,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+  }},
+  {"vvd":"H8112631W","wk":"WK32","date":"08-13","pols":{
+    "CNSHA":{"fak_pct":53.9,"fak_teu":221.0,"fak_price":8600,"nf_pct":46.1,"nf_teu":189.0,"nf_price":8101.6},
+    "CNXMN":{"fak_pct":41.5,"fak_teu":59.0,"fak_price":9200,"nf_pct":58.5,"nf_teu":83.0,"nf_price":8486.1},
+  }},
+  {"vvd":"JRBM2629W","wk":"WK32","date":"08-14","pols":{
+    "CNSHA":{"fak_pct":85.6,"fak_teu":107.0,"fak_price":7800,"nf_pct":14.4,"nf_teu":18.0,"nf_price":6733.3},
+    "CNSHK":{"fak_pct":97.6,"fak_teu":162.0,"fak_price":8000,"nf_pct":2.4,"nf_teu":4.0,"nf_price":7200.0},
+    "CNNGB":{"fak_pct":84.0,"fak_teu":68.0,"fak_price":7800,"nf_pct":16.0,"nf_teu":13.0,"nf_price":6800.0},
+  }},
+  {"vvd":"CSQC2630W","wk":"WK33","date":"08-17","pols":{
+    "CNNAS":{"fak_pct":100.0,"fak_teu":282.0,"fak_price":8700,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNTAO":{"fak_pct":25.8,"fak_teu":125.0,"fak_price":8800,"nf_pct":74.2,"nf_teu":360.0,"nf_price":8668.5},
+    "CNNGB":{"fak_pct":89.9,"fak_teu":483.0,"fak_price":8600,"nf_pct":10.1,"nf_teu":54.0,"nf_price":8118.5},
+    "CNXMN":{"fak_pct":100.0,"fak_teu":2.0,"fak_price":8600,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+  }},
+  {"vvd":"CUYP2634W","wk":"WK33","date":"08-22","pols":{
+    "CNSHA":{"fak_pct":90.6,"fak_teu":652.0,"fak_price":8600,"nf_pct":9.4,"nf_teu":68.0,"nf_price":8564.7},
+    "CNNAS":{"fak_pct":58.0,"fak_teu":390.0,"fak_price":10000,"nf_pct":42.0,"nf_teu":282.0,"nf_price":9439.7},
+    "CNQZH":{"fak_pct":0.0,"fak_teu":0.0,"fak_price":null,"nf_pct":100.0,"nf_teu":24.0,"nf_price":9200.0},
+  }},
+  {"vvd":"HMBM2628W","wk":"WK34","date":"08-24","pols":{
+    "CNSHA":{"fak_pct":57.5,"fak_teu":46.0,"fak_price":8000,"nf_pct":42.5,"nf_teu":34.0,"nf_price":7800.0},
+    "CNSHK":{"fak_pct":98.0,"fak_teu":96.0,"fak_price":8200,"nf_pct":2.0,"nf_teu":2.0,"nf_price":8200.0},
+    "CNNGB":{"fak_pct":92.4,"fak_teu":97.0,"fak_price":8000,"nf_pct":7.6,"nf_teu":8.0,"nf_price":7800.0},
+    "CNDAL":{"fak_pct":0.0,"fak_teu":0.0,"fak_price":null,"nf_pct":100.0,"nf_teu":31.0,"nf_price":7096.8},
+  }},
+  {"vvd":"ZGHZ2630W","wk":"WK34","date":"08-24","pols":{
+    "CNSHA":{"fak_pct":100.0,"fak_teu":56.0,"fak_price":8000,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNSHK":{"fak_pct":88.9,"fak_teu":88.0,"fak_price":8200,"nf_pct":11.1,"nf_teu":11.0,"nf_price":8118.2},
+    "CNNGB":{"fak_pct":100.0,"fak_teu":107.0,"fak_price":8000,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNDAL":{"fak_pct":0.0,"fak_teu":0.0,"fak_price":null,"nf_pct":100.0,"nf_teu":31.0,"nf_price":6864.5},
+  }},
+  {"vvd":"CUHC2631W","wk":"WK34","date":"08-29","pols":{
+    "CNSHA":{"fak_pct":90.6,"fak_teu":652.0,"fak_price":8600,"nf_pct":9.4,"nf_teu":68.0,"nf_price":8564.7},
+  }},
+  {"vvd":"ZG162631W","wk":"WK34","date":"08-30","pols":{
+    "CNSHA":{"fak_pct":100.0,"fak_teu":89.0,"fak_price":9600,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+    "CNNGB":{"fak_pct":100.0,"fak_teu":12.0,"fak_price":9400,"nf_pct":0.0,"nf_teu":0.0,"nf_price":null},
+  }},
+];
+render();
+var fmt$ = function(v){ return (v==null) ? "—" : "$" + Math.round(v).toLocaleString(); };
+var heatBg = function(r){ return r>=80 ? "#2E7D32" : r>=60 ? "#66BB6A" : r>=40 ? "#FFA726" : r>=20 ? "#FF7043" : "#f44336"; };
+function renderHeat(){
+  var tot = {};
+  HEAT_VVDS.forEach(function(h){ Object.keys(h.pols).forEach(function(p){ var d=h.pols[p]; tot[p]=(tot[p]||0)+d.fak_teu+d.nf_teu; }); });
+  var POL_ORDER = ['CNDAL','CNTAO','CNSHA','CNNGB','CNSHK','CNNAS','CNXMN','CNSWA'];
+  var pols = POL_ORDER.filter(function(p){ return tot[p] != null; });
+  var html = '<thead><tr><th style="width:78px">POL</th>';
+  HEAT_VVDS.forEach(function(h){ html += '<th><div>'+h.vvd+'</div><div class="wktag">'+h.wk+' · '+h.date+'</div></th>'; });
+  html += '</tr></thead><tbody>';
+  pols.forEach(function(p){
+    html += '<tr><td class="pol-cell"><div class="pname">'+p+'</div></td>';
+    HEAT_VVDS.forEach(function(h){
+      var d = h.pols[p];
+      if(!d){ html += '<td class="hcell empty">—</td>'; return; }
+      var bg = heatBg(d.fak_pct);
+      var l1 = 'FAK ' + d.fak_pct.toFixed(1) + '%';
+      if(d.fak_teu > 0) l1 += ' · ' + Math.round(d.fak_teu) + 'T · ' + fmt$(d.fak_price);
+      var l2 = 'NF ' + d.nf_pct.toFixed(1) + '%';
+      if(d.nf_teu > 0) l2 += ' · ' + Math.round(d.nf_teu) + 'T · ' + fmt$(d.nf_price);
+      html += '<td class="hcell" style="background:'+bg+'"><div class="l1">'+l1+'</div><div class="l2">'+l2+'</div></td>';
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  document.getElementById("heatTable").innerHTML = html;
+}
+renderHeat();
+</script>
+</body>
+</html>
