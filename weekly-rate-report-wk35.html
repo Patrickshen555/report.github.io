@@ -310,9 +310,6 @@
           </tr>
         </tbody>
       </table>
-      <p style="font-size:12px;color:var(--gray);margin-top:10px">
-        注：市场价为 Daily Rate Reporting（01.09.27 版）CMA / PIL 等航商报价均值（C–D 列），CUL 为挂牌价（F–G 列）；下周预测为 WK36 市场预测值（K–L 列，20'/40'）。
-      </p>
     </div>
 
   </section>
@@ -389,9 +386,6 @@
           </tr>
         </tbody>
       </table>
-      <p style="font-size:12px;color:var(--gray);margin-top:10px">
-        注：市场价为 Daily Rate Reporting（01.09.27 版）航商报价均值；<b>泰国 CUL 高于市场 +$1,800（+26.5%）为中东侧溢价最深</b>；下周预测（K–L 列，20'/40'）中 <b>华东 $9,000（+$1,800）</b> 为全线最强涨价信号。
-      </p>
     </div>
   </section>
 
@@ -466,10 +460,6 @@
           <rect class="vvd-hit" x="528" y="42" width="64" height="316" data-vvd="JRBM2629W"><title>点击查看 JRBM2629W 完船分析</title></rect>
           <rect class="vvd-hit" x="668" y="42" width="64" height="316" data-vvd="CUYP2634W"><title>点击查看 CUYP2634W 完船分析</title></rect>
         </g>      </svg>
-      <p style="font-size:12px;color:var(--gray);margin-top:8px">
-        注：整体 FAK 履行占比 <b>70.1%</b>（TEU 加权）；FAK 挂牌价 / 当时市场价均为红海 SAJED 40 尺 TEU 加权口径。
-        当时市场价来源：BZCF（完船 8/2）/ CSQC（8/6）/ H811（8/7）/ JRBM（8/8）均用 07.08 报告 WK31 市场均价（TEU 加权，按装货港分布）；CUYP（完船 8/22）用 21.08 报告 WK33 市场均价（同周）。
-      </p>
     </div>
   </section>
 
@@ -597,7 +587,7 @@ function vvdModalHtml(vvd){
     +'<h4>口岸装货明细</h4>'
     +'<table><thead><tr><th>口岸</th><th>总TEU</th><th>FAK TEU</th><th>FAK占比</th></tr></thead><tbody>'+portRows+'</tbody></table>'
     +'<div class="comment-strip '+cmtCls+'"><b>点评：</b>'+cmt+'</div>'
-    +'<div style="font-size:11px;color:#999;margin-top:10px">数据同 WK33_WK34_FAK_Dashboard；当时市场价为 Daily Rate Reporting 同周 / 近似口径（详见页脚备注）。</div>';
+    ;
   return html;
 }
 function openVvdModal(vvd){document.getElementById("modalBody").innerHTML=vvdModalHtml(vvd);document.getElementById("vvdModal").classList.add("show");}
