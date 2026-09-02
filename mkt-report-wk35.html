@@ -603,7 +603,7 @@ var heatBg = function(r){ return r>=80 ? "#2E7D32" : r>=60 ? "#66BB6A" : r>=40 ?
 function renderHeat(){
   var tot = {};
   HEAT_VVDS.forEach(function(h){ Object.keys(h.pols).forEach(function(p){ var d=h.pols[p]; tot[p]=(tot[p]||0)+d.fak_teu+d.nf_teu; }); });
-  var POL_ORDER = ['CNDAL','CNTAO','CNSHA','CNNGB','CNSHK','CNNAS','CNXMN','CNSWA'];
+  var POL_ORDER = ['CNTAO','CNSHA','CNNGB','CNSHK','CNNAS','CNXMN','CNSWA'];
   var pols = POL_ORDER.filter(function(p){ return tot[p] != null; });
   var html = '<thead><tr><th style="width:78px">POL</th>';
   HEAT_VVDS.forEach(function(h){ html += '<th><div>'+h.vvd+'</div><div class="wktag">'+h.wk+' · '+h.date+'</div></th>'; });
