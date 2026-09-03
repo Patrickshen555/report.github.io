@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年9月3日</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 14px; opacity: 0.85; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .chip.up { color: #dc2626; }
+    .chip.down { color: #059669; }
+    .chip.highlight { background: #dbeafe; color: #1e40af; }
+    .chip.warn { background: #fef3c7; color: #92400e; }
+
+    .source {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .source a {
+      color: #1a56db;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 12px; }
+      header { padding: 24px 18px; }
+      header h1 { font-size: 20px; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>航运日报</h1>
+      <div class="meta">2026年9月3日 星期四 | 重点关注：美军首次直接击中伊朗油轮+Brent首破95、巴拿马运河9/3正式启动新一轮限流、德/荷北欧港口接力罢工、黄金周马士基/MSC/赫伯罗特密集取消航次、BDI创近三年新高3,331点</div>
+    </header>
+
+    <!-- ① 船司动态 -->
+    <div class="section">
+      <div class="section-title">1️⃣ 船司动态</div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">霍尔木兹"系统性断裂"：美军首次直接击中伊朗油轮、Brent首破95美元、沙特原油出口降至9年最低</div>
+          <span class="tag red">地缘冲突</span>
+        </div>
+        <div class="card-body">
+          <p>9月3日综合报道，美军中央司令部（CENTCOM）9月1日以"tanker-for-tanker"（以其人之道）政策<b>首次直接打击两艘伊朗籍油轮</b>，这是开战以来<b>伊朗油轮本身第一次被列为美军打击目标</b>，标志冲突从"打设施"升级为"打油轮"。伊朗9月2日反向报复约旦/巴林/科威特境内美军基地。CENTCOM累计改道商船已升至<b>86艘</b>。伊朗议会9月1日批准《霍尔木兹海峡可持续安全与进步战略行动》法案第7条（通行须先定战争赔偿）等条款，将"收费+保险+赔偿"制度化。<b>9月3日胡塞再袭两艘油轮</b>——巴拿马/希腊籍"Blue Lagoon"+沙特籍"Amjad"。</p>
+          <div class="data-chips">
+            <span class="chip highlight">美军首次直接击中伊朗油轮</span>
+            <span class="chip highlight">Brent 11月合约 $95.63（+1.04%）首破95</span>
+            <span class="chip warn">WTI 10月 $91.01（+0.88%）</span>
+            <span class="chip warn">沙特8月原油出口~300万桶/日 9年最低</span>
+            <span class="chip warn">巴赫里Sidr号遭袭 2名船员死亡</span>
+            <span class="chip warn">霍尔木兹9/2 Kpler仅4艘/日</span>
+            <span class="chip">伊朗议会立法"收费+保险"</span>
+            <span class="chip">CENTCOM累计改道86艘</span>
+          </div>
+          <p>能源端反应剧烈——<b>Brent 11月NY结算价$95.63</b>自7月底以来首次收盘站上95美元，<b>WTI 10月$91.01</b>，摩根士丹利Q4看<b>$100</b>进入视野。伊朗外汇崩溃——里亚尔兑美元跌破<b>220万里亚尔</b>创历史新低，通胀压力外溢。<b>沙特8月原油出口降至约300万桶/日</b>（彭博Kpler/Vortexa数据），<b>9年来最低</b>；延布港从7月370万桶/日降至8月225万桶/日，波斯湾方向回升昙花一现。这代表<b>霍尔木兹替代通道已被反向卡断</b>，全球能源供应链进入"双峡同锁"的全挤压状态。VLCC运价应声飙涨——美国/巴西航线VLCC日收益突破<b>$100,000</b>、VLCC美湾/巴西航线运价创历史新高。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.kucoin.com/news/flash/middle-east-tensions-escalate-as-us-iran-clashes-affect-hormuz-strait" target="_blank">KuCoin</a>、<a href="https://www.163.com/dy/article/L5SU6GMM05198NMR.html" target="_blank">华尔街见闻/网易</a>、<a href="https://www.jin10.com/?nmfw6/10374.html" target="_blank">金十数据</a>、<a href="https://caifuhao.eastmoney.com/news/20260903062320267570190" target="_blank">东方财富/财联社</a>、<a href="https://shipfeeds.portleads.com/maritime-news-today/hormuz" target="_blank">ShipFeeds</a>、<a href="https://oil.fx678.com" target="_blank">汇通财经</a>
+        </div>
+      </div>
+
+      <div class="card teal">
+        <div class="card-header">
+          <div class="card-title">黄金周大停航：马士基/MSC/赫伯罗特密集取消10余航次，覆盖亚欧、跨太主干航线</div>
+          <span class="tag blue">运力调控</span>
+        </div>
+        <div class="card-body">
+          <p>距离国庆黄金周不足一月，<b>马士基、MSC、赫伯罗特</b>三大船司密集发布黄金周前后航次调整公告：</p>
+          <p><b>马士基（远欧+跨太双线）：</b>AE15第40周640W/645E（9/28青岛）、AE12第41周641W（10/8宁波）、AE1第41周641W（10/10上海）取消；跨太TP8第640E（10/9釜山）、TP12第641E（10/9宁波）取消，及对应回程644W/647W调整。</p>
+          <p><b>MSC（6个航次已确认取消）：</b>亚地中海JADE GJ639W（第39周）、亚欧SWAN FW640W/BRITANNIA QB640W/LION GL641W（亚欧）、亚美西ORIENT GO640N/PEARL GO641N。</p>
+          <p><b>赫伯罗特（5个航次取消/停航）：</b>NE2第641W（10/10上海）、SE3第640W（青岛9/28）、SE1第641W（宁波10/8）、WC2"GuthormMaersk"640E（上海10/10）、US2"Navios Unison"641E（宁波10/7）、AA7"WanHai A13"（宁波10/1）。</p>
+          <div class="data-chips">
+            <span class="chip highlight">马士基取消5个航次</span>
+            <span class="chip highlight">MSC取消6个航次</span>
+            <span class="chip highlight">赫伯罗特取消6个航次</span>
+            <span class="chip warn">均集中9/28-10/10时段</span>
+            <span class="chip">覆盖亚欧/亚美西/亚美东</span>
+            <span class="chip">替代航线+挂靠补充</span>
+          </div>
+          <p>船司基于节前货量回落与缺工预判主动削班，本质是<b>"用停航托价+用替代航线稳网络"</b>组合拳。Drewry预计第36-40周共取消<b>45个航次，整体停航率约6%</b>，其中跨太东行占54%、亚欧/地中海占28%。值得关注的是——<b>停航若执行到位可部分吸收苏伊士复航释放的运力，但若节后货量快速回落，运价下行压力将向美线传导</b>。9/10/15/20前后是观察执行节奏的关键节点。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.toutiao.com/article/7680449453387481634/" target="_blank">今日头条/海运网</a>、<a href="https://m.10jqka.com.cn/20260901/c679488209.shtml" target="_blank">同花顺</a>、<a href="https://www.5684.com/news/article/25044.html" target="_blank">物流巴士</a>
+        </div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">马士基/赫伯罗特/达飞9月密集加征中东-非洲-南美PSS附加费，单箱上调$200-700</div>
+          <span class="tag purple">附加费</span>
+        </div>
+        <div class="card-body">
+          <p>9月开学季+中东旺季叠加，<b>头部船司在多条航线密集启动附加费上调</b>：</p>
+          <p><b>马士基：</b>亚太→中东（9/10起，覆盖中、日、韩、东南亚至阿联酋/沙特等8国）PSS <b>$700/箱</b>；全球→法属波利尼西亚分阶段征<b>$800-1,600/箱</b>（其他地区9/5起、中国台湾/美国9/23起）。</p>
+          <p><b>赫伯罗特：</b>亚洲/大洋洲→西南非洲（8/31起，覆盖安哥拉/刚果等14国）<b>$400/TEU</b>；亚/澳→西非（8/25起，塞内加尔/冈比亚等6国）<b>$200/TEU</b>；远东→南美东海岸（9/1起）每箱<b>+500美元</b>。</p>
+          <p><b>达飞：</b>远东→西非中/南部（9/1起，尼日利亚/安哥拉等12国）干货箱<b>+250美元/TEU</b>；远东→东非（9/1起，肯尼亚/坦桑尼亚/莫桑比克）<b>$150-200/TEU</b>。</p>
+          <div class="data-chips">
+            <span class="chip highlight">马士基中东PSS $700/箱（9/10）</span>
+            <span class="chip highlight">赫伯罗特南美东 +500美元/箱（9/1）</span>
+            <span class="chip warn">赫伯罗特西南非 $400/TEU</span>
+            <span class="chip warn">达飞西非 +250/TEU（9/1）</span>
+            <span class="chip">覆盖中东/西非/东非/南美东</span>
+          </div>
+          <p>继7月霍尔木兹附加费、8月巴拿马PCS密集落地后，9月新一轮附加费<b>进一步从"临时应急"转向"结构性常态"</b>。对货主/货代而言，<b>单一附加费累计已超$1,500/箱</b>，需在合同/报价中前置预留附加费缓冲；中小客户受冲击更明显——分区定价已成新格局，精准选择港口与航线能显著降低附加费冲击。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://applet.10100.com/article/5594457" target="_blank">大数跨境</a>、<a href="https://www.msc.com" target="_blank">MSC官网</a>、<a href="https://www.cma-cgm.com" target="_blank">CMA CGM</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 港口动态 & 油运市场 -->
+    <div class="section">
+      <div class="section-title">2️⃣ 港口动态 & 油运市场</div>
+
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-title">德国汉堡/不来梅等六大港口9月2日夜起48小时罢工+荷兰鹿特丹9月4日接力罢工，北欧供应链连锁冲击</div>
+          <span class="tag orange">港口罢工</span>
+        </div>
+        <div class="card-body">
+          <p>德国服务业工会<b>ver.di</b>因薪酬谈判破裂（资方提出<b>5.1%/18个月</b>涨幅被拒），宣布自<b>9月2日22:00起至9月4日末班结束</b>在汉堡、不来梅/不来梅港、威廉港、埃姆登、布拉克的约<b>1.1万名员工</b>中启动48小时警告罢工，汉堡港为<b>连续48小时全港罢工</b>。期间预计码头装卸、集装箱提送、内陆驳船、铁路联运全面中断，可构成不可抗力。</p>
+          <div class="data-chips">
+            <span class="chip highlight">德国6港48小时罢工9/2-9/4</span>
+            <span class="chip highlight">汉堡港连续48小时全港罢工</span>
+            <span class="chip warn">覆盖员工1.1万人</span>
+            <span class="chip warn">荷兰鹿特丹9/4接力罢工</span>
+            <span class="chip warn">9/9全国铁路/公交24小时罢工</span>
+            <span class="chip">5.1%加薪被拒 谈判破裂</span>
+          </div>
+          <p>几乎同期，<b>荷兰</b>两大工会FNV Havens、CNV宣布9/4 11:15-19:00在<b>鹿特丹、阿姆斯特丹、泽兰</b>三港举行全国港口罢工，抗议政府削减65亿欧元社会保障；9/9荷兰铁路/公共交通将再次24小时罢工。<b>Sea-Intelligence测算</b>：当前全球约5%深水集装箱运力（170万TEU）正因拥堵延误而失效，鹿特丹、汉堡、不来梅港均位列全球十大堵港之列（前周末170+艘锚泊）。</p>
+          <p><b>核心影响：</b>① 北欧供应链遭遇9月初<b>三连击</b>——8月底莱茵河水位创新低+9/2-4德国罢工+9/4荷兰罢工；② 全球堵港运力将进一步推高170万TEU以上；③ 涉苏伊士复航的亚欧航线船期不确定性上升，<b>船司或借此重新评估"加班绕航好望角"的经济性</b>，集运欧线短期获支撑；对货主而言，9/10前出运建议预留5-7天缓冲。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.fms-logistics.com/en/news/article/port-workers-announce-48-hour-warning-strike" target="_blank">FMS Logistics</a>、<a href="https://ns2.tmmarket.com/article/northern-europe-ports-brace-for-labor-strikes-this-week" target="_blank">Maritime Executive</a>、<a href="https://mykn.kuehne-nagel.com/news/article/german-seaport-strike-set-to-halt-container" target="_blank">Kuehne+Nagel</a>、<a href="http://www.hillebrandgori.com/port-updates" target="_blank">Hillebrand Gori</a>
+        </div>
+      </div>
+
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">巴拿马运河9月3日正式启动新一轮限流：Neopanamax降至9艘/天，巴拿马型25艘/天，9/15进一步减至23艘</div>
+          <span class="tag green">运河限流</span>
+        </div>
+        <div class="card-body">
+          <p>巴拿马运河管理局（ACP）今日（9/3）正式启动新一轮通航限制：<b>Neopanamax船闸每日预约名额从36→9艘</b>、<b>Panamax船闸每日→25艘</b>；9/15起Panamax进一步降至<b>23艘/日</b>，较此前36-34艘累计降幅约<b>36%</b>。今年5-8月运河流域降雨较历史均值<b>-34%</b>、来水量<b>-44%</b>，"历史超强"厄尔尼诺持续发展。同时ACP调整通航时段拍卖机制、继续实施新巴拿马型船舶吃水限制。</p>
+          <div class="data-chips">
+            <span class="chip highlight">9/3 Neopanamax降至9艘/天</span>
+            <span class="chip highlight">9/3 Panamax 25艘/天</span>
+            <span class="chip warn">9/15 Panamax进一步降至23艘/天</span>
+            <span class="chip warn">流域累计降雨-34% 来水量-44%</span>
+            <span class="chip">"历史超强"厄尔尼诺</span>
+            <span class="chip">美东运价$10,046/FEU</span>
+          </div>
+          <p>此前美东航线抢运+船司加码运河附加费支撑下，<b>SCFI美东8/28报$10,046/FEU（+3.57%）</b>重新突破1万美元，多家船司9月起再上调美东约<b>$500-700/FEU</b>+加收<b>$200-400/FEU</b>巴拿马运河附加费。Linerlytica指出，<b>亚洲-美东40尺箱目前每减0.5ft吃水装载能力-500-800 TEU</b>，运力损失显著。值得关注——<b>中国黄金周9/28起、欧美返校季结束叠加巴拿马限流高位</b>，9月中下旬美东运价大概率维持$10,000+/FEU，但若中国出货因台风拥堵缓解+节前抢运结束而回落，10月存在回调风险。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.greenworldwide.com/freight-market-update-week-36-2026" target="_blank">Green Worldwide</a>、<a href="https://m.10jqka.com.cn/20260902/c679523462.shtml" target="_blank">华源证券/同花顺</a>、<a href="https://www.cccme.org.cn/news/details.aspx?classid=8C92359A9456952E&id=9B37AA4867B05ACEFF9D15E75DB3D482&xgid=F868932F64EB7AAF" target="_blank">中国机电产品进出口商会</a>、<a href="https://www.pancanal.com" target="_blank">ACP</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 国际海运贸易分析 -->
+    <div class="section">
+      <div class="section-title">3️⃣ 国际海运贸易分析</div>
+
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-title">运价分化加剧：SCFI五连涨3,509点，美强欧弱格局深化；中海NCFI中东线周涨3.9%至5,719点</div>
+          <span class="tag orange">运价指数</span>
+        </div>
+        <div class="card-body">
+          <p>上海航运交易所最新数据：<b>SCFI综合指数报3,509.53点（+2.9%）连续第五周上涨</b>。各航线分化加剧：</p>
+          <p><b>美强：</b>美西$6,940/FEU（+2.6%）、美东$10,046/FEU（+3.6%）重新突破1万美元关口；</p>
+          <p><b>波湾强：</b>波斯湾$6,139/TEU（+7.1%）单周涨$410，南美$8,663/TEU（+11.0%）；</p>
+          <p><b>欧弱：</b>欧洲$2,716/TEU（-4.4%）/$4,321/FEU（-7.3%）创今年2月以来最大跌幅；地中海$3,557/TEU（-5.6%）。</p>
+          <p>CCFI 1,833.99点（+0.7%）；SCFIS欧线3,047.62点（-5.9%）。<b>宁波NCFI</b>（8/22-28）报2,607.4点（+1.9%），21条航线中14条上涨：美东+1.3%、美西+1.1%、<b>中东+3.9%至5,719点</b>、欧洲/地东/地西分别-3.8%/-3.0%/-7.1%。</p>
+          <div class="data-chips">
+            <span class="chip highlight">SCFI 3,509.53（+2.9%五连涨）</span>
+            <span class="chip up">美东 $10,046/FEU 重破万</span>
+            <span class="chip up">波斯湾 $6,139/TEU（+7.1%）</span>
+            <span class="chip down">欧洲 $2,716/TEU（-4.4%）</span>
+            <span class="chip down">地中海 $3,557/TEU（-5.6%）</span>
+            <span class="chip">NCFI 2,607.4（+1.9%）</span>
+            <span class="chip">SCFIS欧线 -5.9%</span>
+          </div>
+          <p>运价市场已<b>完全分裂成多个区域市场</b>：亚洲-美东面对的是巴拿马限流+港口拥堵；亚洲-欧洲面对的是苏伊士复航释放运力+需求偏弱；亚洲-中东面对霍尔木兹风险+陆桥高额附加费；东南亚内贸则出现剧烈短线波动（<b>宁波-胡志明单周+21%、林查班+15.9%、巴生+11.1%</b>）。这种状态不会很快缓解——只要霍尔木兹、曼德、苏伊士、巴拿马任一节点格局未变，<b>"主线分化、整体高位"</b>将是2026下半年的常态。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.sse.net.cn" target="_blank">上海航运交易所</a>、<a href="https://www.cnful.com" target="_blank">宁波航交所NCFI</a>、<a href="https://www.drewry.co.uk" target="_blank">Drewry WCI</a>、<a href="https://m.10jqka.com.cn/20260902/c679523462.shtml" target="_blank">华源证券/同花顺</a>
+        </div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">BDI创近三年新高：9月2日报3,331点（+5.51%），海岬型单日暴涨8.06%至5,642点</div>
+          <span class="tag purple">干散货市场</span>
+        </div>
+        <div class="card-body">
+          <p>波罗的海干散货指数（BDI）9月2日大涨<b>174点（+5.51%）至3,331点</b>，创<b>2023年12月4日以来近三年新高</b>，同日涨幅为2026年7月8日以来最大。三大船型齐涨：</p>
+          <p><b>海岬型BCI：+8.06%（+421点）至5,642点</b>，创2023年12月以来最高；日均收益$47,666（+$3,819），船东盈利水平大幅改善；</p>
+          <p><b>巴拿马型BPI：+2.92%（+69点）至2,429点</b>，创三个多月新高；日均收益$21,865（+$628），北美新季大豆/玉米出口启动提供稳定货盘；</p>
+          <p><b>超灵便型BSI：+0.42%至1,657点</b>。</p>
+          <div class="data-chips">
+            <span class="chip highlight">BDI 3,331点（+5.51%）</span>
+            <span class="chip highlight">2023年12月以来近三年新高</span>
+            <span class="chip up">BCI +8.06% 至5,642点</span>
+            <span class="chip up">BPI +2.92% 至2,429点</span>
+            <span class="chip up">BSI +0.42% 至1,657点</span>
+            <span class="chip warn">Capesize日均收益 $47,666</span>
+            <span class="chip warn">Panamax日均收益 $21,865</span>
+          </div>
+          <p>本轮行情的核心驱动是<b>海岬型铁矿石货盘放量</b>叠加中国钢厂开工率边际改善。澳/巴主要铁矿石出口国发货量持续增加，<b>预计国内港口铁矿石到货量将阶段性回升</b>；同时北美新季大豆/玉米出口季开启，巴拿马型获得粮食货盘支撑。<b>对本轮行情的判断</b>：若铁矿石到货与发货节奏匹配、海岬型货盘维持稳定，BDI有望在3,300-3,500区间震荡偏强；但需警惕——若中国钢厂开工率走弱或中国进口铁矿石到货集中到港压制补库意愿，9月中下旬存在冲高回落风险。<b>对油运/集运联动影响</b>：VLCC运价在霍尔木兹危机推动下加速冲向$100,000/日区间，与BDI同步创近年新高，全球干散货-油运-集装箱"三高一紧"格局进一步加深。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://oil.fx678.com/news/202609030131208817" target="_blank">汇通财经</a>、<a href="https://www.163.com/dy/article/L5PM57OL0519ALI0.html" target="_blank">网易财经</a>、<a href="https://www.balticexchange.com" target="_blank">波罗的海交易所</a>、<a href="https://cj.sina.com.cn/articles/view/5115326071/130e5ae77020030fb2" target="_blank">新浪/格隆汇</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      航运日报 · 2026年9月3日 · 自动化生成
+    </div>
+  </div>
+</body>
+</html>
