@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年9月7日</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 14px; opacity: 0.85; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .chip.up { color: #dc2626; }
+    .chip.down { color: #059669; }
+    .chip.highlight { background: #dbeafe; color: #1e40af; }
+    .chip.warn { background: #fef3c7; color: #92400e; }
+
+    .source {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .source a {
+      color: #1a56db;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .market-summary {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .market-summary h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 12px;
+    }
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .market-item {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+    }
+    .market-item .label {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .market-item .value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .market-item .change {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    .market-item .change.up { color: #dc2626; }
+    .market-item .change.down { color: #059669; }
+
+    @media (max-width: 600px) {
+      .container { padding: 12px; }
+      header { padding: 24px 18px; }
+      header h1 { font-size: 20px; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>航运日报</h1>
+      <div class="meta">2026年9月7日 星期一 | 重点关注：霍尔木兹"暗船"500万桶/日流量曝光、德荷北欧港口连环罢工、SCFI六连涨至3590点、三星索赔达飞1.86亿美元、全球箱船运力破3400万TEU</div>
+    </header>
+
+    <!-- 市场数据速览 -->
+    <div class="market-summary">
+      <h3>市场数据速览（截至9月4日）</h3>
+      <div class="market-grid">
+        <div class="market-item">
+          <div class="label">SCFI 综合指数</div>
+          <div class="value">3,590.05<span class="change up">+2.29%</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">BDI 波罗的海干散货</div>
+          <div class="value">3,628<span class="change up">+140</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">布伦特原油</div>
+          <div class="value">$95.52<span class="change down">-0.12%</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">WTI原油</div>
+          <div class="value">$91.30<span class="change up">+0.32%</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">BDTI 原油运价</div>
+          <div class="value">2,805<span class="change up">+51</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">BCI 海岬型</div>
+          <div class="value">6,427<span class="change up">+385</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ① 船司动态 -->
+    <div class="section">
+      <div class="section-title">1️⃣ 船司动态</div>
+
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">三星向达飞索赔1.86亿美元：FMC疫情滞箱费"旧账"清算第七案，船司收费合规风暴升级</div>
+          <span class="tag purple">合规风暴</span>
+        </div>
+        <div class="card-body">
+          <p>9月4日，美国联邦海事委员会（FMC）正式公告立案（Docket No. 26-12），三星电子美国公司向法国达飞轮船（CMA CGM）提起正式投诉，索赔金额至少<b>1.86亿美元</b>——其中1.48亿美元为涉嫌违法的滞期费、滞箱费及铁路仓储费，810万美元为三星被迫自行安排内陆运输的额外成本，3000万美元为判决前利息。这是三星围绕疫情时期集装箱运输费用问题，向FMC发起的<b>第7起针对船公司的申诉</b>。</p>
+          <div class="data-chips">
+            <span class="chip highlight">索赔$1.86亿（D&D $1.48亿+额外$810万+利息$3000万）</span>
+            <span class="chip warn">涉及12.1万笔滞期费/滞箱费</span>
+            <span class="chip warn">指控达飞未履行Store-Door运输义务却仍收费</span>
+            <span class="chip">指控达飞"扣货"当"人质"(hostage)</span>
+            <span class="chip">单笔铁路仓储费高达$374.8万</span>
+            <span class="chip">FMC 9/1立案 达飞25天内须答复</span>
+            <span class="chip">初步裁决2027/9/1 最终裁决2028/3/15</span>
+            <span class="chip">FMC此前已罚MSC $2267万、和解马士基$190万</span>
+          </div>
+          <p>三星指控核心：2020-2022年疫情期间，达飞在Store-Door（门到门）运输模式下未按约完成内陆运输，却仍向三星收取因延误产生的滞期费和滞箱费。更严重的是，三星指控达飞在费用争议期间<b>扣留三星货物</b>作为施压手段——"费用越高、货物越难处理"形成恶性循环。达飞还被指控单方面将Store-Door提单转为Container Yard（堆场）运输安排，且部分转换发生时集装箱已开始产生滞期费。此案标志着疫情后船公司收费合规审查进入新阶段：FMC此前已对MSC处以2267万美元罚款、与马士基达成190万美元和解。<b>滞箱费/滞期费的合理性与船公司内陆运输履约义务的边界，正在被重新定义</b>。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://en.portnews.ru/news/396571" target="_blank">PortNews</a>、<a href="https://www.sohu.com/a/1072097846_121124376" target="_blank">搜狐</a>、<a href="https://www.163.com/dy/article/L62B9TL00514HF9T.html" target="_blank">最航运/网易</a>
+        </div>
+      </div>
+
+      <div class="card teal">
+        <div class="card-header">
+          <div class="card-title">全球集装箱运力突破3400万TEU历史关口：五年半增42%创纪录，供给压力持续累积</div>
+          <span class="tag blue">行业里程碑</span>
+        </div>
+        <div class="card-body">
+          <p>9月3日，航运组织BIMCO发布最新数据：全球集装箱船队总运力距3400万TEU仅差8,000 TEU，9月待交付的46艘/28.6万TEU新船中只需少量投入运营即可突破这一历史关口。按AlphaLiner数据，全 Cellular 运力已达3420万TEU（6,822艘/4.12亿载重吨）。<b>五年半内全球箱船运力增加约1000万TEU（+42%），创下历史最快增长纪录</b>——此前从1400万增至2400万TEU耗时超过10年半。</p>
+          <div class="data-chips">
+            <span class="chip highlight">全球箱船运力逼近3400万TEU历史关口</span>
+            <span class="chip highlight">5.5年增1000万TEU(+42%) 创纪录</span>
+            <span class="chip warn">5.5年仅拆解<30万TEU（极低）</span>
+            <span class="chip warn">近2000艘/500万TEU船龄≥20年</span>
+            <span class="chip">>12000TEU大型船贡献2/3增量，占比30%→40%</span>
+            <span class="chip">班轮公司控制65%运力（2021年57%）</span>
+            <span class="chip">手持订单>1400万TEU（2030前交付）</span>
+            <span class="chip">BIMCO预测5年内或达4400万TEU</span>
+            <span class="chip">MSC 740万TEU超马士基50%</span>
+          </div>
+          <p>增长来源为创纪录的新船交付量叠加极低的拆解率——五年半仅拆解不足30万TEU，上一次如此低拆解率还是在2004-2009年间（当时船队规模仅为当前1/3）。BIMCO首席分析师Rasmussen警告：<b>即使所有20年以上船舶在未来五年全部拆解，供给增长仍将显著</b>。若苏伊士运河航线恢复正常、绕行好望角吸收的运力被释放，叠加新船持续交付，市场供给压力将进一步加大。不过当前高运价的支撑力量仍在——港口拥堵、运河限航和中东安全风险正在大量吞噬"有效运力"，名义运力增长与实际可用运力之间存在巨大剪刀差。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.shipping-now.com/article/217419/container-fleet-smashes-34m-teu-record-as-fleet-growth-accelerates" target="_blank">Maritime Executive/Shipping Now</a>、<a href="https://www.indexbox.io/blog/global-container-fleet-surpasses-34-million-teu/" target="_blank">IndexBox</a>、<a href="https://en.portnews.ru/news/396509" target="_blank">PortNews</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 港口动态 -->
+    <div class="section">
+      <div class="section-title">2️⃣ 港口动态</div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">德/荷北欧港口连环罢工冲击全球供应链：德国6港48h+荷兰3港+铁路24h，"完美风暴"叠加创纪录拥堵</div>
+          <span class="tag red">供应链冲击</span>
+        </div>
+        <div class="card-body">
+          <p>9月2日晚至9月4日，欧洲北海岸核心港口遭遇"连环罢工"——德国ver.di工会发起48小时警告性罢工，覆盖汉堡、不来梅港、不来梅、威廉港、埃姆登、布拉克六大港口约11,000名码头工人；9月4日荷兰FNV/CNV工会接力罢工，影响鹿特丹、阿姆斯特丹、泽兰三港；9月9日荷兰全国铁路24小时罢工将至。赫伯罗特确认德国港口船舶作业、码头操作和内陆运输全面受影响，鹿特丹拖船服务也参与罢工<b>直接影响港内船舶移动</b>。</p>
+          <div class="data-chips">
+            <span class="chip highlight">德国6港48h罢工(9/2晚-9/4) ~11,000人</span>
+            <span class="chip highlight">荷兰3港罢工(9/4) 鹿特丹/阿姆/泽兰</span>
+            <span class="chip warn">荷兰全国铁路24h罢工(9/9)</span>
+            <span class="chip warn">汉堡4大集装箱码头全停(HHLA CTA/CTB/CTT+Eurogate)</span>
+            <span class="chip warn">鹿特丹拖船参与 影响船舶进出</span>
+            <span class="chip">ver.di要求8.2%(12个月) vs ZDS offer 5.1%(18个月)</span>
+            <span class="chip">鹿特丹/汉堡/不来梅港外锚泊>16万TEU</span>
+            <span class="chip">全球拥堵吸收~170万TEU(5%深水集运运力)</span>
+            <span class="chip">这是8/18以来第二次警告性罢工</span>
+          </div>
+          <p>此次罢工冲击恰逢北欧港口拥堵高峰期。Linerlytica估计鹿特丹、汉堡和不来梅港外等待的集装箱船运力超过<b>16万TEU</b>，全球拥堵和延误已吸收约170万TEU运力（约5%全球深水集运运力）。德迅（Kuehne+Nagel）警告码头将暂停运营，集装箱进港交付和出港提取无法进行；达飞确认卡车和铁路交付在48小时内不可用。值得注意的是，德国罢工与荷兰罢工背景不同——前者为薪资谈判破裂（ver.di要求8.2%加薪/12个月协议，ZDS仅offer 5.1%/18个月），后者为政治抗议（反对政府削减65亿欧元社会保障支出）。<b>两起罢工时间衔接、地点叠加，构成北欧港口"完美风暴"</b>，罢工结束后拥堵仍将持续数周。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.marineinsight.com/port-strikes-disrupt-operations-at-hamburg-rotterdam-and-other-major-european-shipping-hubs" target="_blank">Marine Insight</a>、<a href="https://www.worldcargonews.com/news/2026/09/german-ports-disrupted-by-strikes-as-dutch-dockworkers-prepare-to-walk-out" target="_blank">World Cargo News</a>、<a href="https://www.kytd-logistics.com/european-logistics-strikes-supply-chain-disruption-september.html" target="_blank">KYTD Logistics</a>、<a href="https://www.cccme.org.cn/news/details.aspx?id=9EFC9D3025241057495FE1C5C3BA17FC" target="_blank">中国机电产品进出口商会</a>
+        </div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-title">巴拿马运河阶梯限流再升级：9/3起Neopanamax降至9艘/天，多家船司附加费飙至$500/TEU</div>
+          <span class="tag orange">运力瓶颈</span>
+        </div>
+        <div class="card-body">
+          <p>巴拿马运河管理局持续收紧通航条件：9月3日起Neopanamax船闸每日通航降至9艘、Panamax降至25艘，9月15日Panamax将进一步降至23艘/天。吃水限制同样阶梯式下调——9月3日起降至47.5英尺（14.48米），10月1日进一步降至47英尺。未获预订的南向船舶等待时间已达10.6天，Seaspan Benefactor此前支付400万美元"插队费"接近历史最高。<b>达飞、MSC、赫伯罗特、ONE四大船司密集加收巴拿马运河附加费</b>，成本转嫁从"临时应急"转向"结构性常态"。</p>
+          <div class="data-chips">
+            <span class="chip highlight">Neopanamax 9艘/天 Panamax 25→9/15降至23艘</span>
+            <span class="chip warn">吃水9/3降至47.5ft(14.48m) 10/1降至47ft</span>
+            <span class="chip warn">未预订等待10.6天 插队费$400万</span>
+            <span class="chip">达飞$500/TEU(9/10生效) ↑56%</span>
+            <span class="chip">MSC $149-376/箱(9/12生效) ↑49%</span>
+            <span class="chip">赫伯罗特$130/TEU(8/15起)</span>
+            <span class="chip">ONE $150/TEU(8/10起)</span>
+            <span class="chip">厄尔尼诺增强概率81%</span>
+            <span class="chip">美东/美湾航线单箱成本同比+15%</span>
+          </div>
+          <p>运河限流的根源是加通湖水位因厄尔尼诺干旱持续下降——流域5-8月降雨量同比-34%、来水量-44%。NOAA预测厄尔尼诺增强至"极强"级别概率达81%，意味着限流或持续至明年雨季。13,000-15,500 TEU船舶每减少0.5英尺吃水即损失500-800 TEU装载能力。巴拿马运河与霍尔木兹海峡、曼德海峡构成全球三大航运咽喉同步受限的<b>史无前例多节点压力测试</b>，从红海/波斯湾改道的船舶大量涌入巴拿马，进一步加剧排队。SCFI美东航线已突破$10,046/FEU创25个月新高，运河附加费的层层叠加将使中美航线成本继续攀升。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://southernstarnavigation.com/panama-canal-cbp-drawback-de-minimis-freight-planning" target="_blank">Southern Star Navigation</a>、<a href="https://www.indexbox.io/blog/ocean-carriers-raise-panama-canal-surcharges-amid-drought-preparations/" target="_blank">IndexBox</a>、<a href="https://www.jctrans.com/cn/news/14011" target="_blank">JCtrans</a>、<a href="https://www.shippingazette.com/news?news_id=9260800000320" target="_blank">Shipping Gazette</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 国际海运贸易分析 -->
+    <div class="section">
+      <div class="section-title">3️⃣ 国际海运贸易分析</div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">高盛报告曝光霍尔木兹"暗船"500万桶/日：美伊军事对峙再升级，可见通行仅6-13艘/日</div>
+          <span class="tag red">地缘冲突</span>
+        </div>
+        <div class="card-body">
+          <p>9月4日，高盛策略师团队发布研报揭示：海湾石油出口已回升至每日1500-1600万桶（约战前2/3），但<b>可见船运数据仅显示约1000万桶/日，两者间500万桶的缺口来自"暗船通行激增"</b>——油轮通过关闭AIS系统规避伊朗追踪与拦截。与此同时，美伊军事对峙再度升级：伊朗9/3宣布打击美军在阿联酋和科威特基地；Kpler数据显示9/3仅6艘商船过峡（9/2为11艘），十日日均约13艘，远低于战前日均约100艘。JMIC将风险等级维持"severe"。特朗普9/2明确拒绝谈判，6月签署的MOU已于8/17到期未续。</p>
+          <div class="data-chips">
+            <span class="chip highlight">高盛：海湾出口1500-1600万桶/日(战前2/3)</span>
+            <span class="chip highlight">其中500万桶/日为"暗船"(关闭AIS)</span>
+            <span class="chip warn">Kpler 9/3仅6艘过峡 10日均~13艘</span>
+            <span class="chip warn">战前日均~100艘</span>
+            <span class="chip">美国声称9/2护航40艘/1800万桶(战时纪录)</span>
+            <span class="chip">船追踪数据远低于美方声称</span>
+            <span class="chip">布伦特$95.52 WTI $91.30</span>
+            <span class="chip">CENTCOM累计改变87艘商船航向</span>
+            <span class="chip">伊朗要求$1/桶过境费 须以加密货币支付</span>
+            <span class="chip">沙特红海出口8月较7月-450万桶/日</span>
+            <span class="chip">IMO撤离计划目前暂停</span>
+          </div>
+          <p>美伊双方对海峡通行数据的叙事严重分化——美方宣称"霍尔木兹回来了"（能源部长称1700万桶/日、副总统万斯称1500万桶/日），而船追踪机构Kpler、Lloyd's List Intelligence和PortWatch均显示个位数至低十位数的日均通行量。半岛电视台分析指出：<b>美方可能将绕道管道运输量与海峡通行量混计，或计入军事护航下的非常规通行</b>。高盛指出暗船规模扩大还导致全球原油库存数据可能被低估约3900万桶。当前沙特已将部分石油流量从延布港导回东部港口，红海出口（经曼德海峡/苏伊士运河/SUMED管道）8月较7月减少450万桶/日。伊朗议会通过新法案将海峡控制权列为"不可剥夺权利"并计划征收过境费，而阿联酋已暂停与伊朗一切贸易——<b>"暗船通行+选择性封锁+管道绕行"构成霍尔木兹新常态</b>，保险机构已将该区域战争险费率从0.3%升至0.75%。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.toutiao.com/article/7681469362888426022/" target="_blank">华尔街见闻/今日头条</a>、<a href="https://www.aljazeera.com/news/2026/9/3/how-much-oil-is-going-through-hormuz-how-data-doesnt-match-us-claims" target="_blank">Al Jazeera</a>、<a href="https://finance.sina.com.cn/money/future/fmnews/2026-09-04/doc-iniqrihy3991182.shtml" target="_blank">新浪财经</a>、<a href="https://www.imo.org/en/mediacentre/hottopics/pages/middle-east-strait-of-hormuz.aspx" target="_blank">IMO</a>
+        </div>
+      </div>
+
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">SCFI六连涨至3590点创25个月新高：美强欧弱分化加剧，黄金周前船司密集停航控舱</div>
+          <span class="tag green">运价走势</span>
+        </div>
+        <div class="card-body">
+          <p>上海航运交易所9月4日最新数据：SCFI综合指数报<b>3,590.05点</b>，较上期上涨80.52点（+2.29%），连续第六周上涨，创近25个月新高。运价结构高度分化：美东航线$10,046/FEU（+3.57%）突破万美元创25个月新高、美西$6,940/FEU（+2.59%）、波斯湾$6,139/TEU（+7.1%）、南美$8,663/TEU（+11.0%）全线领涨；而欧洲线$2,716/TEU（-4.43%）、地中海$3,557/TEU（-5.58%）延续弱势。<b>北美、中东、南美市场的大幅上涨正在抵消欧洲航线的持续回落</b>，运价不再全球同步而是高度分化。</p>
+          <div class="data-chips">
+            <span class="chip highlight up">SCFI 3,590.05(+2.29%) 六连涨 25个月新高</span>
+            <span class="chip up">美东 $10,046/FEU(+3.57%) 创25个月新高</span>
+            <span class="chip up">美西 $6,940/FEU(+2.59%)</span>
+            <span class="chip up">波斯湾 $6,139/TEU(+7.1%)</span>
+            <span class="chip up">南美 $8,663/TEU(+11.0%)</span>
+            <span class="chip down">欧洲 $2,716/TEU(-4.43%)</span>
+            <span class="chip down">地中海 $3,557/TEU(-5.58%)</span>
+            <span class="chip">BDI 3,628(+140) BCI 6,427(+385)</span>
+            <span class="chip">马士基/MSC/赫伯罗特黄金周取消10余航次</span>
+            <span class="chip">NCFI 2,607.4(+1.9%) 21条航线14涨7跌</span>
+          </div>
+          <p>运价分化的背后是运力有效性的区域错配——哪里有地缘政治风险、港口拥堵、运河限制和班轮网络失位，哪里的有效运力就变稀缺。北美线受巴拿马运河限航和美国返校季/关税窗口前抢运驱动；波斯湾线受中东冲突推升；欧洲线因需求走弱和航线恢复运力回流而承压。与此同时，马士基、MSC、赫伯罗特已密集公布黄金周停航计划——亚欧方向取消AE15/AE12/AE1/SWAN/BRITANNIA/JADE/LION等航次，跨太平洋取消TP8/TP12/WC2/US2/AA7/Orient/Pearl等航次，<b>第36-41周集中停航率约6%</b>（跨太54%、欧地28%），以控舱对冲需求回落。干散货方面，BDI 9/4报3,628点（+140），BCI 6,427（+385）继续领涨，铁矿石货盘支撑海岬型，但巴拿马型煤炭需求偏弱，大小船分化持续。BDTI 2,805（+51），VLCC中东-远东现货TCE $745,100/天，油运超级周期延续。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.sse.net.cn/index/singleIndex?indexType=scfi" target="_blank">上海航运交易所</a>、<a href="https://www.163.com/dy/article/L5R5KQMF0514C1PI.html" target="_blank">信德海事/网易</a>、<a href="https://www.ccpitzj.gov.cn/col/col1229557691/art/2026/art_f9ae773d951242dab312aee6a70f27cd.html" target="_blank">浙江贸促会</a>、<a href="https://www.tradewindsnews.com/markets" target="_blank">TradeWinds</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      航运日报 | 自动化任务 #1781485712150 | 2026-09-07 09:00 CST<br>
+      数据来源：上海航运交易所 / BIMCO / Kpler / 高盛 / Lloyd's List / IMO / FMC / 洲际船务 等
+    </div>
+  </div>
+</body>
+</html>
