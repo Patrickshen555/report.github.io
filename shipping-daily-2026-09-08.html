@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年9月8日</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 14px; opacity: 0.85; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .chip.up { color: #dc2626; }
+    .chip.down { color: #059669; }
+    .chip.highlight { background: #dbeafe; color: #1e40af; }
+    .chip.warn { background: #fef3c7; color: #92400e; }
+
+    .source {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .source a {
+      color: #1a56db;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .market-summary {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .market-summary h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 12px;
+    }
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .market-item {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+    }
+    .market-item .label {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .market-item .value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .market-item .change {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    .market-item .change.up { color: #dc2626; }
+    .market-item .change.down { color: #059669; }
+
+    @media (max-width: 600px) {
+      .container { padding: 12px; }
+      header { padding: 24px 18px; }
+      header h1 { font-size: 20px; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>航运日报</h1>
+      <div class="meta">2026年9月8日 星期二 | 重点关注：霍尔木兹美伊最大规模油轮互袭升级、伊朗宣布设"新禁区"、布伦特逼近$98创六周新高、OOCL命名第二艘24,000TEU甲醇双燃料船"Grace"、阳明海运6艘13,000TEU LNG双燃料大单11.13亿美元、全球港口待泊运力破纪录430万TEU、SCFI六连涨至3590点</div>
+    </header>
+
+    <!-- 市场数据速览 -->
+    <div class="market-summary">
+      <h3>市场数据速览（截至9月4-7日）</h3>
+      <div class="market-grid">
+        <div class="market-item">
+          <div class="label">SCFI 综合指数 (9/4)</div>
+          <div class="value">3,590.05<span class="change up">+2.29%</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">BDI 波罗的海干散货 (9/4)</div>
+          <div class="value">3,628<span class="change up">+140</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">布伦特原油 (9/8)</div>
+          <div class="value">$97.31<span class="change up">+1.07%</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">WTI原油 (9/8)</div>
+          <div class="value">$92.71<span class="change up">+1.34%</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">BDTI 原油运价 (9/4)</div>
+          <div class="value">2,805<span class="change up">+51</span></div>
+        </div>
+        <div class="market-item">
+          <div class="label">BCI 海岬型 (9/4)</div>
+          <div class="value">6,427<span class="change up">+385</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ① 船司动态 -->
+    <div class="section">
+      <div class="section-title">1️⃣ 船司动态</div>
+
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">OOCL命名第二艘24,000TEU甲醇双燃料船"OOCL Grace"：全球最大甲醇双燃料船系列加速成型</div>
+          <span class="tag green">船队扩张</span>
+        </div>
+        <div class="card-body">
+          <p>东方海外货柜航运（OOCL）近日在南通中远海运川崎船舶工程有限公司（NACKS）船厂为其第二艘24,000TEU甲醇双燃料集装箱船"<b>OOCL Grace</b>"举行命名仪式，Hayco Group全球物流总监Annetta Duan女士担任教母。Grace是OOCL订造的7艘24,000TEU甲醇双燃料船中的第二艘——首制船"OOCL Wisdom"已于5月命名、7月完成首次绿色甲醇加注并开启欧洲首航。OOCL将此系列称为<b>全球最大的甲醇双燃料集装箱船系列</b>，并计划后续5艘陆续加入运营。</p>
+          <div class="data-chips">
+            <span class="chip highlight">24,000 TEU甲醇双燃料 (OOCL Grace为系列第二艘)</span>
+            <span class="chip highlight">Wisdom 7月已完成首航+绿色甲醇加注</span>
+            <span class="chip warn">系列共7艘 由NACKS承建</span>
+            <span class="chip">OOCL Wisdom 24,168 TEU 甲醇双燃料主机/辅机/锅炉</span>
+            <span class="chip">OOCL今年4月另订12艘13,600TEU LNG双燃料船</span>
+            <span class="chip">同步布局甲醇+LNG多燃料路径</span>
+            <span class="chip">OOCL 8/27中期业绩强调船队绿色化</span>
+            <span class="chip">绿色大型化并行 成班轮公司船队更新方向</span>
+          </div>
+          <p>甲醇双燃料技术与24,000TEU超大型船的结合已从"单船试验"迈入<b>"规模化船队部署"阶段</b>。OOCL同时采取甲醇与LNG双轨策略——4月订造12艘13,600TEU LNG双燃料船，加上现有7艘24,000TEU甲醇双燃料船，绿色大型船队矩阵清晰成型。从行业角度看，"绿色燃料+大型化运力"已成头部班轮公司船队更新的主流方向：马士基主推LNG/甲醇双轨、达飞推行LNG+生物甲醇、MSC在LNG/氨燃料预留领域广泛布局。在IMO净零碳排框架下、12月关键会谈前，班轮公司通过"多燃料技术组合+大型新船"提前锁定合规成本优势。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.oocl.com/eng/pressandmedia/pressreleases/2026/Pages/28Aug2026.aspx" target="_blank">OOCL官方</a>、<a href="https://www.seanews.com.tr/article/oocl-launches-oocl-grace-second-24000-teu-methanol-dual-fuel-vessel-mtrq5ntc" target="_blank">SeaNews</a>、<a href="https://www.toutiao.com/article/7681087841283162666/" target="_blank">今日头条/新浪财经</a>、<a href="https://shippingazette.com/news/9260900000053" target="_blank">Shipping Gazette</a>
+        </div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">阳明海运6艘13,000TEU LNG双燃料大单签约：11.13亿美元，韩华海洋承建2028-2029交付</div>
+          <span class="tag purple">造船订单</span>
+        </div>
+        <div class="card-body">
+          <p>9月2日，台湾阳明海运（Yang Ming）与韩国韩华海洋（Hanwha Ocean）正式签署6艘13,000TEU级LNG双燃料集装箱船建造合同，总金额约<b>11.13亿美元</b>（约76.7亿元人民币），单船造价约1.9亿美元，高于克拉克森最新报告的同型船新造船价格约1.73亿美元。签约仪式在阳明海运重庆大楼举行，由阳明董事长蔡丰明与韩华海洋CEO金熙喆代表签约。新船预计2028-2029年陆续交付，将与阳明既有万TEU级船队搭配，灵活部署于亚洲往返北美东/西岸、南美及地中海等核心航线。</p>
+          <div class="data-chips">
+            <span class="chip highlight">6艘×13,650 TEU LNG双燃料 总价$11.13亿</span>
+            <span class="chip highlight">单船造价$1.9亿 高于克拉克森$1.73亿基准</span>
+            <span class="chip warn">氨燃料预留(Ammonia Fuel Ready)设计</span>
+            <span class="chip">LNG减排放20% Type B储气舱设计压力1.0 bar</span>
+            <span class="chip">高锰钢LNG燃料舱(韩华自主技术)</span>
+            <span class="chip">2028-2029年陆续交付</span>
+            <span class="chip">配套船艏导风罩+节能舵球+预导流+岸电</span>
+            <span class="chip">阳明2030年前共24艘新船投运</span>
+            <span class="chip">含18艘LNG双燃料+6艘甲醇双燃料8,000TEU</span>
+            <span class="chip">去年9月已订7艘16,000TEU LNG双燃料</span>
+          </div>
+          <p>阳明海运的"2030船队现代化蓝图"正稳步推进——2030年前将有24艘新船陆续投运，其中18艘LNG双燃料船（5艘15,500 TEU+7艘16,000 TEU+本次6艘13,000 TEU）以及6艘甲醇双燃料预留8,000 TEU级船。<b>13,000TEU级作为"主航线灵活配置船型"，填补了阳明在8,000TEU支线与16,000TEU主力的中间空白</b>，可与既有万TEU船队混编调度。此次订单的特殊意义在于：(1) 高锰钢LNG燃料舱首次批量装船——韩华自主技术，零下163℃超低温环境韧性优于镍合金钢/铝；(2) 氨燃料预留设计为IMO碳价机制（12月会谈）落地后切换零碳燃料预留空间；(3) 单船溢价约1700万美元，反映头部船厂订单簿饱满+优质船位稀缺。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.yangming.com/en/news/press_release/16076" target="_blank">阳明海运官方</a>、<a href="https://www.imarinenews.com/38613.html" target="_blank">iMarine News</a>、<a href="https://www.163.com/dy/article/L600D63G0534MV15.html" target="_blank">国际船舶网/网易</a>、<a href="https://www.moneydj.com/KMDJ/news/newsviewer.aspx?a=b73626e4-c5a0-4115-90bc-245a3ab6162d" target="_blank">MoneyDJ</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 港口动态 -->
+    <div class="section">
+      <div class="section-title">2️⃣ 港口动态</div>
+
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-title">全球港口待泊运力破纪录430万TEU：东亚港口占220万TEU，系统性"运力冻结"成高运价底层支撑</div>
+          <span class="tag orange">港口拥堵</span>
+        </div>
+        <div class="card-body">
+          <p>Linerlytica最新数据显示，全球集装箱港口待泊运力已突破<b>430万TEU</b>，超越2020年新冠疫情期间约400万TEU的历史峰值，占全球3,440万TEU总船队规模的12.6%。约170万TEU运力被"冻结"在港口锚地无法投入下一航次，相当于"凭空消失"了一家全球第八大班轮公司���约三分之一的集装箱船无法准点靠港，平均延误超5天。德路里指出：<b>集运系统多年来优化成本而非韧性，闲置运力正成为新"硬通货"</b>——拥堵叠加舱位偏紧，正是运价维持高位的核心供给侧背景。</p>
+          <div class="data-chips">
+            <span class="chip highlight">全球待泊运力430万TEU 创历史新高</span>
+            <span class="chip highlight">占全球3,440万TEU船队12.6%</span>
+            <span class="chip warn">东亚港口待泊约220万TEU 占全球一半</span>
+            <span class="chip warn">"冻结"运力约170万TEU(全球第8大班轮规模)</span>
+            <span class="chip">超越2020年新冠期间400万TEU峰值</span>
+            <span class="chip">约1/3集装箱船无法准点靠港</span>
+            <span class="chip">船期平均延误>5天</span>
+            <span class="chip">上海洋山锚泊139艘(2周增5.8倍)近2年新高</span>
+            <span class="chip">外高桥/洋山/外二等泊7-12天</span>
+            <span class="chip">宁波舟山港5-6天 梅山堆场利用率100%</span>
+            <span class="chip">青岛/天津/盐田/蛇口/香港等泊3-7天</span>
+            <span class="chip">"单一扰动需约一周恢复"</span>
+          </div>
+          <p>本次拥堵的核心特征是<b>东亚集中化+多触发叠加</b>：东亚港口承担约220万TEU待泊（占全球一半），上海/宁波/深圳/香港/青岛五大枢纽均承压。上海港外等待船舶数从两周前大幅跃升至139艘（约2周前的5.8倍），外高桥/外二/洋山一二期等泊7-12天；宁波舟山港等泊5-6天，梅山集装箱码头堆场利用率达100%；盐田/蛇口等泊3-7天。触发因素除传统旺季集中到港、码头堆场饱和、跳港/紧急改道外，更关键的扰动来自<b>西北太平洋热带气旋频发</b>——"台风→引航暂停→船舶就地锚泊→码头临时关停→船期推迟→出口货物错过预订船"的循环反复，将单次扰动放大为系统性失能。PortXchange指出：这种拥堵"不应被简单视为天气事件"，是行业在协作、韧性与脱碳承诺与实际行动之间存在巨大鸿沟的具体体现。Splash 247分析则指出：在新船供给尚未成为各航线主导力量时，<b>"船司主动控舱+���堵冻结有效运力"短期仍有效，但难以长期中和结构性交付压力</b>。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://allaboutshipping.co.uk/2026/09/03/record-port-congestion-exposes-maritimes-collaboration-problem-says-portxchange" target="_blank">All About Shipping/PortXchange</a>、<a href="https://stusupplychain.com/Global-Port-Congestion-Hits-New-High-4-3-Million-TEU-Waiting-at-Anchor-East-Asia-Ports-Bear-the-Brunt-id01593135.html" target="_blank">STU Supply Chain</a>、<a href="https://www.jiufanglogistics.cn/logistics/11804.html" target="_blank">九方通逊</a>、<a href="https://www.oiaglobal.com/resource-library/market-report/9-2026" target="_blank">OIA Global</a>、<a href="https://tfgglobal.com.au/september-2026-freight-market-update/" target="_blank">TFG Global</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 国际海运贸易分析 -->
+    <div class="section">
+      <div class="section-title">3️⃣ 国际海运贸易分析</div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">霍尔木兹冲突"游戏规则改写"：美伊迄今最大规模油轮互袭，伊朗宣布设海峡外"新禁区"，布伦特逼近$98创六周新高</div>
+          <span class="tag red">地缘冲突</span>
+        </div>
+        <div class="card-body">
+          <p>9月5日，美伊在霍尔木兹海峡及周边海域发生冲突爆发以来<b>迄今最大规模油轮互袭</b>。五角大楼中央司令部宣布：美军在卡尔格岛附近、贾斯克地区和阿曼湾袭击了三艘伊朗油轮；作为回应，伊朗革命卫队用弹道导弹"直接在美国航母上空"试射反舰导弹并打击了一艘美国海军航空母舰和一艘驱逐舰（美军规避无人员伤亡）。9月6日，伊朗革命卫队又打击了一艘"企图驶入伊朗保护区域"的美军海上无人艇。同日，伊朗最高国家安全委员会秘书雷扎伊宣布：伊朗将在<b>霍尔木兹海峡之外设立新"禁区"，范围从美国海军封锁线延伸至波斯湾部分海域</b>，任何进入该范围的船只将被列入制裁名单。伊朗议会议长卡利巴夫直言："对等反击的时代已经结束，冲突的'游戏规则已经改变'。"</p>
+          <div class="data-chips">
+            <span class="chip highlight">9/5美伊迄今最大规模油轮互袭</span>
+            <span class="chip highlight">美军袭击3艘伊朗油轮 伊朗反击航母</span>
+            <span class="chip highlight warn">伊朗宣布霍尔木兹外设"新禁区"</span>
+            <span class="chip warn">通航量降至5月来最低 10日均仅10艘</span>
+            <span class="chip warn">9/6仅5艘 9/5仅2艘过峡</span>
+            <span class="chip warn">9/2以来无VLCC过峡</span>
+            <span class="chip">伊朗与阿曼协议进入最后阶段</span>
+            <span class="chip">布伦特逼近$98 收$97.31(+1.07%)</span>
+            <span class="chip">WTI $92.71(+1.34%)创7月底新高</span>
+            <span class="chip">自7/6以来海峡周边已27起船舶遭袭</span>
+            <span class="chip">高盛警告:持续升级布伦特或冲$120</span>
+            <span class="chip">标普:伊朗"影子舰队"170艘/86艘VLCC</span>
+            <span class="chip">美军开始在霍尔木兹主航道秘密扫雷</span>
+            <span class="chip">美股劳工节休市 油价减仓买盘推升</span>
+            <span class="chip">沙特吉赞炼油厂再次遇袭</span>
+          </div>
+          <p>海运数据呈现"持续失血"状态——央视新闻引述Kpler数据：截至9月6日的10天内，霍尔木兹海峡日均仅10艘商业船舶通过，为5月以来最低；9月6日5艘、9月5日仅2艘过峡，<b>自9月2日以来无任何超大型油轮驶出</b>。英国海上贸易行动办公室（UKMTO）周报显示：自7月6日以来，海峡周边已发生27起船舶遭袭事件。<b>军事冲突与外交谈判同步推进</b>——伊朗外长7日宣布，与阿曼的航运管理协议进入最后阶段，将包括一条穿越霍尔木兹海峡的临时安全通道；讽刺的是，协议即将落槌之际军事冲突同步升温。央视还披露美军开始在霍尔木兹原主航道秘密扫雷作业。航运成本方面，希腊Eagle Intelligence将该水域风险升级至"极高"，VLCC单航战争险报价从战前约25万美元飙至1000万美元峰值。高盛警告：若袭击持续升级，布伦特可能冲向120美元/桶。当前全球五分之一石油运输悬于博弈刀锋之上，<b>"暗船+选择性封锁+管道绕行"已成霍尔木兹新常态</b>。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://www.toutiao.com/article/7682945898871013894/" target="_blank">光明网/今日头条</a>、<a href="https://guba.eastmoney.com/news,cjpl,1769895831.html" target="_blank">东方财富/中国基金报</a>、<a href="https://t.10jqka.com.cn/pid_688585991.shtml" target="_blank">同花顺财经</a>、<a href="https://ishare.ifeng.com/c/s/v006SBGTgiGBpl1r4-_AsznYC7l0CoHV-_o4lfFYliNlY-_3xDEh74JZ0By6--8xZCmDChbR" target="_blank">凤凰国际财闻汇</a>、<a href="https://www.toutiao.com/w/1875720220779596/" target="_blank">今日俄罗斯国际通讯社</a>
+        </div>
+      </div>
+
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">SCFI六连涨至3590.05点创阶段新高：美线东南亚齐涨，欧地延续弱势，黄金周前船司密集控舱</div>
+          <span class="tag green">运价走势</span>
+        </div>
+        <div class="card-body">
+          <p>上海航运交易所9月4日最新数据：SCFI综合指数报<b>3,590.05点</b>，较上期上涨80.52点（+2.29%），连续第六周上涨，创近25个月新高。本期"美强欧弱"分化格局进一步加剧：<b>美西$7,242/FEU（+4.4%）、美东$10,324/FEU（+2.8%）继续领涨</b>，东南亚$893/TEU以12.18%周涨幅成为最亮眼航线，南美$8,953/TEU（+3.3%）、澳新$2,640/TEU（+6.8%）亦同步上行；而欧洲$2,643/TEU（-2.7%）、地中海$3,442/TEU（-3.2%）延续跌势。波斯湾$6,135/TEU（-0.1%）基本持平。德路里WCI综合指数报$4,465/FEU，上海-洛杉矶$7,185/FEU（+5%），上海-纽约$9,587/FEU（-3%）。</p>
+          <div class="data-chips">
+            <span class="chip highlight up">SCFI 3,590.05(+2.29%) 六连涨 25个月新高</span>
+            <span class="chip up">美东 $10,324/FEU(+2.8%) 创阶段新高</span>
+            <span class="chip up">美西 $7,242/FEU(+4.4%)</span>
+            <span class="chip up">东南亚 $893/TEU(+12.18%) 周涨幅第一</span>
+            <span class="chip up">南美 $8,953/TEU(+3.3%)</span>
+            <span class="chip up">澳新 $2,640/TEU(+6.8%)</span>
+            <span class="chip down">欧洲 $2,643/TEU(-2.7%)</span>
+            <span class="chip down">地中海 $3,442/TEU(-3.2%)</span>
+            <span class="chip">波斯湾 $6,135/TEU(-0.1%)</span>
+            <span class="chip">Xeneta:美东$10,910 美西$7,496 累计+305%/+289%</span>
+            <span class="chip">全球准班率29.4% Gemini合作51.8%/Premier 15.8%</span>
+            <span class="chip">美西现货报价$7,500-7,800 美东约$11,000</span>
+            <span class="chip">马士基/太平船务 WK36-37多航次停航</span>
+            <span class="chip">海洋联盟 WK36-37停航3航次运力>3万TEU</span>
+            <span class="chip">CT1-TCE $687,103/天 9/4</span>
+            <span class="chip">VLCC中东-远东 TCE$745,100/天</span>
+          </div>
+          <p>本期运价上涨由多重驱动叠加：①十一黄金周前工厂集中出货，需求短期脉冲；②东亚台风天气频发（上海/宁波/盐田等泊3-12天），船司主动停航与跳港叠加进一步收缩实际有效运力；③巴拿马运河限航（9/3起Neopanamax 9艘/天、Panamax 25→23艘）持续加大美东航线运力压力。<b>分航线分化逻辑比综合指数更值得关注</b>——美线受巴拿马+台风+关税窗口前抢运三重驱动，东南亚受亚洲港口拥堵连锁推升，欧地则因需求疲软+运力充裕持续承压。Xeneta特别指出：自2026年2月末中东冲突爆发以来，远东至美东即期运价累计上涨305%、美西涨289%；但全球准班率仅29.4%（Gemini合作准班率51.8%居首、Premier Alliance仅15.8%、海洋联盟27.7%、MSC 26%），<b>"高价+低质"剪刀差持续扩大</b>。运力管理（空班+跳港+减速+航线整合）短期仍有效托住运价，但下一阶段走势取决于节前出货峰值回落后的需求变化与船司节后运力调整节奏。</p>
+        </div>
+        <div class="source">
+          来源：<a href="https://news.10jqka.com.cn/20260907/c679663395.shtml" target="_blank">同花顺财经</a>、<a href="https://m.10jqka.com.cn/20260908/c679675386.shtml" target="_blank">同花顺财经</a>、<a href="https://www.163.com/dy/article/L62RR3KA051985LJ.html" target="_blank">航运界/网易</a>、<a href="https://www.sse.net.cn/index/singleIndex?indexType=scfi" target="_blank">上海航运交易所</a>、<a href="https://gu.qq.com/resources/shy/news/detail-v2/index.html#/?id=res842020286372" target="_blank">腾讯证券研报</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      航运日报 | 自动化任务 #1781485712150 | 2026-09-08 09:00 CST<br>
+      数据来源：上海航运交易所 / OOCL官方 / 阳明海运官方 / OIA Global / Linerlytica / Kpler / UKMTO / 同花顺财经 / 光明网 / 央视新闻 / Xeneta 等
+    </div>
+  </div>
+</body>
+</html>
