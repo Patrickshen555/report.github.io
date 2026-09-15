@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRR Weekly Report (WK38)</title>
+<style>
+  :root{
+    --navy:#0f2f6b;
+    --blue:#1d5fc0;
+    --blue-light:#eaf1fb;
+    --ink:#1f2a3d;
+    --gray:#6b7a90;
+    --line:#e3e9f2;
+    --bg:#f4f6fa;
+    --card:#ffffff;
+    --down:#d93030;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;
+    padding:24px 0 40px;
+  }
+  .page{max-width:1320px;margin:0 auto;padding:0 24px}
+  .banner{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);
+    color:#fff;border-radius:14px;padding:26px 32px;
+    display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;
+    box-shadow:0 6px 18px rgba(15,47,107,.18);
+  }
+  .banner h1{font-size:24px;letter-spacing:1px;font-weight:700}
+  .banner .sub{margin-top:6px;font-size:13px;opacity:.85}
+  .banner .meta{text-align:right;font-size:13px;line-height:1.9}
+  .banner .meta b{font-size:17px}
+  .toolbar{display:flex;justify-content:flex-end;gap:8px;margin:14px 0 6px}
+  .btn-print{
+    background:#fff;border:1px solid var(--line);color:var(--navy);border-radius:8px;
+    padding:7px 16px;font-size:13px;cursor:pointer;
+  }
+  .btn-print:hover{background:var(--blue-light)}
+  section{margin-top:26px}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .sec-head .no{
+    background:var(--navy);color:#fff;width:26px;height:26px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  }
+  .sec-head h2{font-size:18px;color:var(--navy)}
+  .sec-head .hint{font-size:12.5px;color:var(--gray)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px rgba(31,42,61,.05)}
+  .card h3{font-size:15px;color:var(--ink);margin-bottom:14px;padding-left:10px;border-left:4px solid var(--blue)}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--gray);margin-bottom:8px;flex-wrap:wrap}
+  .legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .legend .sq{display:inline-block;width:12px;height:12px;border:1px solid #a9c2e4;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .chart-box{width:100%;height:auto;display:block}
+  .pending-box{
+    background:#fff;
+    border:1.5px dashed #c9d8ef;border-radius:12px;padding:18px 20px;color:var(--gray);
+    font-size:13px;margin-top:14px;
+  }
+  .pending-box b{color:var(--navy)}
+  .data-hint{fill:var(--gray);font-size:14px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{
+    background:var(--blue-light);color:var(--navy);text-align:left;font-weight:600;
+    padding:9px 12px;white-space:nowrap;border-bottom:2px solid #c9d8ef;
+  }
+  td{padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td.free{background:#fff;color:var(--gray);font-size:12.5px;cursor:text;min-width:70px}
+  td.free:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0;color:var(--ink)}
+  tbody tr:hover{background:#f8fafd}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  th.num{text-align:right}
+  td.num[contenteditable]{cursor:text}
+  td.num[contenteditable]:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0}
+  td.route[contenteditable]{cursor:text}
+  td.route[contenteditable]:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0}
+  .route{font-weight:600;color:var(--ink)}
+  .up{color:var(--ink);font-weight:600}
+  .down{color:#d93030;font-weight:600}
+  .flat{color:var(--ink)}
+  .hot-cell{color:var(--ink);font-weight:700;background:#fdeaea !important}
+  .analysis{
+    background:#fbfcfe;border:1.5px dashed #b9c9e4;border-radius:10px;
+    padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.85;
+  }
+  .analysis:hover{border-color:var(--blue)}
+  .analysis:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(29,95,192,.12)}
+  .analysis .at{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
+  .analysis .at .tip{font-size:11.5px;font-weight:400;color:var(--gray)}
+  .analysis p{margin:6px 0}
+  .analysis b{color:var(--navy)}
+  .analysis .tag{display:inline-block;background:var(--blue-light);color:var(--navy);border-radius:6px;padding:0 8px;font-size:12px;font-weight:600;margin-right:6px}
+  .heat-wrap{overflow-x:auto;margin-top:2px;border-radius:8px;border:1px solid var(--line);padding-bottom:8px}
+  table.heat{width:max-content;border-collapse:collapse;table-layout:fixed;font-size:11px}
+  table.heat th{background:var(--navy);color:#fff;padding:9px 6px;font-weight:600;font-size:12px;line-height:1.45;border:1px solid #0d2a61;min-width:108px}
+  table.heat th:first-child{min-width:76px;max-width:76px;position:sticky;left:0;z-index:2}
+  table.heat th .wktag{font-size:9.5px;font-weight:400;opacity:.85;margin-top:2px}
+  table.heat td{border:1px solid var(--line);min-width:108px}
+  td.pol-cell{background:var(--blue-light);font-weight:700;padding:8px 10px;white-space:nowrap;vertical-align:middle;min-width:76px;max-width:76px;position:sticky;left:0;z-index:1}
+  td.pol-cell .pname{font-size:13px;color:var(--navy)}
+  td.pol-cell .pcode{font-size:10px;color:var(--gray);font-weight:600;margin-top:2px}
+  td.hcell{padding:7px 8px;color:#fff;vertical-align:middle;line-height:1.55}
+  td.hcell .l1{font-size:11px;font-weight:700;white-space:nowrap}
+  td.hcell .l2{font-size:11px;font-weight:400;opacity:.95;white-space:nowrap;margin-top:2px}
+  td.hcell.empty{background:#f5f5f5;color:#bbb;text-align:center;font-size:14px}
+  .footer{margin-top:22px;text-align:center;font-size:12px;color:var(--gray)}
+  @media print{
+    body{background:#fff;padding:0}
+    .btn-print{display:none}
+    .card,.banner{box-shadow:none}
+    .page{max-width:100%}
+  }
+
+  .sub-group{display:flex;flex-direction:column;gap:18px}
+  .sub-tbl{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .sub-title{background:linear-gradient(90deg,var(--blue-light) 0%,#fff 100%);padding:9px 14px;font-size:14px;font-weight:700;color:var(--navy);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+  .wk-badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px}
+  .wk-prev{background:#6b7a90}
+  .wk-cur{background:var(--blue)}
+  .wk-next{background:#5a6b82}
+  .sub-note{font-size:12px;font-weight:400;color:var(--gray);margin-left:4px}
+  td.multi{white-space:normal;line-height:1.7;min-width:180px;font-size:12px}
+  td.num.free{background:#fff;color:var(--gray)}
+  td.num.free:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0;color:var(--ink)}
+
+</style>
+</head>
+<body data-ver="drr-wk38-7">
+<div class="page">
+
+  <div class="banner">
+    <div>
+      <h1>DRR Weekly Report</h1>
+      <div class="sub">Rate Table (Last / Current / Next Week · SAJED &amp; AEJEA) | WK38 (13th - 19th Sept) · Forecast WK39 (20th - 26th Sept)</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <span id="saveStatus" style="margin-right:auto;font-size:12px;color:var(--gray);align-self:center"></span>
+    <button class="btn-print" onclick="exportHTML()" title="将当前编辑内容导出为完整 HTML 文件，覆盖原文件即完成保存">⬇ Export HTML</button>
+    <button class="btn-print" onclick="resetEdits()" title="丢弃浏览器本地修改，恢复为文件当前内容">♻ Reset to File</button>
+    <button class="btn-print" onclick="window.print()">🖨 Print / Export PDF</button>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">1</span>
+      <h2>Red Sea Rate Table · R.SEA – SAJED</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Red Sea (R.SEA – SAJED) Rate Table: Last / Current / Next Week</h3>
+      <div class="sub-group">
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-prev">WK37</span>Last Week</div>
+<table><thead><tr><th>POL</th><th class="num">CUL-FAK 40'</th><th class="num">CUL-Deal 40'</th><th class="num">Market 40'</th><th>Competition</th><th>Other Carriers</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$6,000</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$9,400</td><td class="free" contenteditable="true">CMA:10,000<br>PIL: 9,000</td><td class="free multi" contenteditable="true">HPL $5,813/$9,013<br>PIL $7,000/$9,414<br>TSL $5,800/$8,600</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$6,000</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$9,000</td><td class="free" contenteditable="true">CMA:10,000<br>PIL: 9,000</td><td class="free multi" contenteditable="true">CMA/WHL $6,000/$9,000<br>COSCO —/$9,200</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$5,900</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$9,200</td><td class="free" contenteditable="true">CMA:10,000<br>PIL: 9,000</td><td class="free multi" contenteditable="true">PIL $5,700/$8,200<br>CMA $5,800/$8,300</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">ESL</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">Wanhai</td><td class="free multi" contenteditable="true">—</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-cur">WK38</span>Current Week</div>
+<table><thead><tr><th>POL</th><th class="num">Market 20'</th><th class="num">Market 40'</th><th>Competition</th><th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$6,000</td><td class="num" contenteditable="true">$9,200</td><td class="free" contenteditable="true">CMA 9,400<br>PIL  9,414</td><td class="num" contenteditable="true">$6,250</td><td class="num" contenteditable="true">$9,500</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$6,000</td><td class="num" contenteditable="true">$9,200</td><td class="free" contenteditable="true">CMA:9,000</td><td class="num" contenteditable="true">$6,000</td><td class="num" contenteditable="true">$9,500</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$5,700</td><td class="num" contenteditable="true">$8,800</td><td class="free" contenteditable="true">CMA:8,300<br>PIL: 8,200</td><td class="num" contenteditable="true">$5,900</td><td class="num" contenteditable="true">$9,200</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">ESL</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">$4,700</td><td class="num" contenteditable="true">$6,800</td><td class="free" contenteditable="true">WHL</td><td class="num" contenteditable="true">$5,200</td><td class="num" contenteditable="true">$8,000</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-next">WK39</span>Next Week</div>
+<table><thead><tr><th>POL</th><th class="num">Forecast 20'</th><th class="num">Forecast 40'</th><th>remark</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">5,800</td><td class="num" contenteditable="true">9,000</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">5,800</td><td class="num" contenteditable="true">9,000</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">5,700</td><td class="num" contenteditable="true">8,800</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">4,700</td><td class="num" contenteditable="true">6,800</td><td class="free" contenteditable="true">—</td></tr>
+</tbody></table></div>
+      </div>
+
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Rate Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Last Week (WK37)</span> —</p>
+        <p><span class="tag">② Current Week (WK38)</span> CUL FAK vs Market Δ: North China +250/+300 · Central China 0/+300 · South China +200/+400 · Malaysia +500/+1,200</p>
+        <p><span class="tag">③ Next Week (WK39)</span> —</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">2</span>
+      <h2>Middle East Rate Table · M.E.G – AEJEA</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Middle East (M.E.G – AEJEA) Rate Table: Last / Current / Next Week</h3>
+      <div class="sub-group">
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-prev">WK37</span>Last Week</div>
+<table><thead><tr><th>POL</th><th class="num">CUL-FAK 40'</th><th class="num">CUL-Deal 40'</th><th class="num">Market 40'</th><th>Competition</th><th>Other Carriers</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$7,200</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$8,500</td><td class="free" contenteditable="true">CMA/MSC</td><td class="free multi" contenteditable="true">MSC $7,900/$9,300<br>ESL $7,750/$9,000</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$7,800</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$8,800</td><td class="free" contenteditable="true">CMA/MSC</td><td class="free multi" contenteditable="true">KMTC $6,300/$8,000</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$6,700</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$7,700</td><td class="free" contenteditable="true">CMA/MSC</td><td class="free multi" contenteditable="true">MSC $7,300/$8,600<br>ESL $7,700/$8,800</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num" contenteditable="true">$7,200</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$8,900</td><td class="free" contenteditable="true">ESL</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">$5,000</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$6,200</td><td class="free" contenteditable="true">GFS/RCL/PIL</td><td class="free multi" contenteditable="true">—</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-cur">WK38</span>Current Week</div>
+<table><thead><tr><th>POL</th><th class="num">Market 20'</th><th class="num">Market 40'</th><th>Competition</th><th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$7,200</td><td class="num" contenteditable="true">$8,500</td><td class="free" contenteditable="true">CMA/MSC</td><td class="num" contenteditable="true">$7,400</td><td class="num" contenteditable="true">$8,800</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$6,500</td><td class="num" contenteditable="true">$8,300</td><td class="free" contenteditable="true">CMA/MSC</td><td class="num" contenteditable="true">$7,500</td><td class="num" contenteditable="true">$8,500</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$6,600</td><td class="num" contenteditable="true">$7,600</td><td class="free" contenteditable="true">CMA/MSC</td><td class="num" contenteditable="true">$7,400</td><td class="num" contenteditable="true">$8,800</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">ESL</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">$5,500</td><td class="num" contenteditable="true">$6,800</td><td class="free" contenteditable="true">GSL/KMTC</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-next">WK39</span>Next Week</div>
+<table><thead><tr><th>POL</th><th class="num">Forecast 20'</th><th class="num">Forecast 40'</th><th>remark</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">7,200</td><td class="num" contenteditable="true">8,500</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">6,300</td><td class="num" contenteditable="true">8,000</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">6,600</td><td class="num" contenteditable="true">7,600</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">5,500</td><td class="num" contenteditable="true">6,800</td><td class="free" contenteditable="true">—</td></tr>
+</tbody></table></div>
+      </div>
+
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Rate Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Last Week (WK37)</span> —</p>
+        <p><span class="tag">② Current Week (WK38)</span> CUL FAK vs Market Δ: North China +200/+300 · Central China +1,000/+200 · South China +800/+1,200</p>
+        <p><span class="tag">③ Next Week (WK39)</span> —</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">3</span>
+      <h2>India Sub-Cont Rate Table · I.S.C – INNSA</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>India Sub-Cont (I.S.C – INNSA) Rate Table: Current / Next Week</h3>
+      <div class="sub-group">
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-cur">WK38</span>Current Week</div>
+<table><thead><tr><th>POL</th><th class="num">Market 20'</th><th class="num">Market 40'</th><th>Competition</th><th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$3,400</td><td class="num" contenteditable="true">$3,500</td><td class="free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$3,200</td><td class="num" contenteditable="true">$3,200</td><td class="free" contenteditable="true">—</td><td class="num" contenteditable="true">$3,800</td><td class="num" contenteditable="true">$3,800</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$3,200</td><td class="num" contenteditable="true">$3,300</td><td class="free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">$700</td><td class="num" contenteditable="true">$1,100</td><td class="free" contenteditable="true">COSCO/KMTC</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-next">WK39</span>Next Week</div>
+<table><thead><tr><th>POL</th><th class="num">Forecast 20'</th><th class="num">Forecast 40'</th><th>remark</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">3,400</td><td class="num" contenteditable="true">3,500</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">3,200</td><td class="num" contenteditable="true">3,200</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">3,200</td><td class="num" contenteditable="true">3,300</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">—</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">800</td><td class="num" contenteditable="true">1,300</td><td class="free" contenteditable="true">—</td></tr>
+</tbody></table></div>
+      </div>
+
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Rate Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Current Week (WK38)</span> CUL FAK vs Market Δ: —</p>
+        <p><span class="tag">② Next Week (WK39)</span> —</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">4</span>
+      <h2>Weekly Review · 周度复盘</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <div class="pending-box">
+        <b>Data to be filled:</b> 本周度复盘内容待补充（SAJED / AEJEA FAK 履行、口岸表现、下周运价策略建议等）。直接在下方编辑区填写即可。
+      </div>
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Weekly Review<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① FAK Fulfillment</span> —</p>
+        <p><span class="tag">② POL Performance</span> —</p>
+        <p><span class="tag">③ Action / Next Step</span> —</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    CULINES Marketing · DRR Weekly Report WK38 | Internal Use Only
+  </div>
+</div>
+
+<script>
+/* ===== Edit persistence: localStorage auto-save + full-HTML export ===== */
+var _discarding = false;
+var SAVE_KEY = "mkt-report:" + (location.pathname.split("/").pop() || "index.html");
+var FILE_VER = document.body.getAttribute("data-ver") || "";
+function _edNodes(){ return Array.prototype.slice.call(document.querySelectorAll("[contenteditable]")); }
+function _setStatus(msg){ var st = document.getElementById("saveStatus"); if(st) st.textContent = msg || ""; }
+function saveEdits(){
+  try{
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ver:FILE_VER, cells:_edNodes().map(function(n){ return n.innerHTML; })}));
+    var t = new Date();
+    _setStatus("✓ 已自动保存 " + ("0"+t.getHours()).slice(-2) + ":" + ("0"+t.getMinutes()).slice(-2) + "（浏览器本地；导出后才写入文件）");
+  }catch(e){}
+}
+function restoreEdits(){
+  var raw = null;
+  try{ raw = localStorage.getItem(SAVE_KEY); }catch(e){ return false; }
+  if(!raw) return false;
+  try{
+    var d = JSON.parse(raw);
+    var nodes = _edNodes();
+    if(!d || !d.cells || d.cells.length !== nodes.length) return false;
+    if(d.ver !== FILE_VER) return false; /* 文件已被更新（版本号变化），丢弃过期的本地修改 */
+    nodes.forEach(function(n,i){ n.innerHTML = d.cells[i]; });
+    return true;
+  }catch(e){ return false; }
+}
+function exportHTML(){
+  _setStatus("");
+  var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+  var name = location.pathname.split("/").pop() || "mkt-report.html";
+  var done = function(){ _setStatus("✓ 已导出：" + name + "（用它覆盖原文件即完成保存）"); };
+  if(window.showSaveFilePicker){
+    window.showSaveFilePicker({suggestedName:name, types:[{description:"HTML", accept:{"text/html":[".html"]}}]})
+      .then(function(h){ return h.createWritable().then(function(w){ w.write(new Blob([html],{type:"text/html;charset=utf-8"})); return w.close(); }); })
+      .then(done).catch(function(){ _setStatus("已取消导出"); });
+  } else {
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([html],{type:"text/html;charset=utf-8"}));
+    a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    done();
+  }
+  saveEdits();
+}
+function resetEdits(){
+  if(!confirm("丢弃浏览器本地的修改，恢复为文件当前内容？（原文件不受影响）")) return;
+  _discarding = true;
+  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+  location.reload();
+}
+var _saveTimer = null;
+document.addEventListener("input", function(e){
+  var t = e.target;
+  if(t && t.getAttribute && t.getAttribute("contenteditable") === "true"){
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(function(){ saveEdits(); }, 400);
+  }
+});
+window.addEventListener("beforeunload", function(){ if(!_discarding) saveEdits(); });
+if(restoreEdits()) _setStatus("↩ 已恢复上次未导出的浏览器修改（如不需要请点 Reset to File）");
+
+</script>
+</body></html>
