@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年9月17日（周四）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 13.5px; opacity: 0.9; line-height: 1.7; }
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+    .alert-bar {
+      background: linear-gradient(90deg, #fee2e2 0%, #fef3c7 50%, #fee2e2 100%);
+      border-left: 4px solid #dc2626;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      box-shadow: 0 2px 8px rgba(220,38,38,0.15);
+    }
+    .alert-bar strong { color: #991b1b; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+    .card.darkred { border-left-color: #991b1b; background: #fef2f2; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+    .tag.critical { background: #7c2d12; color: #fff; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+    .card-body strong { color: #111827; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .chip.up { color: #dc2626; }
+    .chip.down { color: #059669; }
+    .chip.highlight { background: #dbeafe; color: #1e40af; }
+    .chip.warn { background: #fef3c7; color: #92400e; }
+    .chip.danger { background: #fee2e2; color: #991b1b; }
+    .chip.success { background: #d1fae5; color: #065f46; }
+
+    .source {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .source a {
+      color: #1a56db;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .market-summary {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .market-summary h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 12px;
+    }
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .market-item {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+    }
+    .market-item .label {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .market-item .value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .market-item .change {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    .market-item .change.up { color: #dc2626; }
+    .market-item .change.down { color: #059669; }
+
+    .why-watch {
+      background: #fefce8;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #713f12;
+      border: 1px solid #fde68a;
+    }
+    .why-watch strong { color: #92400e; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>航运日报 - 2026年9月17日（周四）</h1>
+    <div class="meta">
+      覆盖范围：9/16盘后至9/17早盘 · 自动化第61次执行<br>
+      今日关键词：台风过境后华东港口全面恢复 · VLCC运价首破$100万/天 · 平陆运河正式通航 · 美联储时隔三年首加息 · 德国港口无限期罢工程序启动
+    </div>
+    <span class="badge">港口动态</span>
+    <span class="badge">油运市场</span>
+    <span class="badge">宏观政策</span>
+    <span class="badge">国际海运贸易分析</span>
+  </header>
+
+  <div class="alert-bar">
+    <strong>今日预警：</strong>VLCC中东-中国航线TCE首次突破$100万/天创历史新高，油运进入"百万时代"；美联储时隔三年首次加息25bp至3.75%-4.00%，全票通过，年内或再加一次；德国港口启动无限期罢工程序，亚欧供应链再承压；平陆运河正式通航，西南出海格局重塑。
+  </div>
+
+  <div class="market-summary">
+    <h3>核心市场数据速览</h3>
+    <div class="market-grid">
+      <div class="market-item">
+        <div class="label">布伦特原油（9/16收）</div>
+        <div class="value">$105.58<span class="change down">-2.91%</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">WTI原油（9/16收）</div>
+        <div class="value">$102.02<span class="change down">-3.60%</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">VLCC TD3C TCE</div>
+        <div class="value">$100万+/天<span class="change up">历史新高</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">美湾-中国VLCC包干</div>
+        <div class="value">$4,480万<span class="change up">历史新高</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">SCFI（9/11）</div>
+        <div class="value">3,662.18<span class="change up">+2.01% 七连涨</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">BDTI</div>
+        <div class="value">~4,015<span class="change up">周涨43.1%</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">霍尔木兹通行（9/15）</div>
+        <div class="value">仅4艘<span class="change down">无VLCC/LNG</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">美联储基准利率</div>
+        <div class="value">3.75%-4.00%<span class="change up">+25bp</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 港口动态 ================= -->
+  <div class="section">
+    <div class="section-title">🚢 港口动态</div>
+
+    <div class="card darkred">
+      <div class="card-header">
+        <div class="card-title">台风"贝碧嘉"过境后华东港口全面恢复，约500艘船舶船期受阻紧急疏港 <span class="tag critical">最高关注</span></div>
+      </div>
+      <div class="card-body">
+        <p>9月16日中午台风"贝碧嘉"逐渐远离上海，至9月17日10时，上海边检机关在浦东、虹桥两大国际机场口岸共查验出入境旅客<strong>9.1万余人次</strong>、出入境航班<strong>557架次</strong>，空港口岸航班运行基本恢复正常。海港口岸方面，16日20时30分洋山港恢复运营后迎来靠港高峰，中国香港籍<strong>"中海火星"轮等5艘船舶接续进港</strong>，安全靠泊洋山一/三/四期码头；外高桥、吴淞、金山、崇明等海港口岸通关作业也在陆续恢复。</p>
+        <p>吴淞口国际邮轮港9月17日迎来<strong>"海洋光谱号""爱达·魔都号""鼓浪屿号"三艘国际邮轮同靠</strong>。上海海事局统计显示，此次台风过境共造成上海港约<strong>500艘各型船舶船期受阻</strong>，正根据优先级全力开展船舶编队疏港，按"先出后进、优先大型集装箱船与能源物资船"原则科学调度。</p>
+        <div class="data-chips">
+          <span class="chip highlight">出入境旅客9.1万人次</span>
+          <span class="chip highlight">航班557架次</span>
+          <span class="chip warn">500艘船期受阻</span>
+          <span class="chip danger">~200万TEU积压待疏</span>
+          <span class="chip success">洋山20:30恢复</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①积压的约200万TEU将在未来1-2周集中释放，叠加中秋（9/25-27）与国庆（10/1-7）仅隔3个工作日的极度压缩出货窗口，华东舱位将极度紧张；②疏港期间船舶集中进出，港口作业效率承压，跳港与甩柜风险高企；③台风"杜鹃"已在西北太平洋生成，后续台风季尚未结束，港口运营仍面临二次冲击风险。</div>
+      </div>
+      <div class="source">信源：<a href="https://m.chinanews.com/wap/detail/cht/zw/10287496.shtml">中新网</a> · <a href="https://news.cnr.cn/native/gd/kx/20240917/t20240917_526907156.shtml">央广网</a> · <a href="https://news.ifeng.com/c/8czBrjCrkbl">凤凰网</a></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-header">
+        <div class="card-title">德国港口启动无限期罢工程序，汉堡、不来梅等主要港口面临再次停摆 <span class="tag orange">供应链风险</span></div>
+      </div>
+      <div class="card-body">
+        <p>德国港口劳资谈判再度升级，<strong>无限期罢工程序已经启动</strong>。此前8月中旬及9月初，德国ver.di工会已先后组织警告性罢工，涉及汉堡、不来梅港、威廉港等六大核心港口，约1.1万人参与，工会要求加薪8.2%/12个月（资方仅offer 5.1%/18个月）。此次启动无限期罢工程序意味着欧洲核心枢纽面临全面停摆风险。</p>
+        <p>叠加黄金周前船司密集控舱——德鲁里预计9月14日至10月18日全球将有<strong>79个航次空班</strong>（占计划航次11%，跨太航线空班占比超五成），以及全球港口滞堵运力突破<strong>430万TEU</strong>创历史新高，亚欧航线时效与运价波动将显著加剧。</p>
+        <div class="data-chips">
+          <span class="chip warn">无限期罢工程序已启动</span>
+          <span class="chip warn">汉堡/不来梅等6大港</span>
+          <span class="chip danger">黄金周79个航次空班</span>
+          <span class="chip danger">全球拥堵430万TEU</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①若德国核心港口进入无限期罢工，鹿特丹/安特卫普等相邻枢纽将迅速超负荷，欧洲内陆供应链面临二次冲击；②中国出口至欧洲货物延误风险上升，货主需密切跟踪船期并预留缓冲时间；③罢工叠加巴拿马运河限流与美东港口拥堵，全球有效运力"蒸发"速度加快，集运运价高位支撑逻辑强化。</div>
+      </div>
+      <div class="source">信源：维运网 · <a href="https://www.drewry.co.uk/">Drewry</a> · <a href="https://www.linerlytica.com/">Linerlytica</a></div>
+    </div>
+  </div>
+
+  <!-- ================= 油运市场 ================= -->
+  <div class="section">
+    <div class="section-title">🛢️ 油运市场</div>
+
+    <div class="card red">
+      <div class="card-header">
+        <div class="card-title">VLCC中东-中国TCE首破$100万/天创历史新高，油运进入"百万时代" <span class="tag critical">历史极值</span></div>
+      </div>
+      <div class="card-body">
+        <p>油轮市场正经历历史性行情。<strong>VLCC中东湾至中国航线TD3C的TCE（等价期租租金）首次突破每日100万美元</strong>，创下有记录以来最高位。美湾-中国VLCC包干运费同步飙升至<strong>$4,480万</strong>（2月底战前仅约$1,780万，涨幅超152%），单桶原油运输成本已超过$22。</p>
+        <p>据Poten & Partners数据，阿拉伯湾至远东VLCC收益在8月平均约$60万/天，进入9月后进一步升至<strong>$80万/天以上</strong>；9月11日实际成交显示，一艘从阿拉伯湾前往中国的VLCC以约$60.3万/天成交，前往日本的VLCC约$53万/天。涨势已向全球各航线全面扩散：西非至远东约$38万/天、美湾至亚洲约$27.5万/天、苏伊士型油轮黑海-地中海指数升至$37.6万/天（周涨90%）。</p>
+        <p>战争险成本急剧攀升：中东-中国航线战争险已达<strong>船体价值的12.5%</strong>（危机前约0.25%），运费上涨中相当比例反映的是保险与风险成本。A股油运板块今日逆势冲高：招商轮船涨停、中远海能涨超6%、招商南油涨超3%。</p>
+        <div class="data-chips">
+          <span class="chip danger">TD3C TCE $100万+/天</span>
+          <span class="chip danger">美湾-中国包干 $4,480万</span>
+          <span class="chip warn">战争险 12.5%船体价值</span>
+          <span class="chip highlight">BDTI 周涨43.1%</span>
+          <span class="chip success">招商轮船涨停</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①"百万美元日租金"是油运行业的历史性里程碑，意味着一艘VLCC单航次（约40天往返）即可创造约$4,000万收益，投资回收期大幅缩短；②高运价正吸引全球VLCC船队向中东航线集中调配，其他航线运力收缩将推高全球原油海运成本；③战争险与风险溢价占比持续上升，若地缘形势缓和，运价可能出现剧烈回调，但短期霍尔木兹通航量维持个位数水平，高运价具备持续支撑。</div>
+      </div>
+      <div class="source">信源：<a href="https://news.qq.com/rain/a/20260917A08PFP00">腾讯新闻/中信建投</a> · <a href="https://new.qq.com/rain/a/20260917A09II100">财联社</a> · Poten & Partners · 华泰证券 · 波罗的海交易所</div>
+    </div>
+  </div>
+
+  <!-- ================= 国际海运贸易分析 ================= -->
+  <div class="section">
+    <div class="section-title">🌐 国际海运贸易分析</div>
+
+    <div class="card green">
+      <div class="card-header">
+        <div class="card-title">平陆运河正式通航——新中国成立以来首条国家层面通江达海运河工程 <span class="tag green">里程碑</span></div>
+      </div>
+      <div class="card-body">
+        <p>9月16日上午，西部陆海新通道骨干工程——<strong>平陆运河正式通航</strong>。该工程总投资约<strong>727亿元</strong>、全长<strong>134.2公里</strong>，是新中国成立以来第一条由国家层面统筹建设的通江达海运河工程。通航首日，共有<strong>30艘货船</strong>经过平陆运河，两条新货运航线双向启航：南宁-越南芹苴外贸航线和南宁-海南洋浦内贸航线。</p>
+        <p>官方测算，通航后西南地区货物经运河出海较传统经广州中转路径<strong>缩短内河航程560公里以上</strong>，综合物流成本降低<strong>18%至30%</strong>，每年可节约社会运输费用超<strong>50亿元</strong>。货种以集装箱和散货为主，涵盖建材、煤炭、矿产、钢材、化肥等大宗物资。北部湾港群的集疏运能力迎来质的提升，西南货源经平陆运河直达钦州港出海，将显著改变西南地区货物出海格局。</p>
+        <div class="data-chips">
+          <span class="chip success">总投资727亿元</span>
+          <span class="chip success">全长134.2公里</span>
+          <span class="chip highlight">缩短航程560公里+</span>
+          <span class="chip highlight">物流成本降18%-30%</span>
+          <span class="chip success">年节约50亿元+</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①平陆运河打通西南地区通江达海"最后一公里"，对矿石、煤炭、粮食、建材等大宗货物及出口型制造业构成实质性供应链优化；②北部湾港群（钦州/防城港/北海）吞吐量有望获得长期增量支撑，区域内支线航运与多式联运需求将显著增长；③对国际航运而言，西南地区货物流向从珠三角向北部湾转移，将改变华南港口群的腹地竞争格局，广州/深圳港口需关注货源分流效应。</div>
+      </div>
+      <div class="source">信源：<a href="https://www.cls.cn/">证券时报</a> · 央视新闻 · 人民网四川频道 · 金台资讯</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-header">
+        <div class="card-title">美联储时隔三年首次加息25bp至3.75%-4.00%，全票通过，年内或再加一次 <span class="tag purple">宏观冲击</span></div>
+      </div>
+      <div class="card-body">
+        <p>北京时间9月17日凌晨，<strong>美联储宣布将联邦基金利率目标区间上调25个基点至3.75%-4.00%</strong>，为2023年7月以来首次加息，FOMC以12票赞成、0票反对全票通过。主席沃什在发布会上重申"通胀过高且持续太久"，拒绝提供前瞻指引。最新点阵图显示，<strong>年内或还将加息一次</strong>，19名官员中有16人支持；通胀回归2%目标被指向<strong>2029年</strong>。</p>
+        <p>对航运业的直接冲击：①<strong>船企融资成本抬升</strong>——全球船厂、船东大量船舶贷款挂钩美元利率，浮动利息支出增加，高利率环境下船东可能推迟新船下单，二手船估值承压；②<strong>海外进口商融资成本上升</strong>——美国终端消费承压，四季度欧美订单预期面临下调，外贸出货预期走弱；③<strong>海湾多国央行同步加息</strong>——沙特、阿联酋、卡塔尔、阿曼等紧随美联储宣布加息25bp，中东油运、散货核心区域的贸易融资与信用证成本走高，大宗商品贸易或放缓。</p>
+        <div class="data-chips">
+          <span class="chip highlight">联邦基金利率 3.75%-4.00%</span>
+          <span class="chip warn">全票通过 +25bp</span>
+          <span class="chip warn">点阵图：年内或再加息</span>
+          <span class="chip warn">通胀目标指向2029</span>
+          <span class="chip danger">美元指数破100</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①高利率环境将延长，意味着航运企业的资本开支（新船投资、港口扩建）融资成本系统性上升，2026-2028年集中交付的新船船东财务压力加大；②美元走强推升非美货币计价的原油、矿石等大宗商品进口成本，对亚洲新兴市场需求形成压制，长期可能抑制干散货与油运需求；③但若高利率成功抑制通胀，2027年后政策转向降息的预期将利好航运资产估值修复，形成"先抑后扬"的周期节奏。</div>
+      </div>
+      <div class="source">信源：<a href="https://www.cls.cn/">财联社</a> · 华尔街见闻 · <a href="https://www.federalreserve.gov/">美联储官网</a></div>
+    </div>
+  </div>
+
+  <!-- ================= 地缘与供应链 ================= -->
+  <div class="section">
+    <div class="section-title">⚠️ 地缘与供应链</div>
+
+    <div class="card teal">
+      <div class="card-header">
+        <div class="card-title">霍尔木兹9/15仅4艘商船通行，沙特延布港暂停装船，王毅敦促早日开放海峡 <span class="tag red">地缘风险</span></div>
+      </div>
+      <div class="card-body">
+        <p>中东航运风险持续发酵。周三公布的初步航运数据显示，<strong>9月15日通过霍尔木兹海峡的船舶数量仅为4艘</strong>（前一日7艘），远低于18艘的10日平均水平，通行船舶中不包含VLCC或LNG运输船。沙特位于红海的主要石油出口港<strong>延布（Yanbu）已暂停原油装船作业</strong>，自9月11日以来没有沙特原油从该港装船离港，沙特阿美已通知部分欧洲客户取消原油货物。</p>
+        <p>外交层面，伊朗外长阿拉格齐9月16日访华，外交部长王毅敦促各方采取有效措施<strong>早日开放霍尔木兹海峡</strong>，维护国际航道畅通安全。沙特指控胡塞无人机逼近麦加禁飞区，定性为"新的红线"，过去一周沙特军机对也门7省实施超450次空袭。美军中央司令部司令库珀在上周秘密召集的多国军方会议上明确表态：<strong>美国不会从中东撤军</strong>。</p>
+        <div class="data-chips">
+          <span class="chip danger">霍尔木兹 9/15仅4艘</span>
+          <span class="chip danger">延布港暂停装船</span>
+          <span class="chip warn">麦加禁飞区遭袭</span>
+          <span class="chip warn">美军明确不撤军</span>
+          <span class="chip highlight">中方敦促开放海峡</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①霍尔木兹与曼德"双峡同锁"格局未改，沙特东西管道（500万桶/日旁路能力）遇袭后，海湾原油外运通道进一步收窄；②外交斡旋仍在进行但进展缓慢，伊朗-海湾国家外长会原定9/14召开后被推迟，通航恢复尚无明确时间表；③中方将"航道畅通"和"产供链稳定"摆上外交台面，后续或加大斡旋力度，但短期难以改变军事对峙格局。</div>
+      </div>
+      <div class="source">信源：光明日报 · 新华社 · 哈默情报 · Lloyd's List · Kpler · Region Alert</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    航运日报 · 自动化生成 · 第61次执行 · 2026年9月17日<br>
+    数据来源：上海航运交易所、波罗的海交易所、Kpler、Linerlytica、Drewry、央视新闻、财联社等公开渠道
+  </div>
+
+</div>
+</body>
+</html>
