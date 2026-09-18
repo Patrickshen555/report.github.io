@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年9月18日（周五）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 13.5px; opacity: 0.9; line-height: 1.7; }
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+    .alert-bar {
+      background: linear-gradient(90deg, #fee2e2 0%, #fef3c7 50%, #fee2e2 100%);
+      border-left: 4px solid #dc2626;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      box-shadow: 0 2px 8px rgba(220,38,38,0.15);
+    }
+    .alert-bar strong { color: #991b1b; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+    .card.darkred { border-left-color: #991b1b; background: #fef2f2; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+    .tag.critical { background: #7c2d12; color: #fff; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+    .card-body strong { color: #111827; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .chip.up { color: #dc2626; }
+    .chip.down { color: #059669; }
+    .chip.highlight { background: #dbeafe; color: #1e40af; }
+    .chip.warn { background: #fef3c7; color: #92400e; }
+    .chip.danger { background: #fee2e2; color: #991b1b; }
+    .chip.success { background: #d1fae5; color: #065f46; }
+
+    .source {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+    }
+    .source a {
+      color: #1a56db;
+      text-decoration: none;
+    }
+    .source a:hover { text-decoration: underline; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .market-summary {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .market-summary h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 12px;
+    }
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .market-item {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+    }
+    .market-item .label {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .market-item .value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .market-item .change {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    .market-item .change.up { color: #dc2626; }
+    .market-item .change.down { color: #059669; }
+
+    .why-watch {
+      background: #fefce8;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #713f12;
+      border: 1px solid #fde68a;
+    }
+    .why-watch strong { color: #92400e; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>航运日报 - 2026年9月18日（周五）</h1>
+    <div class="meta">
+      覆盖范围：9/17盘后至9/18早盘 · 自动化第62次执行<br>
+      今日关键词：VLCC运价突破$100万/天 · 马士基/赫伯罗特再增4条苏伊士航线 · 德国港口无限期罢工投票启动 · 全球港口拥堵破430万TEU · 集运超大型箱船订单潮再起
+    </div>
+    <span class="badge">船司动态</span>
+    <span class="badge">港口动态</span>
+    <span class="badge">油运市场</span>
+    <span class="badge">国际海运贸易分析</span>
+  </header>
+
+  <div class="alert-bar">
+    <strong>今日预警：</strong>VLCC中东-中国TD3C航线TCE突破$100万/天，创历史极值；马士基与赫伯罗特宣布AE5/AE11/AE12/ME2四条Gemini服务回归苏伊士运河；德国ver.di工会启动无限期罢工投票，10月1日前揭晓；全球港口拥堵超430万TEU创历史新高。
+  </div>
+
+  <div class="market-summary">
+    <h3>核心市场数据速览</h3>
+    <div class="market-grid">
+      <div class="market-item">
+        <div class="label">布伦特原油（9/17收）</div>
+        <div class="value">$103.90<span class="change down">-1.82%</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">WTI原油（9/17收）</div>
+        <div class="value">$101.09<span class="change down">-1.31%</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">VLCC TD3C TCE</div>
+        <div class="value">$103.5万/天<span class="change up">历史新高</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">中国进口原油运价指数CTFI</div>
+        <div class="value">14,575.03<span class="change up">较9/1 +83%</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">SCFI（9/11）</div>
+        <div class="value">3,662.18<span class="change up">+2.01% 七连涨</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">BDI（9/17）</div>
+        <div class="value">3,336<span class="change up">+0.27%</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">全球港口滞堵运力</div>
+        <div class="value">>430万TEU<span class="change up">创历史新高</span></div>
+      </div>
+      <div class="market-item">
+        <div class="label">巴拿马运河日通行量</div>
+        <div class="value">32艘<span class="change down">9/15起降至32</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 船司动态 ================= -->
+  <div class="section">
+    <div class="section-title">🚢 船司动态</div>
+
+    <div class="card purple">
+      <div class="card-header">
+        <div class="card-title">马士基/赫伯罗特再增4条Gemini服务回归苏伊士运河，亚欧航线绕航红利加速回吐 <span class="tag purple">航线调整</span></div>
+      </div>
+      <div class="card-body">
+        <p>9月14日，马士基与赫伯罗特宣布Gemini Cooperation旗下<strong>AE5、AE11、AE12、ME2四条服务将从好望角改回苏伊士运河/红海航线</strong>，加上此前已恢复的阿E15、AE19，目前共有6条Gemini服务经苏伊士运行。首班切换时间：AE11于9月19日从丹戎帕拉帕斯西行起航，AE5于9月21日，ME2于9月24日从科伦坡出发，AE12首航日期待定。</p>
+        <p>马士基表示，苏伊士路线可显著缩短亚欧及印度-欧洲航线的运输时间，但强调任何进一步调整均取决于红海安全局势，船员、船舶与货物安全仍是最高优先级。此次一次性新增4条航线，是2023年底红海危机以来船司回归苏伊士运河<strong>最大规模的单次扩容</strong>。</p>
+        <div class="data-chips">
+          <span class="chip highlight">AE5/AE11/AE12/ME2</span>
+          <span class="chip highlight">6条Gemini服务经苏伊士</span>
+          <span class="chip warn">9/19起陆续切换</span>
+          <span class="chip success">较好望角显著缩短航程</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①更多船舶回归苏伊士意味着亚欧航线有效运力增加，欧线运价本就承压（欧线$2,545/TEU周跌3.7%），绕航红利回吐或加速现货下行；②船司态度仍谨慎，一旦红海安全形势反复，可能再次绕行好望角，运价波动将放大；③对于货主而言，需实时核对订舱航次是否已切换，及时更新到门ETA。</div>
+      </div>
+      <div class="source">信源：<a href="https://www.worldcargonews.com/news/2026/09/maersk-hapag-lloyd-step-up-suez-routings">WorldCargo News</a> · <a href="https://www.maersk.com.cn/news/articles/2026/09/09/europe-market-update-september">马士基</a> · <a href="https://navilinkglobal.com/news/maersk-and-hapag-lloyd-just-sent-four-more-services-back-through-the-suez-canal-here-is-the-full-return-to-red-sea-timeline">NaviLink Global</a></div>
+    </div>
+
+    <div class="card teal">
+      <div class="card-header">
+        <div class="card-title">集运超大型箱船订单潮再起，马士基打破十年运力纪律、中国船厂成最大赢家 <span class="tag blue">造船/运力</span></div>
+      </div>
+      <div class="card-body">
+        <p>班轮巨头重启大型化扩张。据Alphaliner及经纪市场消息，<strong>马士基已就约40艘超大型集装箱船向中韩船厂询价</strong>，包括约20艘24,000TEU级及约20艘18,000-20,000TEU级，全部拟采用LNG双燃料推进，若全部落地手持订单或增至约205万TEU。其中12艘24,000TEU项目拟由扬子江船业承接，24艘19,000TEU项目或花落恒力重工，6艘18,600TEU备选订单或在新扬子生效。</p>
+        <p>另据披露，9月16日<strong>沪东中华与中联航运签署2艘14,000TEU大型集装箱船建造合同</strong>，这是中联航运首批万箱级以上新造船订单。2026年上半年全球集装箱船新船成交近400艘，中国船厂承接超过80%，全球造船业正经历大型化、绿色化、LNG双燃料化的深刻结构性变革。</p>
+        <div class="data-chips">
+          <span class="chip highlight">马士基拟订约40艘大船</span>
+          <span class="chip highlight">手持订单或达205万TEU</span>
+          <span class="chip success">中国船厂承接>80%</span>
+          <span class="chip warn">2029年末起集中交付</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①马士基放弃坚守十年的400-440万TEU运力上限，标志着行业从"运力克制"转向"规模竞赛"，2029-2030年交付洪峰将显著抬升供给；②中国船厂凭借产能与交付期优势，正锁定这一轮超级周期最大份额，扬子江、恒力重工、沪东中华等持续受益；③长期看，若需求增速不及供给，欧线等主干航线运价中枢面临系统性下移压力。</div>
+      </div>
+      <div class="source">信源：Alphaliner · 龙de船人 · 中国经济网 · <a href="https://finance.sina.com.cn/jjxw/2026-09-18/doc-inisefvv0373062.shtml">新浪财经</a></div>
+    </div>
+  </div>
+
+  <!-- ================= 港口动态 ================= -->
+  <div class="section">
+    <div class="section-title">⚓ 港口动态</div>
+
+    <div class="card orange">
+      <div class="card-header">
+        <div class="card-title">德国港口无限期罢工投票正式启动，汉堡、不来梅等6大港10月1日前揭晓 <span class="tag orange">供应链风险</span></div>
+      </div>
+      <div class="card-body">
+        <p>德国港口劳资谈判继续恶化。ver.di工会9月15日表示，针对雇主第四轮方案的代表性调查显示，<strong>超过5,500名雇员中64.7%反对该方案</strong>，工会已启动正式会员投票，就是否宣布谈判失败并授权无限期罢工进行表决，投票将持续至10月1日。若至少75%的投票会员反对，ver.di联邦集体谈判委员会将决定是否授权无限期罢工。</p>
+        <p>争议覆盖汉堡、不来梅港、不来梅、威廉港、埃姆登、布拉克六大港口约11,000名工人。工会要求加薪8.2%/12个月（最低时薪增€2.50），资方第四轮方案为3.4%/12个月（追溯至8月1日）+ €200假期补贴+高周转集装箱码头€416年津贴。此前两次警告性罢工已导致汉堡、不来梅港等码头作业中断。</p>
+        <div class="data-chips">
+          <span class="chip warn">64.7%反对第四轮方案</span>
+          <span class="chip danger">11,000名工人</span>
+          <span class="chip warn">投票至10月1日</span>
+          <span class="chip danger">75%门槛触发无限期罢工</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①无限期罢工若成真，将成为2026年欧洲最严重的港口中断，汉堡与不来梅港集装箱吞吐量将骤降，货量被迫转移至鹿特丹/安特卫普，邻近枢纽接载能力有限；②亚欧航线本就因红海复航与巴拿马限流而脆弱，德国罢工将加剧班期延误与空班；③货主应提前规划替代路线、增加安全库存，并关注10月初投票结果。</div>
+      </div>
+      <div class="source">信源：<a href="https://www.worldcargonews.com/news/2026/09/german-port-wage-dispute-moves-towards-indefinite-strike-vote/">WorldCargo News</a> · <a href="https://vesselhunter.io/news/german-seaport-wage-offer-indefinite-strike-ballot">Vessel Hunter</a> · <a href="https://tzp.news/en/news/2026-09-17-almanya-liman-iscileri-suresiz-grev-oylamasi">TZP News</a></div>
+    </div>
+
+    <div class="card red">
+      <div class="card-header">
+        <div class="card-title">全球港口拥堵超430万TEU创历史新高，"有效运力"紧张支撑美线运价 <span class="tag red">拥堵</span></div>
+      </div>
+      <div class="card-body">
+        <p>根据Linerlytica数据，截至8月底全球约有<strong>430万TEU集装箱船运力因港口拥堵滞留，超过2022年疫情期间约400万TEU的历史峰值</strong>，占全球船队约12.6%。上海、宁波等主要港口大型船舶平均等待时间仍维持4-10天，船舶集中到港与班期紊乱相互叠加，有效运力被大量吸收。</p>
+        <p>Sea-Intelligence指出，当前约5%的全球远洋集装箱运力被船期延误"吸收"，而2011-2019年正常水平仅约2.2%，相当于约170万TEU运力无法正常周转。这种"名义运力充足、实际舱位偏紧"的结构性矛盾，正是SCFI连涨七周、美线屡创新高的核心支撑。德鲁里预计9月14日至10月18日东西向航线将有79个空班，占计划航次约11%。</p>
+        <div class="data-chips">
+          <span class="chip danger">>430万TEU滞留</span>
+          <span class="chip warn">占全球船队12.6%</span>
+          <span class="chip highlight">上海/宁波等泊4-10天</span>
+          <span class="chip warn">黄金周79个空班</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①拥堵已从亚洲向欧洲、北美、拉美扩散，南美桑托斯、蒙得维的亚及加拿大内陆铁路 dwell time 同步拉长；②船期可靠性下降迫使货主提前备货、预留更长交货周期，供应链成本系统性上升；③黄金周后若亚洲港口积压逐步消化且红海复航持续，被占用的有效运力有望释放，但天气与罢工仍是关键变量。</div>
+      </div>
+      <div class="source">信源：<a href="https://finance.eastmoney.com/a/202609183877941242.html">新华财经/东方财富</a> · <a href="https://psishipping.com/why-global-port-congestion-in-2026-is-worse-than-the-pandemic-and-how-to-keep-your-cargo-moving">PSI Shipping</a> · <a href="https://www.everstream.ai/risk-centers/port-congestion-report-16-september-2026">Everstream Analytics</a> · <a href="https://www.seanews.com.tr/article/port-congestion-and-pre-golden-week-surge-push-freight-rates-higher-mu27e9eu">SeaNews</a></div>
+    </div>
+  </div>
+
+  <!-- ================= 油运市场 ================= -->
+  <div class="section">
+    <div class="section-title">🛢️ 油运市场</div>
+
+    <div class="card darkred">
+      <div class="card-header">
+        <div class="card-title">VLCC中东-中国TCE突破$100万/天，油运进入"百万时代" <span class="tag critical">历史极值</span></div>
+      </div>
+      <div class="card-body">
+        <p>超大型原油运输船（VLCC）运价再创历史。据波罗的海交易所数据，<strong>9月14日中东湾-中国TD3C航线TCE达到$103.5万/天</strong>，首次突破百万美元关口，较2月底美伊冲突爆发前一天的$20.96万/天上涨约425%。9月15日16时，Seatrade Maritime评估TD3C已达$109.9万/天。</p>
+        <p>涨势已从霍尔木兹海峡向全球扩散：9月11日TD3C WS 821.11对应TCE约$86.22万/天，TD34阿曼湾-中国WS 450.71对应$46.58万/天；大西洋市场同步走强，TD15西非-中国约$35.36万/天，TD22美湾-中国超$25.7万/天。上海航运交易所数据显示，9月16日中国进口原油运价指数CTFI达到<strong>14,575.03点</strong>，较9月1日上涨约83%。</p>
+        <p>风险溢价持续飙升：霍尔木兹通航严重受限，大量原油需通过短驳、船对船过驳完成；战争险已达船体价值12.5%（危机前约0.25%）。A股油运板块9月17日逆势走强，招商轮船涨停，中远海能涨超6%，海通发展、招商南油跟涨。</p>
+        <div class="data-chips">
+          <span class="chip danger">TD3C $103.5万/天</span>
+          <span class="chip danger">较战前+425%</span>
+          <span class="chip warn">CTFI 14,575.03</span>
+          <span class="chip highlight">战争险12.5%船体价值</span>
+          <span class="chip success">招商轮船涨停</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①VLCC运价已脱离传统供需框架，进入地缘风险定价模式，"有效船舶天数"取代船舶数量成为核心矛盾；②运费暴涨通过"离岸-运费-到岸"链条推高国内进口原油到岸成本，炼厂利润承压，SC原油相对Brent走强；③伊拉克实体拟以$2亿收购Dynacom在建VLCC、ADNOC持续高价购船，"现成运力"溢价凸显，新船订单创历史最高，中国船厂显著受益。</div>
+      </div>
+      <div class="source">信源：<a href="https://finance.sina.com.cn/jjxw/2026-09-18/doc-inisefvv0373062.shtml">新浪财经</a> · <a href="https://en.portnews.ru/news/397004">PortNews</a> · <a href="https://www.cfi.net.cn/p20260914000141.html">中财网</a> · 波罗的海交易所 · 上海航运交易所</div>
+    </div>
+  </div>
+
+  <!-- ================= 国际海运贸易分析 ================= -->
+  <div class="section">
+    <div class="section-title">🌐 国际海运贸易分析</div>
+
+    <div class="card green">
+      <div class="card-header">
+        <div class="card-title">SCFI七连涨、航线分化加剧：美线续创新高，欧线持续回落 <span class="tag green">运价指数</span></div>
+      </div>
+      <div class="card-body">
+        <p>9月11日上海出口集装箱运价指数（SCFI）报<strong>3,662.18点，周涨2.0%，连续第七周上涨</strong>。航线分化格局延续：北美航线继续领涨，美西$7,339/FEU（+1.34%）、美东$10,479/FEU（+1.5%）均续创历史新高；东南亚近洋线大涨13.1%至$1,010/TEU，突破千美元关口。</p>
+        <p>相比之下，欧洲航线继续走弱：欧洲基本港$2,545/TEU（-3.7%）、地中海$3,299/TEU（-4.2%）。中信建投指出，全球主要集运航线运价延续分化，综合指数涨势延续、欧线持续回落；即使进入国庆黄金周传统淡季，在积压货量尚未完全消化及有效运力受限的双重作用下，舱位利用率仍将保持高位，运价短期仍具支撑。</p>
+        <div class="data-chips">
+          <span class="chip highlight">SCFI 3,662.18 +2.0%</span>
+          <span class="chip up">美西 $7,339 +1.34%</span>
+          <span class="chip up">美东 $10,479 +1.5%</span>
+          <span class="chip down">欧线 $2,545 -3.7%</span>
+          <span class="chip down">地中海 $3,299 -4.2%</span>
+          <span class="chip up">东南亚 $1,010 +13.1%</span>
+        </div>
+        <div class="why-watch"><strong>值得关注：</strong>①美强欧弱的分化反映需求前置、港口拥堵与巴拿马限流对美线的支撑，而欧线受红海复航预期与需求疲软双重压制；②节前出货与积压货量叠加，9月下旬订舱仍可能偏强，但10月后需观察需求回落速度；③船司通过空班控舱（黄金周空班率或升至30%）托价，运价或呈震荡而非单边下行。</div>
+      </div>
+      <div class="source">信源：<a href="https://www.ccpitzj.gov.cn/col/col1229557691/art/2026/art_ff4486c91baf41e99beafbfee37cca6e.html">浙江省贸促会</a> · <a href="https://www.cccme.org.cn/news/details.aspx?id=45B2AF7028B85EBFBDDFE7D8D98FDB58">中国机电产品进出口商会</a> · <a href="https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=1ed9288c-1259-4eaa-97b0-24fdf985a742">MoneyDJ</a> · 上海航运交易所</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    航运日报 · 自动化生成 · 仅供信息参考 · 不构成投资建议<br>
+    GitHub Pages: <a href="https://patrickshen555.github.io/report.github.io/shipping-daily-2026-09-18.html">https://patrickshen555.github.io/report.github.io/shipping-daily-2026-09-18.html</a>
+  </div>
+
+</div>
+</body>
+</html>
