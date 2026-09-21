@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年9月21日（周一）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 13.5px; opacity: 0.9; line-height: 1.7; }
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+    .alert-bar {
+      background: linear-gradient(90deg, #fee2e2 0%, #fef3c7 50%, #fee2e2 100%);
+      border-left: 4px solid #dc2626;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      box-shadow: 0 2px 8px rgba(220,38,38,0.15);
+    }
+    .alert-bar strong { color: #991b1b; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+    .card.darkred { border-left-color: #991b1b; background: #fef2f2; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+    .tag.critical { background: #7c2d12; color: #fff; }
+
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+    .card-body strong { color: #111827; }
+
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #374151;
+      font-weight: 500;
+    }
+    .chip b { color: #1a56db; }
+    .chip.up b { color: #dc2626; }
+    .chip.down b { color: #059669; }
+
+    .why {
+      background: #eff6ff;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #1e40af;
+    }
+    .why::before { content: "💡 关注理由："; font-weight: 700; }
+
+    .sources {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      font-size: 12.5px;
+      color: #6b7280;
+      line-height: 2;
+    }
+    .sources a { color: #2563eb; text-decoration: none; word-break: break-all; }
+    .sources a:hover { text-decoration: underline; }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🚢 航运日报 | 2026年9月21日（周一）</h1>
+      <div class="meta">
+        覆盖窗口：9/18收盘 → 9/21早盘（含周末）<br>
+        <span class="badge">船司与集运市场</span><span class="badge">港口与油运市场</span><span class="badge">国际海运贸易分析</span>
+      </div>
+    </header>
+
+    <div class="alert-bar">
+      <strong>📌 今日焦点：</strong>联合国大会周（9/23-26）成为中东局势关键谈判窗口，油价两周来首次回落；但胡塞同日宣布控制曼德海峡入口并袭击延布，"停火预期 vs 地缘现实"进入高波动定价期。集运SCFI八连涨、美强欧弱极致分化，超大型箱船"东方葡萄牙"轮首穿苏伊士标志复航进入新阶段；黄金周前出货窗口仅剩最后两周。
+    </div>
+
+    <div class="section">
+      <div class="section-title">① 船司与集运市场</div>
+
+      <div class="card red">
+        <div class="card-header">
+          <div class="card-title">SCFI八连涨至3,687.83点，美线续创新高 vs 欧线加速下行，分化极致</div>
+          <span class="tag red">运价</span>
+        </div>
+        <div class="card-body">
+          <p>上海航运交易所9/18数据：SCFI报<strong>3,687.83点（+0.7%），连续第八周上涨</strong>；CCFI报1,897.15点（+1.9%），其中<strong>波红航线暴涨12.4%</strong>。美线供需稳固：美西$7,560/FEU（+3.0%）、美东$10,579/FEU（+1.0%），两者价差扩至$3,019；Drewry上海-纽约即期<strong>周涨7%至$10,394/FEU</strong>。欧地持续走弱：欧线$2,425/TEU（-4.7%）、地中海$3,125/TEU（-5.3%），上海-鹿特丹WCI跌9%至$3,626/FEU。波斯湾$6,246/TEU（-1.0%）小幅回落。Xeneta指出9月远东-美东运力较8月增6-7%，预计10月初黄金周前抢运推动美线再涨。</p>
+          <div class="data-chips">
+            <span class="chip up">SCFI <b>3,687.83 (+0.7%) 八连涨</b></span>
+            <span class="chip up">美西 <b>$7,560/FEU (+3.0%)</b></span>
+            <span class="chip up">美东 <b>$10,579/FEU (+1.0%)</b></span>
+            <span class="chip down">欧线 <b>$2,425/TEU (-4.7%)</b></span>
+            <span class="chip down">地中海 <b>$3,125/TEU (-5.3%)</b></span>
+            <span class="chip up">CCFI波红线 <b>+12.4%</b></span>
+          </div>
+          <div class="why">美欧线价差超$3,000/FEU创罕见极值——黄金周前美线窗口是本季最后的价格红利期；欧线随苏伊士复航+需求疲软双重压制，绕航红利回吐已在运价上兑现，对亚欧航线舱位与报价策略有直接指引。</div>
+        </div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-title">"东方葡萄牙"轮24,188TEU首穿苏伊士 + Gemini再添4线回归，复航进入"大船时代"</div>
+          <span class="tag purple">船司动态</span>
+        </div>
+        <div class="card-body">
+          <p>东方海外（OOCL）旗下<strong>24,188TEU"东方葡萄牙"轮首次通过苏伊士运河</strong>，为迄今经苏伊士的最大级别箱船之一，标志超大型船回归红海航道。马士基/赫伯罗特Gemini合作再调整4条航线：AE11、ME2西行<strong>9/19起</strong>改经苏伊士，AE5西行<strong>9/21（今日）起</strong>生效，东行AE5/AE11分别9/22、9/28起调整——Gemini经苏伊士服务累计已达10条。Sea-Intelligence数据显示<strong>亚欧西行运力约18%已转回红海/苏伊士方向</strong>。但胡塞宣布控制曼德入口为复航节奏埋下变数，Drewry提示红海安全风险可能拖慢苏伊士服务恢复进度。</p>
+          <div class="data-chips">
+            <span class="chip">"东方葡萄牙" <b>24,188 TEU</b></span>
+            <span class="chip">Gemini经苏伊士服务 <b>10条</b></span>
+            <span class="chip">亚欧西行运力回归 <b>~18%</b></span>
+          </div>
+          <div class="why">当2.4万TEU级旗舰船开始走苏伊士，说明船司风险定价已从"全面回避"转向"选择性回归"——亚欧航线有效运力将加速释放，欧线运价中枢下移压力增大；但曼德胡塞控制权变化意味着复航进程随时可能被安全事件打断，需持续跟踪Gemini后续航线切换公告。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">② 港口与油运市场</div>
+
+      <div class="card darkred">
+        <div class="card-header">
+          <div class="card-title">胡塞宣布控制曼德海峡入口 + 袭击延布储油设施，沙特绕行通道再受挫</div>
+          <span class="tag critical">地缘升级</span>
+        </div>
+        <div class="card-body">
+          <p>周末局势突变：胡塞武装<strong>占领也门Mocha港并宣布完全控制曼德海峡入口</strong>，警告第三方勿加入沙特反攻；同时向特朗普政府保证<strong>不会袭击美国船只</strong>，为红海博弈增加"美国豁免"变量。9/19胡塞导弹/无人机袭击沙特<strong>延布储油枢纽</strong>，导致东西管道（Petroline，500万桶/日）修复工期延后约<strong>6周</strong>。沙特阿美已通知至少两家欧洲炼油商<strong>10月长协原油交付归零</strong>，欧洲炼厂被迫抢单，北海Johan Sverdrup原油溢价一度飙至<strong>$35/桶的历史纪录</strong>。曼德当前7日均通行27.3艘（战前80%），其中油轮8.1艘（战前62%）。</p>
+          <div class="data-chips">
+            <span class="chip">Petroline修复 <b>延后~6周</b></span>
+            <span class="chip">沙特10月对欧长协 <b>归零</b></span>
+            <span class="chip">Johan Sverdrup溢价 <b>$35/桶 纪录</b></span>
+            <span class="chip">曼德通行 <b>战前80%（油轮62%）</b></span>
+          </div>
+          <div class="why">沙特"延布绕行"方案——霍尔木兹封锁的核心替代通道——再次被胡塞打击封堵，全球原油物流的替代选项进一步收窄；"不袭美船"承诺则显示胡塞正将打击目标与大国博弈切割，红海保险与运价的风险定价逻辑面临重构，对油轮与班轮航线决策均至关重要。</div>
+        </div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-title">UNGA谈判窗口开启，油价两周首跌，但霍尔木兹仍处5%低位、VLCC维持天价</div>
+          <span class="tag orange">油运/宏观</span>
+        </div>
+        <div class="card-body">
+          <p>卡塔尔斡旋美伊"双边框架"，本周联合国大会（9/23-26）期间特朗普或与伊朗总统佩泽希齐扬会面，市场博弈停火预期：<strong>布伦特收$103.19（-1.6%）、WTI $99.53（-2.3%），结束两周连涨</strong>。但实际通航仍冻结：霍尔木兹7日均仅5.3艘（<strong>战前5%</strong>）、油轮1.4艘（战前3%），伊朗重申"解除封锁+解除制裁+解冻资产"为重开前提；美军中央司令部司令则称过去两周过峡油/LNG船量创<strong>6个月最高</strong>。运价端，关键航线VLCC日收益达<strong>$120万/天</strong>，Aframax/Suezmax均超<strong>$30万/天</strong>，美国柴油9/19创$6.49/加仑历史纪录。OPEC月报<strong>连续第五次下调</strong>2026年需求增量预期至38万桶/日（原58万）。</p>
+          <div class="data-chips">
+            <span class="chip down">布伦特 <b>$103.19 (-1.6%)</b></span>
+            <span class="chip down">WTI <b>$99.53 (-2.3%)</b></span>
+            <span class="chip">霍尔木兹通行 <b>战前5%</b></span>
+            <span class="chip up">VLCC关键航线 <b>$120万/天</b></span>
+            <span class="chip up">Aframax/Suezmax <b>&gt;$30万/天</b></span>
+            <span class="chip">OPEC 2026需求增量 <b>58→38万桶/日</b></span>
+          </div>
+          <div class="why">本周UNGA是冲突爆发以来最接近"谈判桌"的窗口——若达成框架，油价与战争险将快速回吐、VLCC天价收益回落的情景将触发油运股/运价的剧烈反转；若谈崩则高盛上行情景$120或被激活。油运市场当前处于"事件驱动定价"模式，运价与油价的方向性拐点都可能在本周出现。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">③ 国际海运贸易分析</div>
+
+      <div class="card teal">
+        <div class="card-header">
+          <div class="card-title">BDI周跌4%后尾段反弹：海岬型大西洋回暖 vs 巴拿马型承压，煤炭贸易结构性走弱</div>
+          <span class="tag blue">干散货</span>
+        </div>
+        <div class="card-body">
+          <p>波罗的海交易所9/18（周五）：BDI报<strong>3,370点（+1%）连两日回升，但全周累计下跌约4%</strong>。海岬型BCI涨2%至5,768点，<strong>南巴西/西非-中国10月定载活跃</strong>带动大西洋市场回暖；巴拿马型BPI续跌1.4%至2,251点，运力供给过剩叠加煤炭/粮食需求平淡。中期结构看：2026年全球煤炭消费约89.4亿吨（+1.2%）受高气价与地缘暂时支撑，但<strong>中国海运煤进口预计降至约3.1亿吨</strong>（2025年约3.25亿）；2027年若LNG流量正常化、气价回落，全球煤炭贸易量或再收缩0.4%——巴拿马型船最大货类的需求天花板下移。</p>
+          <div class="data-chips">
+            <span class="chip down">BDI <b>3,370（全周-4%）</b></span>
+            <span class="chip up">BCI <b>5,768 (+2%)</b></span>
+            <span class="chip down">BPI <b>2,251 (-1.4%)</b></span>
+            <span class="chip up">BSI <b>1,767 (+0.3%)</b></span>
+            <span class="chip">中国海运煤进口 <b>2026E ~3.1亿吨</b></span>
+          </div>
+          <div class="why">干散货"大小船分化"进一步固化：Q4铁矿石发运旺季支撑海岬型，但中国煤炭进口持续萎缩对巴拿马型构成结构性压制，2027年LNG替代效应将放大这一分化——干散货船型资产配置与航线布局需区别对待。</div>
+        </div>
+      </div>
+
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-title">香港首份五年规划定调航运业"高增值转型"：从"吨位大港"到"价值港"</div>
+          <span class="tag green">中国港口</span>
+        </div>
+        <div class="card-body">
+          <p>香港特区政府9/16正式公布<strong>《香港特别行政区经济和社会发展第一个五年规划（2026—2030年）》</strong>——回归祖国以来首次制定五年规划，其中对航运业明确"高增值发展"定位：从传统"吨位大港"转向"价值港"，重点发展<strong>船舶注册、海事保险、海事仲裁、航运融资及绿色船用燃料加注</strong>等高端航运服务业，主动对接国家发展战略、融入国家发展大局。</p>
+          <div class="data-chips">
+            <span class="chip">规划期 <b>2026-2030</b></span>
+            <span class="chip">定位 <b>吨位大港 → 价值港</b></span>
+          </div>
+          <div class="why">在港口吞吐量增长见顶背景下，香港把航运竞争力从"硬吞吐"转向"软服务"（保险/仲裁/融资/绿色燃料），与新加坡、上海的高增值航运中心竞争正面碰撞；对中资船司而言，香港绿色甲醇加注、海事仲裁与融资政策松绑值得关注，或影响区域加油与注册安排。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">信源</div>
+      <div class="sources">
+        1. 上海航运交易所 SCFI/CCFI（9/18）：<a href="https://www.sse.net.cn/index/singleIndex?indexType=scfi">sse.net.cn</a> / <a href="https://www.cnfin.com/kx/detail/20260918/4471766_1.html">中国金融信息网</a><br>
+        2. 航运界：SCFI分航线及"东方葡萄牙"轮首穿苏伊士（9/19）：<a href="https://www.163.com/dy/article/L76P6VSK05568W0A.html">163.com</a><br>
+        3. 每经/新浪财经：马士基与赫伯罗特调整4条航线改经苏伊士（9/14）：<a href="https://finance.sina.com.cn/roll/2026-09-14/doc-inirutny4050773.shtml">sina.com.cn</a><br>
+        4. Iran SITREP：Day 205 战况与霍尔木兹/曼德通行数据（9/20）：<a href="https://www.iransitrep.com/">iransitrep.com</a><br>
+        5. Region Alert：霍尔木兹安全与能源市场评估（9/20，VLCC $1.2M/天、延布遇袭、沙特断供欧洲）：<a href="https://regionalert.com/blog/hormuz-strait-oil-shipping-intelligence-2026.html">regionalert.com</a><br>
+        6. Trading Economics 原油行情及UNGA会晤预期（9/21更新）：<a href="https://tradingeconomics.com/commodity/crude-oil">tradingeconomics.com</a><br>
+        7. SteelMint：BDI/BCI/BPI 9/18数据与展望：<a href="https://www.steelmint.in/baltic-dry-index-rises-d-o-d-for-second-session-capesize-rebound-offsets-panamax-weakness-791212">steelmint.in</a><br>
+        8. SeaSearch：干散货周评与2026-27煤炭贸易展望（9/19）：<a href="https://www.shipshipship.uk/post/84463605/nicholas-g-moundreas-ngm">shipshipship.uk</a><br>
+        9. 新浪财经：香港首个五年规划定调航运业高增值（9/21）：<a href="https://finance.sina.com.cn/roll/2026-09-21/doc-inispueh8922075.shtml">sina.com.cn</a>
+      </div>
+    </div>
+
+    <footer>
+      航运日报 · 每日9:00自动生成 · 数据截至 2026-09-21 早盘 · 仅供参考
+    </footer>
+  </div>
+</body>
+</html>
