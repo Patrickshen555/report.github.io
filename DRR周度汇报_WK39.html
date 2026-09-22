@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Report (WK39)</title>
+<style>
+  :root{
+    --navy:#0f2f6b;
+    --blue:#1d5fc0;
+    --blue-light:#eaf1fb;
+    --ink:#1f2a3d;
+    --gray:#6b7a90;
+    --line:#e3e9f2;
+    --bg:#f4f6fa;
+    --card:#ffffff;
+    --down:#d93030;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;
+    padding:24px 0 40px;
+  }
+  .page{max-width:1320px;margin:0 auto;padding:0 24px}
+  .banner{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);
+    color:#fff;border-radius:14px;padding:26px 32px;
+    display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;
+    box-shadow:0 6px 18px rgba(15,47,107,.18);
+  }
+  .banner h1{font-size:24px;letter-spacing:1px;font-weight:700}
+  .banner .sub{margin-top:6px;font-size:13px;opacity:.85}
+  .banner .meta{text-align:right;font-size:13px;line-height:1.9}
+  .banner .meta b{font-size:17px}
+  .toolbar{display:flex;justify-content:flex-end;gap:8px;margin:14px 0 6px}
+  .btn-print{
+    background:#fff;border:1px solid var(--line);color:var(--navy);border-radius:8px;
+    padding:7px 16px;font-size:13px;cursor:pointer;
+  }
+  .btn-print:hover{background:var(--blue-light)}
+  section{margin-top:26px}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .sec-head .no{
+    background:var(--navy);color:#fff;width:26px;height:26px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  }
+  .sec-head h2{font-size:18px;color:var(--navy)}
+  .sec-head .hint{font-size:12.5px;color:var(--gray)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;box-shadow:0 2px 8px rgba(31,42,61,.05)}
+  .card h3{font-size:15px;color:var(--ink);margin-bottom:14px;padding-left:10px;border-left:4px solid var(--blue)}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--gray);margin-bottom:8px;flex-wrap:wrap}
+  .legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .legend .sq{display:inline-block;width:12px;height:12px;border:1px solid #a9c2e4;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .chart-box{width:100%;height:auto;display:block}
+  .pending-box{
+    background:#fff;
+    border:1.5px dashed #c9d8ef;border-radius:12px;padding:18px 20px;color:var(--gray);
+    font-size:13px;margin-top:14px;
+  }
+  .pending-box b{color:var(--navy)}
+  .data-hint{fill:var(--gray);font-size:14px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{
+    background:var(--blue-light);color:var(--navy);text-align:left;font-weight:600;
+    padding:9px 12px;white-space:nowrap;border-bottom:2px solid #c9d8ef;
+  }
+  td{padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td.free{background:#fff;color:var(--gray);font-size:12.5px;cursor:text;min-width:70px}
+  td.free:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0;color:var(--ink)}
+  tbody tr:hover{background:#f8fafd}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  th.num{text-align:right}
+  td.num[contenteditable]{cursor:text}
+  td.num[contenteditable]:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0}
+  td.route[contenteditable]{cursor:text}
+  td.route[contenteditable]:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0}
+  .route{font-weight:600;color:var(--ink)}
+  .up{color:var(--ink);font-weight:600}
+  .down{color:#d93030;font-weight:600}
+  .flat{color:var(--ink)}
+  .hot-cell{color:var(--ink);font-weight:700;background:#fdeaea !important}
+  .analysis{
+    background:#fbfcfe;border:1.5px dashed #b9c9e4;border-radius:10px;
+    padding:14px 18px;margin-top:14px;font-size:13px;line-height:1.85;
+  }
+  .analysis:hover{border-color:var(--blue)}
+  .analysis:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(29,95,192,.12)}
+  .analysis .at{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
+  .analysis .at .tip{font-size:11.5px;font-weight:400;color:var(--gray)}
+  .analysis p{margin:6px 0}
+  .analysis b{color:var(--navy)}
+  .analysis .tag{display:inline-block;background:var(--blue-light);color:var(--navy);border-radius:6px;padding:0 8px;font-size:12px;font-weight:600;margin-right:6px}
+  .heat-wrap{overflow-x:auto;margin-top:2px;border-radius:8px;border:1px solid var(--line);padding-bottom:8px}
+  table.heat{width:max-content;border-collapse:collapse;table-layout:fixed;font-size:11px}
+  table.heat th{background:var(--navy);color:#fff;padding:9px 6px;font-weight:600;font-size:12px;line-height:1.45;border:1px solid #0d2a61;min-width:108px}
+  table.heat th:first-child{min-width:76px;max-width:76px;position:sticky;left:0;z-index:2}
+  table.heat th .wktag{font-size:9.5px;font-weight:400;opacity:.85;margin-top:2px}
+  table.heat td{border:1px solid var(--line);min-width:108px}
+  td.pol-cell{background:var(--blue-light);font-weight:700;padding:8px 10px;white-space:nowrap;vertical-align:middle;min-width:76px;max-width:76px;position:sticky;left:0;z-index:1}
+  td.pol-cell .pname{font-size:13px;color:var(--navy)}
+  td.pol-cell .pcode{font-size:10px;color:var(--gray);font-weight:600;margin-top:2px}
+  td.hcell{padding:7px 8px;color:#fff;vertical-align:middle;line-height:1.55}
+  td.hcell .l1{font-size:11px;font-weight:700;white-space:nowrap}
+  td.hcell .l2{font-size:11px;font-weight:400;opacity:.95;white-space:nowrap;margin-top:2px}
+  td.hcell.empty{background:#f5f5f5;color:#bbb;text-align:center;font-size:14px}
+  .footer{margin-top:22px;text-align:center;font-size:12px;color:var(--gray)}
+  @media print{
+    body{background:#fff;padding:0}
+    .btn-print{display:none}
+    .card,.banner{box-shadow:none}
+    .page{max-width:100%}
+  }
+
+  .sub-group{display:flex;flex-direction:column;gap:18px}
+  .sub-tbl{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .sub-title{background:linear-gradient(90deg,var(--blue-light) 0%,#fff 100%);padding:9px 14px;font-size:14px;font-weight:700;color:var(--navy);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+  .wk-badge{display:inline-block;padding:2px 9px;border-radius:6px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px}
+  .wk-prev{background:#6b7a90}
+  .wk-cur{background:var(--blue)}
+  .wk-next{background:#5a6b82}
+  .sub-note{font-size:12px;font-weight:400;color:var(--gray);margin-left:4px}
+  td.multi{white-space:normal;line-height:1.7;min-width:180px;font-size:12px}
+  td.num.free{background:#fff;color:var(--gray)}
+  td.num.free:focus{outline:none;background:#eef4ff;box-shadow:inset 0 0 0 1.5px #7ba4e0;color:var(--ink)}
+
+</style>
+</head>
+<body data-ver="drr-wk39-9">
+<div class="page">
+
+  <div class="banner">
+    <div>
+      <h1>Market Report</h1>
+      <div class="sub">Rate Table (Last / Current / Next Week · SAJED &amp; AEJEA) | WK39 (20th - 26th Sept) · Forecast WK40 (27th Sept - 3rd Oct)</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <span id="saveStatus" style="margin-right:auto;font-size:12px;color:var(--gray);align-self:center"></span>
+    <button class="btn-print" onclick="exportHTML()" title="将当前编辑内容导出为完整 HTML 文件，覆盖原文件即完成保存">⬇ Export HTML</button>
+    <button class="btn-print" onclick="resetEdits()" title="丢弃浏览器本地修改，恢复为文件当前内容">♻ Reset to File</button>
+    <button class="btn-print" onclick="window.print()">🖨 Print / Export PDF</button>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">1</span>
+      <h2>Red Sea Rate Table · R.SEA – SAJED</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Red Sea (R.SEA – SAJED) Rate Table: Last / Current / Next Week</h3>
+      <div class="sub-group">
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-prev">WK38</span>Last Week</div>
+<table><thead><tr><th>POL</th><th class="num">CUL-FAK 40'</th><th class="num">CUL-Deal 40'</th><th class="num">Market 40'</th><th>Competition</th><th>Other Carriers</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$8,500</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$9,000</td><td class="free" contenteditable="true">ESL 9000</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$8,500</td><td class="num" contenteditable="true">8500</td><td class="num" contenteditable="true">$9,000</td><td class="free" contenteditable="true">CMA:9,000</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$8,400</td><td class="num" contenteditable="true">8500</td><td class="num" contenteditable="true">$9,000</td><td class="free" contenteditable="true">CMA:9000<br>PIL:9000</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num" contenteditable="true">$7,500</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">$6,800</td><td class="free" contenteditable="true">WHL</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num free" contenteditable="true">$7,500</td><td class="num free" contenteditable="true">—</td><td class="num free" contenteditable="true">$6,800</td><td class="free" contenteditable="true">WHL</td><td class="free multi" contenteditable="true">—</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-cur">WK39</span>Current Week</div>
+<table><thead><tr><th>POL</th><th class="num">Market 20'</th><th class="num">Market 40'</th><th>Competition</th><th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$6,000</td><td class="num" contenteditable="true">$8,800</td><td class="free" contenteditable="true">CMA</td><td class="num" contenteditable="true">$6,000</td><td class="num" contenteditable="true">$8,500</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$5,900</td><td class="num" contenteditable="true">$8,500</td><td class="free" contenteditable="true">CMA\PIL</td><td class="num" contenteditable="true">$5,500</td><td class="num" contenteditable="true">$8,550</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$5,300</td><td class="num" contenteditable="true">$8,300</td><td class="free" contenteditable="true">CMA</td><td class="num" contenteditable="true">$5,100</td><td class="num" contenteditable="true">$8,500</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num" contenteditable="true">$5,500</td><td class="num" contenteditable="true">$7,500</td><td class="free" contenteditable="true">WHL/ESL</td><td class="num" contenteditable="true">$5,500</td><td class="num" contenteditable="true">$7,500</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">$4,700</td><td class="num" contenteditable="true">$7,200</td><td class="free" contenteditable="true">—</td><td class="num" contenteditable="true">$5,000</td><td class="num" contenteditable="true">$7,500</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-next">WK40</span>Next Week</div>
+<table><thead><tr><th>POL</th><th class="num">Forecast 20'</th><th class="num">Forecast 40'</th><th>remark</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">5,900</td><td class="num" contenteditable="true">8,700</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">5,900</td><td class="num" contenteditable="true">8,400</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">5,300</td><td class="num" contenteditable="true">8,300</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num" contenteditable="true">5,500</td><td class="num" contenteditable="true">7,500</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">4,700</td><td class="num" contenteditable="true">7,200</td><td class="free" contenteditable="true">—</td></tr>
+</tbody></table></div>
+      </div>
+
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Rate Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Last Week (WK38)</span> CUL-FAK 40' NC $8,500 · CC $8,550 · SC $8,400 · TH $7,500 · MY $7,500. Market 40' 对比 CUL：NC -500 / CC -450 / SC -600 / TH +700 / MY +700。（CUL-Deal 40' 与 Other Carriers 待补录）</p>
+        <p><span class="tag">② Current Week (WK39)</span> Market 40' NC $8,800 · CC $8,500 · SC $8,300 · TH $7,500 · MY $7,200；CUL-FAK 40' NC $8,500 · CC $8,550 · SC $8,500 · TH $7,500 · MY $7,500。CUL 对比市场：NC −300 / CC +50 / SC +200 / TH 0 / MY +300，仅 North China 低于市场均价。</p>
+        <p><span class="tag">③ Next Week (WK40)</span> Forecast 40' NC $8,700 (−100) · CC $8,400 (−100) · SC $8,300 (0) · TH $7,500 (0) · MY $7,200 (0) —— 华北、华中继续小幅走弱，其余口岸持平。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">2</span>
+      <h2>Middle East Rate Table · M.E.G – AEJEA</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Middle East (M.E.G – AEJEA) Rate Table: Last / Current / Next Week</h3>
+      <div class="sub-group">
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-prev">WK38</span>Last Week</div>
+<table><thead><tr><th>POL</th><th class="num">CUL-FAK 40'</th><th class="num">CUL-Deal 40'</th><th class="num">Market 40'</th><th>Competition</th><th>Other Carriers</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$8,000</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$8,500</td><td class="free" contenteditable="true">PIL</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$8,400</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$8,200</td><td class="free" contenteditable="true">KMTC</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$8,200</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$8,600</td><td class="free" contenteditable="true">MSC</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num" contenteditable="true">$7,000</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$6,847</td><td class="free" contenteditable="true">HPL</td><td class="free multi" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">$7,000</td><td class="num free" contenteditable="true">—</td><td class="num" contenteditable="true">$6,800</td><td class="free" contenteditable="true">GSL/KMTC</td><td class="free multi" contenteditable="true">—</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-cur">WK39</span>Current Week</div>
+<table><thead><tr><th>POL</th><th class="num">Market 20'</th><th class="num">Market 40'</th><th>Competition</th><th class="num">CUL-FAK 20'</th><th class="num">CUL-FAK 40'</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">$6,700</td><td class="num" contenteditable="true">$8,300</td><td class="free" contenteditable="true">CMA</td><td class="num" contenteditable="true">$7,000</td><td class="num" contenteditable="true">$8,500</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">$6,550</td><td class="num" contenteditable="true">$8,100</td><td class="free" contenteditable="true">CMA</td><td class="num" contenteditable="true">$6,600</td><td class="num" contenteditable="true">$8,000</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">$6,600</td><td class="num" contenteditable="true">$7,800</td><td class="free" contenteditable="true">MSC</td><td class="num" contenteditable="true">$6,800</td><td class="num" contenteditable="true">$8,200</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num" contenteditable="true">$5,500</td><td class="num" contenteditable="true">$6,900</td><td class="free" contenteditable="true">—</td><td class="num" contenteditable="true">$6,000</td><td class="num" contenteditable="true">$7,000</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">$5,500</td><td class="num" contenteditable="true">$6,800</td><td class="free" contenteditable="true">—</td><td class="num" contenteditable="true">$6,000</td><td class="num" contenteditable="true">$7,000</td></tr>
+</tbody></table></div>
+<div class="sub-tbl">
+<div class="sub-title"><span class="wk-badge wk-next">WK40</span>Next Week</div>
+<table><thead><tr><th>POL</th><th class="num">Forecast 20'</th><th class="num">Forecast 40'</th><th>remark</th></tr></thead>
+<tbody>
+<tr><td class="route" contenteditable="true">North China</td><td class="num" contenteditable="true">6,700</td><td class="num" contenteditable="true">8,300</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Central China</td><td class="num" contenteditable="true">6,550</td><td class="num" contenteditable="true">8,100</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">South China</td><td class="num" contenteditable="true">7,300</td><td class="num" contenteditable="true">8,600</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Thailand</td><td class="num" contenteditable="true">5,500</td><td class="num" contenteditable="true">6,900</td><td class="free" contenteditable="true">—</td></tr>
+<tr><td class="route" contenteditable="true">Malaysia</td><td class="num" contenteditable="true">5,500</td><td class="num" contenteditable="true">6,800</td><td class="free" contenteditable="true">—</td></tr>
+</tbody></table></div>
+      </div>
+
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">Rate Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Last Week (WK38)</span> CUL-FAK 40' NC $8,000 · CC $8,400 · SC $8,200 · TH $7,000 · MY $7,000. Market 40' 对比 CUL：NC -500 / CC +200 / SC -400 / TH +153 / MY +200。（CUL-Deal 40' 与 Other Carriers 待补录）</p>
+        <p><span class="tag">② Current Week (WK39)</span> Market 40' NC $8,300 · CC $8,100 · SC $7,800 · TH $6,900 · MY $6,800；CUL-FAK 40' NC $8,500 · CC $8,000 · SC $8,200 · TH $7,000 · MY $7,000。CUL 对比市场：NC +200 / CC −100 / SC +400 / TH +100 / MY +200。</p>
+        <p><span class="tag">③ Next Week (WK40)</span> Forecast 40' NC $8,300 (0) · CC $8,100 (0) · SC $8,600 (+800) · TH $6,900 (0) · MY $6,800 (0) —— South China 显著上调，其余口岸持平。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="no">3</span>
+      <h2>Weekly Rate Review · WK35-38</h2>
+    </div>
+
+    <div class="card" style="margin-top:0">
+      <h3>Weekly Completed VVD: USD/40' SAJED</h3>
+      <div class="legend">
+        <span><span class="sq" style="background:#c9d9f0"></span>FAK Ratio (bar, left %)</span>
+        <span><span class="dot" style="background:#1d5fc0"></span>CUL FAK (line, right)</span>
+        <span><span class="dot" style="background:#2e9e5b"></span>CUL Deal (line, right)</span>
+      </div>
+      <svg class="chart-box" id="chartSvg" viewBox="0 0 860 410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Weekly Rate Review Chart">
+        <g id="chartPlot"></g>
+      </svg>
+      <div class="pending-box" id="dataHint" style="display:none;">
+        <b>Note:</b> Based on completed-voyage FAK analysis (Shipper version). Hover bars for detail.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>POL × Voyage Heatmap: FAK Ratio (bg) with FAK / Non-FAK Volume &amp; Price</h3>
+      <div class="heat-wrap">
+        <table class="heat" id="heatTable"></table>
+      </div>
+      <div class="legend" style="margin-top:10px;justify-content:center">
+        <span><span class="sq" style="background:#2E7D32"></span>FAK ≥80%</span>
+        <span><span class="sq" style="background:#66BB6A"></span>60-79%</span>
+        <span><span class="sq" style="background:#FFA726"></span>40-59%</span>
+        <span><span class="sq" style="background:#FF7043"></span>20-39%</span>
+        <span><span class="sq" style="background:#f44336"></span>&lt;20%</span>
+        <span><span class="sq" style="background:#f5f5f5;border:1px solid #ddd"></span>No Volume</span>
+      </div>
+      <div style="margin-top:8px;font-size:12px;color:var(--gray);text-align:center">
+        Basis: DEL = SAJED | FAK Ratio = FAK TEU / total TEU (TEU = 1×20GP + 2×40HQ) | FAK Price 40' = list | Non-FAK Price 40' = deal avg (TEU-weighted, 40' only — 纯 20GP 票不进入价格口径)
+      </div>
+      <div class="analysis" contenteditable="true" spellcheck="false">
+        <div class="at">POL Performance Analysis<span class="tip">Click to edit</span></div>
+        <p><span class="tag">① Top POL</span> CNSHA 86.0% (3136 TEU · 10 voyages) — 主力口岸，FAK 占比领先；CNNAS 84.0% (1301 TEU · 4 voyages) 次之。</p>
+        <p><span class="tag">② Weak POL</span> CNTAO 37.1% (909 TEU · 2 voyages) — 最低，ZGYC2633W 仅 25.4%、CSQC2634W 仅 55.2%。</p>
+        <p><span class="tag">③ By Voyage</span> WK35 88.3% (4 船 · 1584 TEU, 区间 82.0–89.7%) → WK36 71.5% (1 船 · 326 TEU, 区间 65.8–65.8%) → WK37 65.8% (6 船 · 2924 TEU, 区间 39.3–100.0%) → WK38 74.4% (5 船 · 6117 TEU, 区间 50.2–86.4%)。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    CULINES Marketing · Market Report WK39 | Internal Use Only
+  </div>
+</div>
+
+<script>
+/* ===== Weekly Rate Review: Bar Chart + Heatmap ===== */
+var DATA =   {
+  "weeks": [
+    {"wk": "WK35", "vvds": [
+      {"vvd": "ZG162631W", "ratio": 84.0, "mkt": 9600, "fak": 9543, "oft": 9590},
+      {"vvd": "CUHC2631W", "ratio": 89.7, "mkt": 9600, "fak": 8600, "oft": 8695},
+      {"vvd": "ZGHZ2630W", "ratio": 85.1, "mkt": 9600, "fak": 8071, "oft": 8084},
+      {"vvd": "HMBM2628W", "ratio": 82.0, "mkt": 9600, "fak": 8019, "oft": 8008}
+    ]},
+    {"wk": "WK36", "vvds": [
+      {"vvd": "MEBB2631W", "ratio": 65.8, "mkt": 9000, "fak": 8107, "oft": 8079}
+    ]},
+    {"wk": "WK37", "vvds": [
+      {"vvd": "RACE2632W", "ratio": 88.0, "mkt": 9500, "fak": 8979, "oft": 9003},
+      {"vvd": "CSQC2634W", "ratio": 61.9, "mkt": 9500, "fak": 9396, "oft": 9233},
+      {"vvd": "H8112634W", "ratio": 80.7, "mkt": 9500, "fak": 9500, "oft": 9523},
+      {"vvd": "ZGU92636W", "ratio": 100.0, "mkt": 9500, "fak": 9500, "oft": 9572},
+      {"vvd": "MMRN2636W", "ratio": 39.3, "mkt": 10000, "fak": 10000, "oft": 9687},
+      {"vvd": "ZGU82634W", "ratio": 72.1, "mkt": 10000, "fak": 10000, "oft": 9875}
+    ]},
+    {"wk": "WK38", "vvds": [
+      {"vvd": "DFMH2634W", "ratio": 86.4, "mkt": 10000, "fak": 9699, "oft": 9699},
+      {"vvd": "CUNS2635W", "ratio": 86.3, "mkt": 9500, "fak": 9500, "oft": 9506},
+      {"vvd": "ZGYC2633W", "ratio": 50.2, "mkt": 9500, "fak": 9500, "oft": 9165},
+      {"vvd": "CSJ82637W", "ratio": 82.3, "mkt": 8800, "fak": 8800, "oft": 9055},
+      {"vvd": "X1062638W", "ratio": 60.9, "mkt": 8800, "fak": 8800, "oft": 8796}
+    ]}
+  ]
+};
+var W = 860, H = 410;
+var M = {top:40, right:66, bottom:56, left:62};
+var PW = W - M.left - M.right;
+var P0 = 6500, P1 = 10500;
+var groupW = PW / DATA.weeks.length;
+var yRatio = function(r){ return 330 - r * 2.8; };
+var yPrice = function(p){ return 330 - (p - P0) / (P1 - P0) * 280; };
+var NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent){
+  var e = document.createElementNS(NS, tag);
+  for(var k in attrs) e.setAttribute(k, attrs[k]);
+  if(parent) parent.appendChild(e);
+  return e;
+}
+function render(){
+  var plot = document.getElementById("chartPlot");
+  plot.innerHTML = "";
+  var hasAny = false;
+  DATA.weeks.forEach(function(w){ if(w.vvds.length) hasAny = true; });
+  document.getElementById("dataHint").style.display = hasAny ? "none" : "block";
+  var i, j;
+  var gridYs = [330,260,190,120,50];
+  var gridPs = [6500,7500,8500,9500,10500];
+  for(i=0;i<gridYs.length;i++){
+    el("line",{x1:M.left,y1:gridYs[i],x2:M.left+PW,y2:gridYs[i],stroke:"#e3e9f2","stroke-width":1},plot);
+  }
+  var fakYs = [50,120,190,260,330];
+  var fakLs = ["100%","75%","50%","25%","0%"];
+  for(i=0;i<fakYs.length;i++){
+    el("text",{x:M.left-8,y:fakYs[i]+4,"text-anchor":"end","font-size":11,fill:"#6b7a90"},plot).textContent=fakLs[i];
+  }
+  for(i=0;i<gridYs.length;i++){
+    el("text",{x:M.left+PW+8,y:gridYs[i]+4,"text-anchor":"start","font-size":11,fill:"#6b7a90"},plot).textContent="$"+gridPs[i].toLocaleString();
+  }
+  el("text",{x:14,y:40,"font-size":11,fill:"#6b7a90"},plot).textContent="FAK Ratio";
+  el("text",{x:M.left+PW+62,y:40,"font-size":11,fill:"#6b7a90","text-anchor":"end"},plot).textContent="USD/40'";
+  var vvdTeu = {};
+  HEAT_VVDS.forEach(function(h){
+    var tot = 0;
+    for(var pol in h.pols){
+      tot += (h.pols[pol].fak_teu || 0) + (h.pols[pol].nf_teu || 0);
+    }
+    vvdTeu[h.vvd] = Math.round(tot);
+  });
+  var tipG = el("g",{style:"opacity:0;pointer-events:none;transition:opacity .15s"},plot);
+  var tipBg = el("rect",{x:0,y:0,width:188,height:88,rx:8,fill:"#1f2a3d",opacity:.96},tipG);
+  var tipBar = el("rect",{x:0,y:0,width:4,height:88,rx:2,fill:"#1d5fc0"},tipG);
+  var tipVvd = el("text",{x:14,y:19,"font-size":11.5,fill:"#fff","font-weight":700},tipG);
+  var tipPct = el("text",{x:14,y:38,"font-size":11.5,fill:"#8ec5ff"},tipG);
+  var tipPrice = el("text",{x:14,y:57,"font-size":11.5,fill:"#8ed4a8"},tipG);
+  var tipTeu = el("text",{x:14,y:76,"font-size":11.5,fill:"#cfe0f5"},tipG);
+  var TW=188, TH=88;
+  DATA.weeks.forEach(function(w,wi){
+    var gx = M.left + wi*groupW;
+    var n = w.vvds.length;
+    var slots = [];
+    for(j=0;j<n;j++){
+      var x = gx + 20 + (j+1) * ((groupW-40)/(n+1));
+      slots.push(x);
+    }
+    el("text",{x:gx+groupW/2,y:H-14,"text-anchor":"middle","font-size":14,fill:"#0f2f6b","font-weight":700},plot).textContent=w.wk;
+    if(n===0){
+      el("text",{x:gx+groupW/2,y:190,"text-anchor":"middle","font-size":12,fill:"#b9c3d4","font-weight":600},plot).textContent="Data to be filled";
+    }
+    var v = w.vvds;
+    for(j=0;j<n;j++){
+      var vvd = v[j];
+      var x = slots[j];
+      var bw = Math.min(44, (groupW-40)/(n+1) * 0.55);
+      var yTop = yRatio(vvd.ratio);
+      var bar = el("rect",{x:x-bw/2,y:yTop,width:bw,height:330-yTop,fill:"#c9d9f0",stroke:"#a9c2e4",style:"cursor:pointer;transition:fill .15s"},plot);
+      el("text",{x:x,y:yTop-6,"text-anchor":"middle","font-size":10,fill:"#0f2f6b","font-weight":700},plot).textContent=Math.round(vvd.ratio)+"%";
+      var vvdLabel = vvd.vvd.substr(0,4) + vvd.vvd.substr(6);
+      el("text",{x:x,y:343,"text-anchor":"end","font-size":9,fill:"#1f2a3d","font-weight":600,transform:"rotate(-45, "+x+", 343)"},plot).textContent=vvdLabel;
+      (function(pt, b){
+        b.addEventListener("mouseenter",function(){
+          b.setAttribute("fill","#9ab8e8");
+          tipVvd.textContent = pt.wk + " · " + pt.vvd;
+          tipPct.textContent = "FAK: $" + pt.fak.toLocaleString();
+          tipPrice.textContent = "Deal: $" + pt.oft.toLocaleString();
+          tipTeu.textContent = "Volume: " + pt.teu.toLocaleString() + " TEU";
+          var tx = pt.x + 10, ty = pt.yTop - TH - 8;
+          if(tx + TW > M.left + PW) tx = pt.x - TW - 10;
+          if(ty < M.top) ty = pt.yTop + 12;
+          tipBg.setAttribute("x",tx); tipBg.setAttribute("y",ty);
+          tipBar.setAttribute("x",tx); tipBar.setAttribute("y",ty);
+          tipVvd.setAttribute("x",tx+14); tipVvd.setAttribute("y",ty+19);
+          tipPct.setAttribute("x",tx+14); tipPct.setAttribute("y",ty+38);
+          tipPrice.setAttribute("x",tx+14); tipPrice.setAttribute("y",ty+57);
+          tipTeu.setAttribute("x",tx+14); tipTeu.setAttribute("y",ty+76);
+          tipG.style.opacity = 1;
+        });
+        b.addEventListener("mouseleave",function(){
+          b.setAttribute("fill","#c9d9f0");
+          tipG.style.opacity = 0;
+        });
+      })({wk:w.wk, vvd:vvd.vvd, ratio:vvd.ratio, fak:vvd.fak, oft:vvd.oft, teu:vvdTeu[vvd.vvd]||0, x:x, yTop:yTop}, bar);
+    }
+  });
+  var series = [
+    {key:"fak", color:"#1d5fc0", label:"CUL FAK"},
+    {key:"oft", color:"#2e9e5b", label:"CUL Deal"}
+  ];
+  series.forEach(function(s){
+    var pts = [];
+    var n = 0;
+    DATA.weeks.forEach(function(w,wi){
+      var gx = M.left + wi*groupW;
+      var v = w.vvds;
+      for(j=0;j<v.length;j++){
+        var x = gx + 20 + (j+1) * ((groupW-40)/(v.length+1));
+        var p = v[j][s.key];
+        if(p==null) continue;
+        pts.push([x, yPrice(p)]);
+        n++;
+      }
+    });
+    if(!n) return;
+    var d = pts.map(function(pt,i){ return (i?"L":"M")+pt[0].toFixed(1)+","+pt[1].toFixed(1); }).join(" ");
+    el("path",{d:d,fill:"none",stroke:s.color,"stroke-width":2.5},plot);
+    pts.forEach(function(pt){
+      el("circle",{cx:pt[0],cy:pt[1],r:4,fill:s.color,stroke:"#fff","stroke-width":1.5},plot);
+    });
+  });
+  if(!hasAny){
+    el("text",{x:M.left+PW/2,y:190,"text-anchor":"middle","font-size":15,fill:"#8a6420","font-weight":600},plot).textContent="WK36-37 Data to be filled";
+  }
+  plot.appendChild(tipG);
+}
+
+var HEAT_VVDS =
+  [
+  {"vvd": "ZG162631W", "wk": "WK35", "date": "08-30", "pols": {
+    "CNSHA": {"fak_pct": 86.1, "fak_teu": 124.0, "fak_price": 9600, "nf_pct": 13.9, "nf_teu": 20.0, "nf_price": null},
+    "CNNGB": {"fak_pct": 79.0, "fak_teu": 49.0, "fak_price": 9400, "nf_pct": 21.0, "nf_teu": 13.0, "nf_price": null}
+  }},
+  {"vvd": "CUHC2631W", "wk": "WK35", "date": "08-29", "pols": {
+    "CNSHA": {"fak_pct": 89.7, "fak_teu": 715.0, "fak_price": 8600, "nf_pct": 10.3, "nf_teu": 82.0, "nf_price": 8400.0}
+  }},
+  {"vvd": "ZGHZ2630W", "wk": "WK35", "date": "08-24", "pols": {
+    "CNSHA": {"fak_pct": 100.0, "fak_teu": 56.0, "fak_price": 8000, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null},
+    "CNNGB": {"fak_pct": 98.2, "fak_teu": 107.0, "fak_price": 8000, "nf_pct": 1.8, "nf_teu": 2.0, "nf_price": null},
+    "CNSHK": {"fak_pct": 89.0, "fak_teu": 89.0, "fak_price": 8200, "nf_pct": 11.0, "nf_teu": 11.0, "nf_price": 8100.0}
+  }},
+  {"vvd": "HMBM2628W", "wk": "WK35", "date": "08-24", "pols": {
+    "CNSHA": {"fak_pct": 57.5, "fak_teu": 46.0, "fak_price": 8000, "nf_pct": 42.5, "nf_teu": 34.0, "nf_price": 7800.0},
+    "CNNGB": {"fak_pct": 92.5, "fak_teu": 99.0, "fak_price": 8000, "nf_pct": 7.5, "nf_teu": 8.0, "nf_price": 7800.0},
+    "CNSHK": {"fak_pct": 98.0, "fak_teu": 96.0, "fak_price": 8200, "nf_pct": 2.0, "nf_teu": 2.0, "nf_price": null},
+    "CNDAL": {"fak_pct": 58.1, "fak_teu": 18.0, "fak_price": 7200, "nf_pct": 41.9, "nf_teu": 13.0, "nf_price": null}
+  }},
+  {"vvd": "MEBB2631W", "wk": "WK36", "date": "09-01", "pols": {
+    "CNNGB": {"fak_pct": 100.0, "fak_teu": 98.0, "fak_price": 8000, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null},
+    "CNSHA": {"fak_pct": 100.0, "fak_teu": 110.0, "fak_price": 8000, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null},
+    "CNSHK": {"fak_pct": 21.2, "fak_teu": 25.0, "fak_price": 9000, "nf_pct": 78.8, "nf_teu": 93.0, "nf_price": 8368.4}
+  }},
+  {"vvd": "RACE2632W", "wk": "WK37", "date": "09-12", "pols": {
+    "CNNGB": {"fak_pct": 26.4, "fak_teu": 23.0, "fak_price": 9500, "nf_pct": 73.6, "nf_teu": 64.0, "nf_price": 8617.6},
+    "CNSHA": {"fak_pct": 93.8, "fak_teu": 91.0, "fak_price": 9500, "nf_pct": 6.2, "nf_teu": 6.0, "nf_price": null},
+    "CNSHK": {"fak_pct": 100.0, "fak_teu": 332.0, "fak_price": 8800, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null}
+  }},
+  {"vvd": "CSQC2634W", "wk": "WK37", "date": "09-13", "pols": {
+    "CNNAS": {"fak_pct": 82.7, "fak_teu": 182.0, "fak_price": 9200, "nf_pct": 17.3, "nf_teu": 38.0, "nf_price": null},
+    "CNNGB": {"fak_pct": 51.1, "fak_teu": 194.0, "fak_price": 9500, "nf_pct": 48.9, "nf_teu": 186.0, "nf_price": 8997.8},
+    "CNTAO": {"fak_pct": 55.2, "fak_teu": 197.0, "fak_price": 9500, "nf_pct": 44.8, "nf_teu": 160.0, "nf_price": 9300},
+    "CNXMN": {"fak_pct": 100.0, "fak_teu": 51.0, "fak_price": 9300, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null}
+  }},
+  {"vvd": "H8112634W", "wk": "WK37", "date": "09-12", "pols": {
+    "CNSHA": {"fak_pct": 80.7, "fak_teu": 415.0, "fak_price": 9500, "nf_pct": 19.3, "nf_teu": 99.0, "nf_price": 9036.4}
+  }},
+  {"vvd": "ZGU92636W", "wk": "WK37", "date": "09-13", "pols": {
+    "CNSHA": {"fak_pct": 100.0, "fak_teu": 85.0, "fak_price": 9500, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null}
+  }},
+  {"vvd": "MMRN2636W", "wk": "WK37", "date": "09-07", "pols": {
+    "CNSHK": {"fak_pct": 39.3, "fak_teu": 267.0, "fak_price": 10000, "nf_pct": 60.7, "nf_teu": 412.0, "nf_price": 9388.5}
+  }},
+  {"vvd": "ZGU82634W", "wk": "WK37", "date": "09-12", "pols": {
+    "CNNGB": {"fak_pct": 87.9, "fak_teu": 58.0, "fak_price": 10000, "nf_pct": 12.1, "nf_teu": 8.0, "nf_price": 9500.0},
+    "CNSHA": {"fak_pct": 53.6, "fak_teu": 30.0, "fak_price": 10000, "nf_pct": 46.4, "nf_teu": 26.0, "nf_price": 9600.0}
+  }},
+  {"vvd": "DFMH2634W", "wk": "WK38", "date": "09-15", "pols": {
+    "CNNGB": {"fak_pct": 100.0, "fak_teu": 356.0, "fak_price": 9500, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null},
+    "CNNAS": {"fak_pct": 100.0, "fak_teu": 253.0, "fak_price": 10000, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null},
+    "CNXGG": {"fak_pct": 0.0, "fak_teu": 0.0, "fak_price": null, "nf_pct": 100.0, "nf_teu": 74.0, "nf_price": 9000},
+    "CNXMN": {"fak_pct": 100.0, "fak_teu": 13.0, "fak_price": 9300, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null},
+    "CNSWA": {"fak_pct": 0.0, "fak_teu": 0.0, "fak_price": null, "nf_pct": 100.0, "nf_teu": 24.0, "nf_price": 9300}
+  }},
+  {"vvd": "CUNS2635W", "wk": "WK38", "date": "09-18", "pols": {
+    "CNNGB": {"fak_pct": 90.2, "fak_teu": 395.0, "fak_price": 9500, "nf_pct": 9.8, "nf_teu": 43.0, "nf_price": null},
+    "CNSHA": {"fak_pct": 85.5, "fak_teu": 1024.0, "fak_price": 9500, "nf_pct": 14.5, "nf_teu": 173.0, "nf_price": 9400},
+    "CNZPU": {"fak_pct": 0.0, "fak_teu": 0.0, "fak_price": null, "nf_pct": 100.0, "nf_teu": 10.0, "nf_price": null}
+  }},
+  {"vvd": "ZGYC2633W", "wk": "WK38", "date": "09-19", "pols": {
+    "CNNGB": {"fak_pct": 85.5, "fak_teu": 414.0, "fak_price": 9500, "nf_pct": 14.5, "nf_teu": 70.0, "nf_price": 9000},
+    "CNNAS": {"fak_pct": 0.0, "fak_teu": 0.0, "fak_price": null, "nf_pct": 100.0, "nf_teu": 34.0, "nf_price": 9200},
+    "CNTAO": {"fak_pct": 25.4, "fak_teu": 140.0, "fak_price": 9500, "nf_pct": 74.6, "nf_teu": 412.0, "nf_price": 9000},
+    "CNSWA": {"fak_pct": 0.0, "fak_teu": 0.0, "fak_price": null, "nf_pct": 100.0, "nf_teu": 34.0, "nf_price": 9000}
+  }},
+  {"vvd": "CSJ82637W", "wk": "WK38", "date": "09-18", "pols": {
+    "CNNAS": {"fak_pct": 82.9, "fak_teu": 658.0, "fak_price": 8800, "nf_pct": 17.1, "nf_teu": 136.0, "nf_price": 8453},
+    "CNSHK": {"fak_pct": 80.6, "fak_teu": 614.0, "fak_price": 8800, "nf_pct": 19.4, "nf_teu": 148.0, "nf_price": 8500},
+    "CNXMN": {"fak_pct": 100.0, "fak_teu": 53.0, "fak_price": 8800, "nf_pct": 0.0, "nf_teu": 0.0, "nf_price": null}
+  }},
+  {"vvd": "X1062638W", "wk": "WK38", "date": "09-19", "pols": {
+    "CNNGB": {"fak_pct": 64.7, "fak_teu": 633.0, "fak_price": 8800, "nf_pct": 35.3, "nf_teu": 346.0, "nf_price": 8534},
+    "CNXGG": {"fak_pct": 0.0, "fak_teu": 0.0, "fak_price": null, "nf_pct": 100.0, "nf_teu": 60.0, "nf_price": 9900}
+  }}
+];
+render();
+var fmt$ = function(v){ return (v==null) ? "\u2014" : "$" + Math.round(v).toLocaleString(); };
+var heatBg = function(r){ return r>=80 ? "#2E7D32" : r>=60 ? "#66BB6A" : r>=40 ? "#FFA726" : r>=20 ? "#FF7043" : "#f44336"; };
+function renderHeat(){
+  var tot = {};
+  HEAT_VVDS.forEach(function(h){ Object.keys(h.pols).forEach(function(p){ var d=h.pols[p]; tot[p]=(tot[p]||0)+d.fak_teu+d.nf_teu; }); });
+  var POL_ORDER = ['CNTAO','CNSHA','CNNGB','CNSHK','CNNAS','CNXMN'];
+  var pols = POL_ORDER.filter(function(p){ return tot[p] != null; });
+  var html = '<thead><tr><th style="width:78px">POL</th>';
+  HEAT_VVDS.forEach(function(h){ html += '<th><div>'+h.vvd+'</div><div class="wktag">'+h.wk+' · '+h.date+'</div></th>'; });
+  html += '</tr></thead><tbody>';
+  pols.forEach(function(p){
+    html += '<tr><td class="pol-cell"><div class="pname">'+p+'</div></td>';
+    HEAT_VVDS.forEach(function(h){
+      var d = h.pols[p];
+      if(!d){ html += '<td class="hcell empty">\u2014</td>'; return; }
+      var bg = heatBg(d.fak_pct);
+      var l1 = 'FAK ' + d.fak_pct.toFixed(1) + '%';
+      if(d.fak_teu > 0) l1 += ' \u00b7 ' + Math.round(d.fak_teu) + 'T \u00b7 ' + fmt$(d.fak_price);
+      var l2 = 'NF ' + d.nf_pct.toFixed(1) + '%';
+      if(d.nf_teu > 0) l2 += ' \u00b7 ' + Math.round(d.nf_teu) + 'T \u00b7 ' + fmt$(d.nf_price);
+      html += '<td class="hcell" style="background:'+bg+'"><div class="l1">'+l1+'</div><div class="l2">'+l2+'</div></td>';
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  document.getElementById("heatTable").innerHTML = html;
+}
+renderHeat();
+
+/* ===== Edit persistence: localStorage auto-save + full-HTML export ===== */
+var _discarding = false;
+var SAVE_KEY = "mkt-report:" + (location.pathname.split("/").pop() || "index.html");
+var FILE_VER = document.body.getAttribute("data-ver") || "";
+function _edNodes(){ return Array.prototype.slice.call(document.querySelectorAll("[contenteditable]")); }
+function _setStatus(msg){ var st = document.getElementById("saveStatus"); if(st) st.textContent = msg || ""; }
+function saveEdits(){
+  try{
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ver:FILE_VER, cells:_edNodes().map(function(n){ return n.innerHTML; })}));
+    var t = new Date();
+    _setStatus("✓ 已自动保存 " + ("0"+t.getHours()).slice(-2) + ":" + ("0"+t.getMinutes()).slice(-2) + "（浏览器本地；导出后才写入文件）");
+  }catch(e){}
+}
+function restoreEdits(){
+  var raw = null;
+  try{ raw = localStorage.getItem(SAVE_KEY); }catch(e){ return false; }
+  if(!raw) return false;
+  try{
+    var d = JSON.parse(raw);
+    var nodes = _edNodes();
+    if(!d || !d.cells || d.cells.length !== nodes.length) return false;
+    if(d.ver !== FILE_VER) return false; /* 文件已被更新（版本号变化），丢弃过期的本地修改 */
+    nodes.forEach(function(n,i){ n.innerHTML = d.cells[i]; });
+    return true;
+  }catch(e){ return false; }
+}
+function exportHTML(){
+  _setStatus("");
+  var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+  var name = location.pathname.split("/").pop() || "mkt-report.html";
+  var done = function(){ _setStatus("✓ 已导出：" + name + "（用它覆盖原文件即完成保存）"); };
+  if(window.showSaveFilePicker){
+    window.showSaveFilePicker({suggestedName:name, types:[{description:"HTML", accept:{"text/html":[".html"]}}]})
+      .then(function(h){ return h.createWritable().then(function(w){ w.write(new Blob([html],{type:"text/html;charset=utf-8"})); return w.close(); }); })
+      .then(done).catch(function(){ _setStatus("已取消导出"); });
+  } else {
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([html],{type:"text/html;charset=utf-8"}));
+    a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    done();
+  }
+  saveEdits();
+}
+function resetEdits(){
+  if(!confirm("丢弃浏览器本地的修改，恢复为文件当前内容？（原文件不受影响）")) return;
+  _discarding = true;
+  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+  location.reload();
+}
+var _saveTimer = null;
+document.addEventListener("input", function(e){
+  var t = e.target;
+  if(t && t.getAttribute && t.getAttribute("contenteditable") === "true"){
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(function(){ saveEdits(); }, 400);
+  }
+});
+window.addEventListener("beforeunload", function(){ if(!_discarding) saveEdits(); });
+if(restoreEdits()) _setStatus("↩ 已恢复上次未导出的浏览器修改（如不需要请点 Reset to File）");
+
+</script>
+</body></html>
