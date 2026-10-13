@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年10月13日（周二）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 13.5px; opacity: 0.9; line-height: 1.7; }
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+    .alert-bar {
+      background: linear-gradient(90deg, #fee2e2 0%, #fef3c7 50%, #fee2e2 100%);
+      border-left: 4px solid #dc2626;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      box-shadow: 0 2px 8px rgba(220,38,38,0.15);
+    }
+    .alert-bar strong { color: #991b1b; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+    .card.darkred { border-left-color: #991b1b; background: #fef2f2; }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+    .tag.critical { background: #7c2d12; color: #fff; }
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+    .card-body strong { color: #111827; }
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #374151;
+      font-weight: 500;
+    }
+    .chip b { color: #1a56db; }
+    .chip.up b { color: #dc2626; }
+    .chip.down b { color: #059669; }
+    .why {
+      background: #eff6ff;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #1e40af;
+    }
+    .why::before { content: "💡 关注理由："; font-weight: 700; }
+    .sources {
+      background: white;
+      border-radius: 10px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      font-size: 12.5px;
+      color: #6b7280;
+      line-height: 2;
+    }
+    .sources a { color: #2563eb; text-decoration: none; word-break: break-all; }
+    .sources a:hover { text-decoration: underline; }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 24px;
+      padding-bottom: 20px;
+    }
+    @media (max-width: 640px) {
+      .container { padding: 12px; }
+      header { padding: 24px 18px; }
+      header h1 { font-size: 21px; }
+      .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>🚢 航运日报</h1>
+    <div class="meta">
+      2026年10月13日（周二）· 第68期<br>
+      聚焦：船司和港口动态 · 国际海运贸易分析
+    </div>
+    <div>
+      <span class="badge">霍尔木兹打击升级</span>
+      <span class="badge">VLCC ~$141万/天</span>
+      <span class="badge">SCFI欧地止跌</span>
+      <span class="badge">亚洲港口拥堵</span>
+      <span class="badge">巴拿马附加费上调</span>
+    </div>
+  </header>
+
+  <div class="alert-bar">
+    <strong>今日主线：</strong>伊朗革命卫队升级打击"违规"油轮，霍尔木兹海峡南部首次常态化袭击扩散至阿曼湾/波斯湾深处，空载VLCC开始掉头远离富查伊拉，海峡通航量跌至战前3%、油轮仅2%；VLCC日租金再创约141万美元/天新高。集运端SCFI周环比持平，欧地航线结束连跌率先反弹，美线维持高位；亚洲港口拥堵>400万TEU，上海/宁波等泊最长12天。
+  </div>
+
+  <div class="section">
+    <div class="section-title">① 船司动态</div>
+
+    <div class="card darkred">
+      <div class="card-header">
+        <div class="card-title">伊朗打击"违规"油轮升级：霍尔木兹及阿曼湾同日多起遇袭，空载VLCC掉头远离波斯湾<span class="tag critical">地缘风险</span></div>
+      </div>
+      <div class="card-body">
+        <p>伊朗伊斯兰革命卫队海军10月12日声明，当天在霍尔木兹海峡打击一艘关闭导航系统、试图经"非法"航线驶出海峡的大型油轮，这是<strong>过去两天内第三艘在驶离霍尔木兹海峡时遭打击的违规大型油轮</strong>。10月11日，霍尔木兹海峡内4艘油轮出峡途中遭"不明发射物"袭击，1艘集装箱船入峡被击中；阿曼苏哈尔锚地附近油轮"Petro Dolphin"遭无人机袭击。伊朗方面警告，任何与美军合作、擅自通过非授权航线的商船或油轮都将遭到果断打击，打击范围已从海峡本身扩展至波斯湾深处与阿曼湾。</p>
+        <p>风险外溢正在改变船东行为：据彭博社船舶追踪数据，近几日<strong>至少10艘VLCC及数艘苏伊士型油轮在驶近阿联酋富查伊拉港途中停航或掉头</strong>。富查伊拉位于霍尔木兹海峡外侧，是海湾原油海上接驳转运的关键节点；空载大船撤离将削弱"穿梭油轮过峡+STS过驳"的替代出口模式，拖慢海湾原油外运速度。</p>
+        <div class="data-chips">
+          <span class="chip up">霍尔木兹7日均通行 <b>战前3%（油轮仅2%）</b></span>
+          <span class="chip up">曼德海峡7日均通行 <b>战前87%（油轮69%）</b></span>
+          <span class="chip up">10/11单日霍尔木兹及阿曼湾遇袭 <b>6艘</b></span>
+          <span class="chip down">过去48小时被打击违规油轮 <b>3艘</b></span>
+        </div>
+        <div class="why">"合规/非合规"航线分化已让战争险、识别系统、船旗与货主身份成为定价核心变量；空载VLCC掉头意味着即便运费天价也无法完全对冲政治风险，海湾原油出口的"接驳缓冲垫"正在变薄，Q4能源物流成本易涨难跌。</div>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-header">
+        <div class="card-title">巴拿马运河附加费再上调：MSC涨至$100/TEU，赫伯罗特10/17起征$155/TEU<span class="tag orange">船司费率</span></div>
+      </div>
+      <div class="card-body">
+        <p>地中海航运（MSC）宣布自10月1日起，对经巴拿马运河、由西地中海/亚得里亚海/以色列/西北欧/斯堪的纳维亚—波罗的海地区运往美国/加拿大/墨西哥的货物，<strong>收取$100/TEU的巴拿马运河紧急附加费（PCE）</strong>，干箱/冷藏箱/特种箱统一费率。赫伯罗特跟进，宣布自<strong>10月17日起对大洋洲至美国东海岸及拉丁美洲航线征收$155/TEU巴拿马运河附加费</strong>，并已按美国联邦海事委员会（FMC）要求备案。</p>
+        <p>巴拿马运河管理局（ACP）10月15日起维持33艘/日总通行量、新巴拿马型闸10艘/日，最大吃水回调至49英尺（14.94米），此前"最坏降至27艘/日"的极端情景解除。但2027财年预算草案显示日均通行量可能进一步压缩至29.5艘，叠加厄尔尼诺滞后影响，限航与附加费或呈常态化。</p>
+        <div class="data-chips">
+          <span class="chip up">MSC PCE <b>$100/TEU（10/1起）</b></span>
+          <span class="chip up">赫伯罗特 PCE <b>$155/TEU（10/17起）</b></span>
+          <span class="chip">ACP日通行量 <b>33艘（10/15维持）</b></span>
+          <span class="chip">FY2027预算日均 <b>或降至29.5艘</b></span>
+        </div>
+        <div class="why">巴拿马附加费从"临时应急"升级为"结构性成本"，美东/拉美进口货主需将PCE、插队费与等待时间一并计入Q4 landed cost；船司间的费率差异（达飞$500/TEU、赫伯罗特$130-155/TEU、MSC $100/TEU）也将影响订舱选择。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">② 港口动态 & 油运市场</div>
+
+    <div class="card red">
+      <div class="card-header">
+        <div class="card-title">VLCC日租金再创约141万美元/天历史新高：全球油轮市场进入"有效运力危机"<span class="tag red">油运超级周期</span></div>
+      </div>
+      <div class="card-body">
+        <p>据东方财富跟踪波罗的海交易所TD3C-TCE口径，<strong>10月8日中东湾至中国航线VLCC日租金达到约141.26万美元/天</strong>，较2月27日海峡关闭前上涨约574%。摩根大通指出，最初局限于中东的VLCC短缺已演变为覆盖VLCC、苏伊士型与阿芙拉型的全球性挤兑——<strong>全球923艘VLCC中9月已有766艘处于运营状态，可供调动的闲置运力极少</strong>；另有约124艘因参与伊朗石油运输或受制裁影响难以进入主流租船市场。</p>
+        <p>有效运力损耗是核心矛盾：中东原油出口9月反弹至约1,200万桶/日（7-8月仅约750万桶/日），但船舶周转效率因船对船过驳（一次或耗时10天）、绕行好望角、护航等待而大幅降低。克拉克森研究周报显示，<strong>ClarkSea综合指数升至84,951美元/天（周+12%）连续第五周刷新历史纪录；VLCC平均收益804,601美元/天（+21%），苏伊士型724,398美元/天（+17%），阿芙拉型393,951美元/天（+46%）</strong>。</p>
+        <div class="data-chips">
+          <span class="chip up">TD3C-TCE <b>~$141.26万/天（+574%）</b></span>
+          <span class="chip up">ClarkSea <b>$84,951/天（连续5周新高）</b></span>
+          <span class="chip">全球VLCC运营率 <b>766/923艘</b></span>
+          <span class="chip">中东9月原油出口 <b>~1200万桶/日</b></span>
+        </div>
+        <div class="why">油运从"事件脉冲"转向"平台化高位"：名义船队未减，但"船舶时间"被过驳、绕行与等待大量消耗；Q4传统旺季叠加低库存，VLCC高运价具备韧性，但需警惕霍尔木兹若阶段性放行带来的"和平折价"冲击。</div>
+      </div>
+    </div>
+
+    <div class="card teal">
+      <div class="card-header">
+        <div class="card-title">亚洲港口拥堵>400万TEU：上海/宁波等泊最长12天，准班率跌至21%/34.6%<span class="tag green">港口动态</span></div>
+      </div>
+      <div class="card-body">
+        <p>Linerlytica数据显示，<strong>当前亚洲港口拥堵已波及超过400万TEU</strong>，上海、宁波等核心枢纽船舶等待靠泊时间最长可达12天，延误向中国华南及东南亚港口蔓延。Sea-Intelligence数据显示，<strong>8月全球船期准班率跌至49.9%，为2022年9月以来最差，平均延误6.81天</strong>；上海港准班率一度跌至21%，宁波港34.6%。业内估计全面恢复正常或需7-10个月，拥堵可能持续到2027年。</p>
+        <p>另一方面，上海港生产数据仍在创新高：上港集团9月完成集装箱吞吐量<strong>513.5万TEU，同比增长6.2%，创单月历史新高</strong>；国庆假期完成115万TEU，同比增长1.3%，前期台风积压已明显缓解。宁波舟山港9月完成427万TEU，同比增长11.5%，同样处于月度历史最高水平。</p>
+        <div class="data-chips">
+          <span class="chip up">亚洲港口拥堵涉及运力 <b>>400万TEU</b></span>
+          <span class="chip down">上海港准班率 <b>21%</b></span>
+          <span class="chip down">宁波港准班率 <b>34.6%</b></span>
+          <span class="chip up">上海港9月吞吐量 <b>513.5万TEU（+6.2%）</b></span>
+        </div>
+        <div class="why">拥堵已从"台风+黄金周"的短期扰动转为结构性运力吸收：需求未走弱、船舶集中到港与码头处理能力错配，使跨太平洋与亚洲区内航线舱位紧张延续；对货主而言，"舱位可得性"已取代"价格"成为Q4核心风险。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">③ 国际海运贸易分析</div>
+
+    <div class="card purple">
+      <div class="card-header">
+        <div class="card-title">SCFI周环比持平3664.11点：欧地航线结束连跌率先反弹，美线高位盘整<span class="tag blue">运价分析</span></div>
+      </div>
+      <div class="card-body">
+        <p>上海航运交易所10月9日发布数据显示，<strong>SCFI报3664.11点，较上期上涨1.81点（+0.05%）</strong>，结束此前连续两周下跌。分航线走势分化：<strong>欧洲基本港$2,274/TEU（+3.4%）、地中海$3,002/TEU（+0.2%）</strong>结束连续回落率先反弹；<strong>美西$7,584/FEU（+0.1%）、美东$10,524/FEU（持平）</strong>维持高位盘整；波斯湾$6,452/TEU（-0.6%）、南美$5,925/TEU（-0.9%）小幅回调；近洋线中韩国$386/TEU（-17美元）、东南亚$1,159/TEU（-12美元）走弱。</p>
+        <p>船司报价继续承压：OOCL进一步下调欧线报价至大柜$3,400-3,500，集量低至$3,300-3,400；COSCO基本调降至同等水平。欧洲经济9月通胀升至3.8%，欧洲央行加息抑制物价但内生动力有限，欧线逐步进入传统淡季。美线则因补库存需求、巴拿马运河限制与港口拥堵支撑，春节前景气仍可维持。</p>
+        <div class="data-chips">
+          <span class="chip">SCFI <b>3,664.11（+0.05%）</b></span>
+          <span class="chip up">欧线 <b>$2,274/TEU（+3.4%）</b></span>
+          <span class="chip up">地中海 <b>$3,002/TEU（+0.2%）</b></span>
+          <span class="chip">美西 <b>$7,584/FEU（+0.1%）</b></span>
+          <span class="chip">美东 <b>$10,524/FEU（持平）</b></span>
+        </div>
+        <div class="why">SCFI企稳显示"美强欧弱"格局延续，欧线短期反弹或只是节后补货+船司控舱的喘息，美线高运价仍具粘性；货主应优先锁定美线舱位，欧线可观察10月中旬船司提价能否落地后再决定锁仓节奏。</div>
+      </div>
+    </div>
+
+    <div class="card green">
+      <div class="card-header">
+        <div class="card-title">附条：长荣再订5艘24,000TEU LNG双燃料Megamax，全球箱船订单/运力比维持38%高位<span class="tag green">造船动态</span></div>
+      </div>
+      <div class="card-body">
+        <p>据Ocean Economist报道，<strong>长荣海运在广州造船国际（GSI）再订5艘24,000TEU LNG双燃料Megamax集装箱船，订单价值约13-14.8亿美元</strong>，单船成本约2.62-2.95亿美元。该批船舶未来可转换氨/甲醇燃料，预计延续长荣近两年在中韩船厂密集订造双燃料大船的策略。全球集装箱船订单/运力比已升至约38%，为2008年以来最高，2027年起运力增速或显著加快。</p>
+        <div class="why">船公司仍在押注低碳法规与规模化降本，但订单/运力比高企意味着2027-2029年交付潮将对运价形成长期压制；当前高运价窗口是锁定长期运力与评估 fleet renewal 的关键节点。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sources">
+    <strong>今日信源：</strong><br>
+    · <a href="https://www.iransitrep.com/">Iran SITREP：霍尔木兹10月13日遇袭与通行数据</a><br>
+    · <a href="https://so.html5.qq.com/page/real/search_news?docid=70000021_2116acd3ff336452">新华社/彭博：伊朗打击违规油轮，空载VLCC掉头远离波斯湾</a><br>
+    · <a href="https://www.163.com/dy/article/L934HT810556MGC6.html">摩根大通：VLCC市场进入有效运力危机</a><br>
+    · <a href="https://www1.cfi.net.cn/p20261013000222.html">中财网：VLCC运价创历史新高</a><br>
+    · <a href="https://www.toutiao.com/article/7695911259388035625/">东方财富：TD3C-TCE 10/8约141.26万美元/天</a><br>
+    · <a href="https://toutiao.toocle.com/detail-11334168.html">Linerlytica/生意头条：亚洲港口拥堵>400万TEU，达飞PSS上调</a><br>
+    · <a href="https://www.msccargo.cn/de/newsroom/customer-advisories/2026/sept/pce-trade-from-wmed,-adriatic,-israel,-nwc-and-scan-baltic-to-usa,-canada-and-mexico">MSC官网：巴拿马运河附加费$100/TEU通知</a><br>
+    · <a href="https://news.toocle.com/news-1000502.html">赫伯罗特：巴拿马运河附加费$155/TEU通知</a><br>
+    · <a href="https://oceaneconomist.com/articles/evergreen-marine-lng-megamax-gsi">Ocean Economist：长荣再订5艘LNG双燃料Megamax</a><br>
+    · 上海航运交易所 / 中国新闻网 / Sea-Intelligence / PortCalls / 克拉克森研究 / 汇通财经
+  </div>
+
+  <footer>
+    航运日报 · 自动化生成 · 2026年10月13日 · 数据截至发稿时，请以官方最新发布为准
+  </footer>
+
+</div>
+</body>
+</html>
