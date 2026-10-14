@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CNNAS · 国庆红海货量及运价 FAK完船报告</title>
+
+<style>
+:root{
+  --navy:#0f2f6b;
+  --blue:#1d5fc0;
+  --blue-light:#eaf1fb;
+  --ink:#1f2a3d;
+  --gray:#6b7a90;
+  --line:#e3e9f2;
+  --bg:#f4f6fa;
+  --card:#ffffff;
+  --down:#d93030;
+  --border:#c9d8ef;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1360px;margin:0 auto;padding:0 24px 40px}
+header.banner{
+  background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);
+  color:#fff;border-radius:14px;padding:22px 28px;margin-top:20px;
+  display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;
+  box-shadow:0 6px 18px rgba(15,47,107,.18);
+}
+header.banner h1{font-size:21px;letter-spacing:.5px;font-weight:700}
+header.banner .sub{margin-top:6px;font-size:13px;opacity:.88}
+.crumb{font-size:13px;color:var(--gray);margin:16px 0 12px}
+.crumb span{margin:0 6px;color:#b6c0cf}
+h2{font-size:16px;font-weight:700;color:var(--navy);margin:26px 0 12px;display:flex;align-items:center;gap:9px}
+h2::before{content:'';width:4px;height:16px;background:var(--blue);border-radius:2px;flex:none}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:6px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;box-shadow:0 2px 8px rgba(31,42,61,.05)}
+.kpi .l{font-size:12px;color:var(--gray)}
+.kpi .v{font-size:22px;font-weight:700;margin-top:2px;color:var(--navy);font-variant-numeric:tabular-nums}
+.kpi .v.ok{color:#12785a}.kpi .v.warn{color:#b45309}.kpi .v.mute{color:var(--gray)}
+.bars{margin-top:8px}
+.bar{display:flex;align-items:center;gap:10px;padding:6px 0}
+.bar .nm{width:96px;flex:none;font-size:13px;color:var(--ink)}
+.bar .nm .cn{color:var(--gray);margin-left:4px}
+.bar .tr{flex:1;height:16px;background:#e9edf4;border-radius:3px;overflow:hidden;display:flex}
+.bar .tr i{display:block;height:100%}
+.bar .vv{width:118px;flex:none;text-align:right;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.i-fak{background:#2fa172}.i-non{background:#dd9a1f}.i-unr{background:#9aa3b2}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:10px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgba(31,42,61,.05);transition:border-color .15s,box-shadow .15s}
+.card:hover{border-color:var(--blue);box-shadow:0 4px 14px rgba(29,95,192,.16);text-decoration:none}
+.card .top{display:flex;justify-content:space-between;align-items:baseline}
+.card .pc{font-size:15px;font-weight:700;color:var(--navy)}
+.card .rt{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+.card .rt.ok{color:#12785a}.card .rt.mid{color:#b45309}.card .rt.bad{color:var(--down)}
+.card .met{font-size:12px;color:var(--gray);margin-top:6px}
+.card .mini{margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{background:var(--blue-light);color:var(--navy);text-align:left;font-weight:600;padding:9px 12px;white-space:nowrap;border-bottom:2px solid var(--border)}
+td{padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:hover{background:#f8fafd}
+.polrow{cursor:pointer}
+.polrow td.pc{color:var(--blue);font-weight:600}
+details{border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:var(--card);overflow:hidden}
+details[open]{background:#fdfefe}
+summary{cursor:pointer;padding:11px 15px;font-size:13.5px;list-style:none;display:flex;align-items:center;gap:12px;user-select:none}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:#f8fafd}
+summary .mk{color:#a6b0c0;font-size:10px;width:8px}
+summary .vv{font-weight:700;color:var(--navy)}
+summary .rt{font-size:12px;color:var(--gray)}
+summary .sp{flex:1}
+summary .mt{font-size:12px;color:var(--gray);font-variant-numeric:tabular-nums}
+.dl{padding:2px 15px 12px}
+.dlh{display:flex;align-items:center;gap:10px;padding:8px 0 4px;font-size:13px;color:var(--ink)}
+.dlh .cn{color:var(--gray)}
+.dlh .mt{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--gray)}
+.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11.5px}
+.t-fak{background:#e6f4ed;color:#12785a}
+.t-non{background:#fdf2dc;color:#a1650a}
+.t-unr{background:var(--blue-light);color:var(--gray)}
+.neg{color:var(--down)}
+.tools{display:flex;gap:8px;align-items:center;margin:14px 0 6px}
+input[type=search]{background:#fff;border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:7px 11px;font-size:13px;width:270px;font-family:inherit}
+input[type=search]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,95,192,.12)}
+.hint{font-size:12px;color:var(--gray)}
+.empty{padding:12px 15px;color:var(--gray);font-size:13px}
+.hmbox{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:0 2px 8px rgba(31,42,61,.05);margin-top:4px}
+.hmscroll{overflow-x:auto;margin-top:8px;border-radius:8px;border:1px solid var(--line);padding-bottom:8px}
+table.hm{width:max-content;border-collapse:separate;border-spacing:2px;font-size:12px}
+table.hm th{border:0;position:static;font-size:12px;color:#fff;font-weight:600;background:var(--navy)}
+table.hm td{border:0;padding:0}
+table.hm th.rh{text-align:left;padding:8px 10px;min-width:88px;max-width:88px;white-space:nowrap;background:var(--navy);position:sticky;left:0;z-index:2}
+table.hm th.rh a{font-weight:700;color:#fff}
+table.hm th.rh span{font-weight:400;opacity:.8;font-size:11px}
+table.hm th.ch{text-align:center;background:var(--navy);color:#fff;padding:8px 6px;border:1px solid #0d2a61;min-width:158px;line-height:1.45;border-radius:4px}
+table.hm th.ch .cc{display:block;font-weight:700;font-size:12.5px}
+table.hm th.ch .cn2{display:block;font-weight:400;opacity:.85;font-size:10.5px}
+table.hm th.ch .ct{display:block;font-weight:400;opacity:.8;font-size:10px}
+.hc{min-width:158px;min-height:50px;height:auto;padding:4px 6px;padding:2px 6px;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;line-height:1.35;cursor:default;position:relative;color:#fff}
+.hc .ln{display:block;font-size:10.5px;font-weight:700;white-space:nowrap}
+.hc .ln.dim{font-weight:400;opacity:.88}
+.hc .ln.ref{font-weight:600;opacity:.85;font-size:10px}
+.hc .npx{font-weight:400;opacity:.8;font-size:9.5px}
+.hc.na{background:#f5f5f5;color:#bbb;border:1px dashed #e0e0e0}
+.hc .gap{position:absolute;top:3px;right:4px;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(15,47,107,.35)}
+.hc.q0{background:#cf3b3b}
+.hc.q1{background:#d9801a}
+.hc.q2{background:#c99a14}
+.hc.q3{background:#2a8f63}
+.hc.q4{background:#0f7a52}
+.hc:hover{outline:2px solid var(--navy);outline-offset:-2px}
+.lg{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--gray)}
+.lg .steps{display:flex;align-items:center;gap:0}
+.lg .steps i{width:36px;height:11px;display:block}
+.lg .steps i:first-child{border-radius:2px 0 0 2px}
+.lg .steps i:last-child{border-radius:0 2px 2px 0}
+.lg .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 0 1px rgba(15,47,107,.4);margin-right:5px;vertical-align:middle}
+footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);color:var(--gray);font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="banner">
+    <div>
+      <h1>国庆红海货量及运价 FAK完船报告</h1>
+      <div class="sub" id="hdrSub"></div>
+    </div>
+  </header>
+  <div id="app"></div>
+  <footer id="ftr"></footer>
+</div>
+
+<script>
+const DATA = {"meta":{"tag":"20261014","scope":"红海四港(吉达/亚丁/苏丹港/苏赫纳)","t":17038,"f":11667,"u":612,"v":22,"p":11,"bl":4589,"cust":320,"skipPol":["CNZPU","CNQZH","CNDAL"],"r":68.5},"dels":[{"c":"SAJED","n":"吉达","t":12500,"f":8500,"u":465,"r":68.0},{"c":"YEADE","n":"亚丁","t":1901,"f":1395,"u":29,"r":73.4},{"c":"SDPZU","n":"苏丹港","t":1455,"f":1183,"u":114,"r":81.3},{"c":"EGSOK","n":"苏赫纳","t":1182,"f":589,"u":4,"r":49.8}],"pols":[{"c":"CNNAS","t":3325,"f":2479,"u":22,"r":74.6,"v":10,"n":78,"b":1010}],"byPol":{"CNNAS":{"vvds":[{"v":"CSJ82637W","rt":"REX WK38","e":"20260918","t":794,"f":658,"u":0,"r":82.9,"dels":[{"c":"SAJED","n":"吉达","t":794,"f":658,"u":0,"r":82.9,"custs":[{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":154.0,"f":154.0,"r":100.0,"p20":5800,"f20":5700,"p40":9195,"f40":8800},{"n":"PATENT INTERNATIONAL LOGISTICS (SHENZHEN) CO.LTD","c":"CN316612","a":"CU-立联","ty":"Non-FAK","t":72.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8500,"f40":8800},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":70.0,"f":70.0,"r":100.0,"p20":"","f20":"","p40":9166,"f40":8800},{"n":"GLORY INTERNATIONAL LOGISTICS LIMITED","c":"CN354263","a":"CU-立联","ty":"FAK","t":64.0,"f":64.0,"r":100.0,"p20":"","f20":"","p40":9612,"f40":8800},{"n":"HAVI FREIGHT MANAGEMENT LIMITED","c":"HK426333","a":"CU-立联","ty":"Non-FAK","t":64.0,"f":0,"r":0.0,"p20":5100,"f20":5700,"p40":8400,"f40":8800},{"n":"HONHANN SUPPLY CHAIN CO., LTD","c":"CN418031","a":"UL-联合物流","ty":"FAK","t":48.0,"f":48.0,"r":100.0,"p20":"","f20":"","p40":10000,"f40":8800},{"n":"UIFF SHIPPING CO LTD","c":"CN333943","a":"CU-立联","ty":"FAK","t":42.0,"f":42.0,"r":100.0,"p20":"","f20":"","p40":9181,"f40":8800},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":36.0,"f":36.0,"r":100.0,"p20":5720,"f20":5700,"p40":9077,"f40":8800},{"n":"U.S.UNITED","c":"CN333696","a":"CU-立联","ty":"FAK","t":30.0,"f":30.0,"r":100.0,"p20":6500,"f20":5700,"p40":10000,"f40":8800},{"n":"GUANGDONG AIR SEA TRANSPORT INC.","c":"CN400972","a":"CU-立联","ty":"FAK","t":26.0,"f":26.0,"r":100.0,"p20":"","f20":"","p40":10200,"f40":8800},{"n":"Unity International Logistics Co.,Ltd","c":"CN439353","a":"UL-联合物流","ty":"FAK","t":22.0,"f":22.0,"r":100.0,"p20":5900,"f20":5700,"p40":9200,"f40":8800},{"n":"UNI-STAR INTERNATIONAL LOGISTICS SERVICE","c":"CN363244","a":"CU-立联","ty":"FAK","t":20.0,"f":20.0,"r":100.0,"p20":5800,"f20":5700,"p40":9200,"f40":8800},{"n":"ONTOP LOGISTICS CO.,LTD","c":"CN405212","a":"UL-联合物流","ty":"FAK","t":20.0,"f":20.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8800},{"n":"Guangzhou Noble International Logistics Co.,Ltd","c":"CN430293","a":"CU-立联","ty":"FAK","t":20.0,"f":20.0,"r":100.0,"p20":"","f20":"","p40":10000,"f40":8800},{"n":"UNIBEST (GZ) INT'L LOGISTICS CO., LTD","c":"CN315985","a":"CU-立联","ty":"FAK","t":16.0,"f":16.0,"r":100.0,"p20":"","f20":"","p40":9662,"f40":8800},{"n":"GUANGDONG HUAN SHIPPING INTERNATIONAL LOGISTICS CO.,LTD","c":"CN348378","a":"CU-立联","ty":"FAK","t":16.0,"f":16.0,"r":100.0,"p20":5700,"f20":5700,"p40":8800,"f40":8800},{"n":"GUANGZHOU SEA WORLD FREIGHT LIMITED","c":"CN377090","a":"CU-立联","ty":"FAK","t":14.0,"f":14.0,"r":100.0,"p20":"","f20":"","p40":9814,"f40":8800},{"n":"GUANGZHOU FOCUS GLOBAL LOGISTICS CORPORATION LTD","c":"CN306382","a":"CU-立联","ty":"FAK","t":9.0,"f":9.0,"r":100.0,"p20":5700,"f20":5700,"p40":10000,"f40":8800},{"n":"LONGSAIL SUPPLY CHAIN CO.,LTD","c":"CN323378","a":"CU-立联","ty":"FAK","t":5.0,"f":5.0,"r":100.0,"p20":5700,"f20":5700,"p40":8800,"f40":8800},{"n":"CFI TRADING INT CO. , LTD","c":"CN440306","a":"CU-立联","ty":"FAK","t":5.0,"f":5.0,"r":100.0,"p20":6200,"f20":5700,"p40":9000,"f40":8800},{"n":"Chinatrans International Limited","c":"CN300777","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":9100,"f40":8800},{"n":"Patent International Logistics (Shenzhen) Co.,Ltd","c":"CN300779","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":10300,"f40":8800},{"n":"BLUE WHALE SUPPLY CHAIN (SHENZHEN) CO.,LTD","c":"CN325822","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":9100,"f40":8800},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":10000,"f40":8800},{"n":"XIAMEN RICHOCEAN LOGISTICS CO.,LTD","c":"CN362607","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":5700,"f20":5700,"p40":"","f40":""},{"n":"APEC SHIPPING CO.,LTD","c":"CN302741","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5850,"f20":5700,"p40":9100,"f40":8800},{"n":"SHENZHEN A&E CONTAINER TRANSPORTATION CO., LTD","c":"CN304547","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5850,"f20":5700,"p40":9100,"f40":8800},{"n":"ASIACARGO GLOBAL LOGISTICS (GUANGZHOU) CO.,LTD","c":"CN401335","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5850,"f20":5700,"p40":9100,"f40":8800},{"n":"Unitex Int'l Forwarding ME(Guangzhou)Ltd","c":"CN426973","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":6800,"f20":5700,"p40":10500,"f40":8800},{"n":"HACOS INT'L LOGISTICS CO.,LTD","c":"CN339441","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":9300,"f40":8800},{"n":"UNICORN SUPPLY CHAIN (SHENZHEN) CO., LTD","c":"CN343647","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8800},{"n":"SHENZHEN BODA LOGISTICS TECHNOLOGY CO., LTD","c":"CN361435","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":10500,"f40":8800},{"n":"SHENZHEN SOUTHEAST INTERNATIONAL LOGISTICS CO.,LTD","c":"CN329735","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5900,"f20":5700,"p40":"","f40":""},{"n":"T.A. INTERNATIONAL TRANSPORTATION CO.,LTD","c":"CN344287","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5850,"f20":5700,"p40":"","f40":""},{"n":"SAILSPREAD SUPLY CHAIN CO.,LTD","c":"CN431401","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":6100,"f20":5700,"p40":"","f40":""}]}]},{"v":"ZGHA2638W","rt":"RES WK39","e":"20260922","t":19,"f":19,"u":0,"r":100.0,"dels":[{"c":"SAJED","n":"吉达","t":19,"f":19,"u":0,"r":100.0,"custs":[{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":13.0,"f":13.0,"r":100.0,"p20":5700,"f20":5700,"p40":8800,"f40":8800},{"n":"UNIBEST (GZ) INT'L LOGISTICS CO., LTD","c":"CN315985","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8800},{"n":"BEIJING KANG JIE KONG INTERNATIONAL CARGO AGENT CO., LTD","c":"CN320609","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8800},{"n":"UNI-STAR INTERNATIONAL LOGISTICS SERVICE","c":"CN363244","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8800}]}]},{"v":"LION2638W","rt":"CGX WK39","e":"20260926","t":520,"f":242,"u":0,"r":46.5,"dels":[{"c":"SAJED","n":"吉达","t":479,"f":201,"u":0,"r":42.0,"custs":[{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":43.0,"f":43.0,"r":100.0,"p20":5591,"f20":5100,"p40":8762,"f40":8500},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"Non-FAK","t":112.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"PATENT INTERNATIONAL LOGISTICS (SHENZHEN) CO.LTD","c":"CN316612","a":"CU-立联","ty":"FAK","t":12.0,"f":12.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"PATENT INTERNATIONAL LOGISTICS (SHENZHEN) CO.LTD","c":"CN316612","a":"CU-立联","ty":"Non-FAK","t":116.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"Guangzhou Noble International Logistics Co.,Ltd","c":"CN430293","a":"CU-立联","ty":"Non-FAK","t":50.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8144,"f40":8500},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":44.0,"f":44.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"SHENZHEN UFAN LOGISTICS CO.,LTD","c":"CN422653","a":"UL-联合物流","ty":"FAK","t":19.0,"f":19.0,"r":100.0,"p20":5700,"f20":5100,"p40":8800,"f40":8500},{"n":"ASIACARGO GLOBAL LOGISTICS (GUANGZHOU) CO.,LTD","c":"CN401335","a":"CU-立联","ty":"FAK","t":16.0,"f":16.0,"r":100.0,"p20":"","f20":"","p40":8838,"f40":8500},{"n":"GLORY INTERNATIONAL LOGISTICS LIMITED","c":"CN354263","a":"CU-立联","ty":"FAK","t":14.0,"f":14.0,"r":100.0,"p20":"","f20":"","p40":9200,"f40":8500},{"n":"LONGSAIL SUPPLY CHAIN CO.,LTD","c":"CN323378","a":"CU-立联","ty":"FAK","t":10.0,"f":10.0,"r":100.0,"p20":"","f20":"","p40":9140,"f40":8500},{"n":"UIFF SHIPPING CO LTD","c":"CN333943","a":"CU-立联","ty":"FAK","t":10.0,"f":10.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"UNICORN SUPPLY CHAIN (SHENZHEN) CO., LTD","c":"CN343647","a":"CU-立联","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":5100,"f20":5100,"p40":8800,"f40":8500},{"n":"Dongguan MAHA Home Product COMPANY LIMITED","c":"CN442854","a":"UL-联合物流","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5100,"f20":5100,"p40":8800,"f40":8500},{"n":"WORLDWIDE LOGISTICS CO.,LTD","c":"CN301319","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"SHENZHEN A&E CONTAINER TRANSPORTATION CO., LTD","c":"CN304547","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":5850,"f20":5100,"p40":"","f40":""},{"n":"U.S.UNITED","c":"CN333696","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"T.A. INTERNATIONAL TRANSPORTATION CO.,LTD","c":"CN344287","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"Foshan Jingmei New Energy Technology Co.,Ltd","c":"CN442853","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"GUANGZHOU FOCUS GLOBAL LOGISTICS CORPORATION LTD","c":"CN306382","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""},{"n":"GUANGZHOU TOPJET INTERNATIONAL LOGISTICS CO.,LTD","c":"CN325486","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5750,"f20":5100,"p40":"","f40":""},{"n":"SHAOGUAN DONGSEN SYNTHETIC MATERIAL CO., LTD","c":"CN442846","a":"UL-联合物流","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""},{"n":"STAR CHEMICALS AND CATALYSTS CO., LTD","c":"CN442857","a":"UL-联合物流","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""}]},{"c":"SDPZU","n":"苏丹港","t":41,"f":41,"u":0,"r":100.0,"custs":[{"n":"WORLDWIDE LOGISTICS CO.,LTD","c":"CN301319","a":"UL-联合物流","ty":"FAK","t":23.0,"f":23.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":7400},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":7700,"f40":7400},{"n":"SHENZHEN UFAN LOGISTICS CO.,LTD","c":"CN422653","a":"UL-联合物流","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":7700,"f40":7400},{"n":"Shenzhen United Logistics Development Co.,Ltd","c":"CN362830","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7700,"f40":7400}]}]},{"v":"TGLK2638W","rt":"REX WK39","e":"20260926","t":314,"f":266,"u":0,"r":84.7,"dels":[{"c":"YEADE","n":"亚丁","t":314,"f":266,"u":0,"r":84.7,"custs":[{"n":"GLORY INTERNATIONAL LOGISTICS LIMITED","c":"CN354263","a":"CU-立联","ty":"FAK","t":88.0,"f":88.0,"r":100.0,"p20":"","f20":"","p40":8600,"f40":8600},{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":59.0,"f":59.0,"r":100.0,"p20":5500,"f20":5500,"p40":8600,"f40":8600},{"n":"GUANGZHOU TOPJET INTERNATIONAL LOGISTICS CO.,LTD","c":"CN325486","a":"CU-立联","ty":"FAK","t":51.0,"f":51.0,"r":100.0,"p20":5500,"f20":5500,"p40":8600,"f40":8600},{"n":"UIFF SHIPPING CO LTD","c":"CN333943","a":"CU-立联","ty":"FAK","t":34.0,"f":34.0,"r":100.0,"p20":"","f20":"","p40":8600,"f40":8600},{"n":"ZHEJIANG HADA INTERNATIONAL LOGISTICS CO.,LTD","c":"CN404470","a":"CU-立联","ty":"Non-FAK","t":24.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8300,"f40":8600},{"n":"SHENZHEN UFAN LOGISTICS CO.,LTD","c":"CN422653","a":"UL-联合物流","ty":"Non-FAK","t":12.0,"f":0,"r":0.0,"p20":"","f20":"","p40":7700,"f40":8600},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":"","f20":"","p40":8600,"f40":8600},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"Non-FAK","t":2.0,"f":0,"r":0.0,"p20":"","f20":"","p40":7400,"f40":8600},{"n":"ONTOP LOGISTICS CO.,LTD","c":"CN405212","a":"UL-联合物流","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":8600,"f40":8600},{"n":"UNIBEST (GZ) INT'L LOGISTICS CO., LTD","c":"CN315985","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":"","f20":"","p40":9000,"f40":8600},{"n":"Cargovasto International Logistics Co.,Ltd","c":"CN412210","a":"CU-立联","ty":"Non-FAK","t":6.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8100,"f40":8600},{"n":"UNI-STAR INTERNATIONAL LOGISTICS SERVICE","c":"CN363244","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":8600,"f40":8600},{"n":"HAIER GULF ELECTRONICS L.L.C","c":"AE339324","a":"CU-立联","ty":"Non-FAK","t":2.0,"f":0,"r":0.0,"p20":"","f20":"","p40":4370,"f40":8600},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":5500,"f20":5500,"p40":"","f40":""},{"n":"Chinatrans International Limited","c":"CN300777","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":9000,"f40":8600},{"n":"CTS INTERNATIONAL TRANSPORTATION (GUANGZHOU) CO.,LTD","c":"CN323599","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8900,"f40":8600},{"n":"HTO INTERNATIONAL LOGISTICS (GUANGZHOU) CO., LTD","c":"CN338104","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":9000,"f40":8600},{"n":"HONHANN SUPPLY CHAIN CO., LTD","c":"CN418031","a":"UL-联合物流","ty":"Non-FAK","t":2.0,"f":0,"r":0.0,"p20":"","f20":"","p40":7400,"f40":8600},{"n":"GUANGZHOU FOCUS GLOBAL LOGISTICS CORPORATION LTD","c":"CN306382","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5500,"f20":5500,"p40":"","f40":""},{"n":"GUANGDONG HUAN SHIPPING INTERNATIONAL LOGISTICS CO.,LTD","c":"CN348378","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5500,"f20":5500,"p40":"","f40":""}]}]},{"v":"H7282635W","rt":"REX WK40","e":"20260930","t":230,"f":184,"u":0,"r":80.0,"dels":[{"c":"SAJED","n":"吉达","t":161,"f":115,"u":0,"r":71.4,"custs":[{"n":"XINCHENG INTERNATIONAL (HONG KONG) CO.,LIMITED","c":"CN442799","a":"UL-联合物流","ty":"Non-FAK","t":38.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"HONHANN SUPPLY CHAIN CO., LTD","c":"CN418031","a":"UL-联合物流","ty":"FAK","t":34.0,"f":34.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":25.0,"f":25.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"LONGSAIL SUPPLY CHAIN CO.,LTD","c":"CN323378","a":"CU-立联","ty":"FAK","t":18.0,"f":18.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"HAIER SINGAPORE INVESTMENT HOLDING PTE.LTD","c":"SG364123","a":"CU-立联","ty":"Non-FAK","t":8.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"GUANGZHOU TOPJET INTERNATIONAL LOGISTICS CO.,LTD","c":"CN325486","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":5200,"f20":5100,"p40":"","f40":""},{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"XIAMEN RICHOCEAN LOGISTICS CO.,LTD","c":"CN362607","a":"CU-立联","ty":"FAK","t":5.0,"f":5.0,"r":100.0,"p20":5220,"f20":5100,"p40":"","f40":""},{"n":"GUANGDONG AIR SEA TRANSPORT INC.","c":"CN400972","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":9000,"f40":8500},{"n":"GUANGZHOU FOCUS GLOBAL LOGISTICS CORPORATION LTD","c":"CN306382","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""},{"n":"SHENZHEN VCHAIN INTERNATIONAL CO.,LTD","c":"CN328306","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8700,"f40":8500},{"n":"T.A. INTERNATIONAL TRANSPORTATION CO.,LTD","c":"CN344287","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8700,"f40":8500},{"n":"GUANGZHOU XIANYI CARGO CO.,LTD","c":"CN428566","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8600,"f40":8500},{"n":"ECU WORLDWIDE (GUANGZHOU) LIMITED","c":"CN318791","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5350,"f20":5100,"p40":"","f40":""},{"n":"UNI-STAR INTERNATIONAL LOGISTICS SERVICE","c":"CN363244","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""},{"n":"WINCO GROUP LIMITED","c":"CN410418","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5300,"f20":5100,"p40":"","f40":""}]},{"c":"SDPZU","n":"苏丹港","t":46,"f":46,"u":0,"r":100.0,"custs":[{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":16.0,"f":16.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":6600},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":15.0,"f":15.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":6600},{"n":"GUANGZHOU TOPJET INTERNATIONAL LOGISTICS CO.,LTD","c":"CN325486","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":6600},{"n":"UNI-STAR INTERNATIONAL LOGISTICS SERVICE","c":"CN363244","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":4800,"f20":4800,"p40":"","f40":""},{"n":"MANLITOP(SHENZHEN)LIMITED","c":"CN303927","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7900,"f40":6600},{"n":"UIFF SHIPPING CO LTD","c":"CN333943","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":4800,"f20":4800,"p40":"","f40":""},{"n":"HONHANN SUPPLY CHAIN CO., LTD","c":"CN418031","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":6600},{"n":"Patent International Logistics (Shenzhen) Co.,Ltd","c":"CN300779","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":4900,"f20":4800,"p40":"","f40":""}]},{"c":"YEADE","n":"亚丁","t":15,"f":15,"u":0,"r":100.0,"custs":[{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":5000,"f20":4800,"p40":7700,"f40":7400},{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":7700,"f40":7400},{"n":"Chinatrans International Limited","c":"CN300777","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":4900,"f20":4800,"p40":"","f40":""},{"n":"UNIBEST (GZ) INT'L LOGISTICS CO., LTD","c":"CN315985","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7800,"f40":7400},{"n":"WINCO GROUP LIMITED","c":"CN410418","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5550,"f20":4800,"p40":"","f40":""}]},{"c":"EGSOK","n":"苏赫纳","t":8,"f":8,"u":0,"r":100.0,"custs":[{"n":"SHENZHEN VCHAIN INTERNATIONAL CO.,LTD","c":"CN328306","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":6700,"f40":6500},{"n":"GUANGDONG HUAN SHIPPING INTERNATIONAL LOGISTICS CO.,LTD","c":"CN348378","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":4000,"f20":4000,"p40":"","f40":""},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":4000,"f20":4000,"p40":"","f40":""},{"n":"LONGSAIL SUPPLY CHAIN CO.,LTD","c":"CN323378","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":4000,"f20":4000,"p40":"","f40":""},{"n":"GLORY INTERNATIONAL LOGISTICS LIMITED","c":"CN354263","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":4000,"f20":4000,"p40":"","f40":""},{"n":"HONHANN SUPPLY CHAIN CO., LTD","c":"CN418031","a":"UL-联合物流","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":4000,"f20":4000,"p40":"","f40":""}]}]},{"v":"BZCF2639W","rt":"CGX WK40","e":"20261002","t":64,"f":64,"u":0,"r":100.0,"dels":[{"c":"SAJED","n":"吉达","t":64,"f":64,"u":0,"r":100.0,"custs":[{"n":"ONTOP LOGISTICS CO.,LTD","c":"CN405212","a":"UL-联合物流","ty":"FAK","t":43.0,"f":43.0,"r":100.0,"p20":5700,"f20":5100,"p40":8800,"f40":8500},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":18.0,"f":18.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"Shenzhen United Logistics Development Co.,Ltd","c":"CN362830","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"WORLDWIDE LOGISTICS CO.,LTD","c":"CN301319","a":"UL-联合物流","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""}]}]},{"v":"ZGZH2635W","rt":"RES WK40","e":"20261002","t":79,"f":24,"u":0,"r":30.4,"dels":[{"c":"EGSOK","n":"苏赫纳","t":43,"f":0,"u":0,"r":0.0,"custs":[{"n":"SUNTOP INTERNATIONAL LOGISTICS GUANGZHOU LIMITED","c":"CN362195","a":"CU-立联","ty":"Non-FAK","t":32.0,"f":0,"r":0.0,"p20":"","f20":"","p40":6500,"f40":7200},{"n":"GUANGZHOU SEA WORLD FREIGHT LIMITED","c":"CN377090","a":"CU-立联","ty":"Non-FAK","t":4.0,"f":0,"r":0.0,"p20":"","f20":"","p40":6700,"f40":7200},{"n":"SHUNZHENG INTL SEAWAY LTD","c":"CN439837","a":"UL-联合物流","ty":"Non-FAK","t":3.0,"f":0,"r":0.0,"p20":4000,"f20":4700,"p40":"","f40":""},{"n":"HONHANN SUPPLY CHAIN CO., LTD","c":"CN418031","a":"UL-联合物流","ty":"Non-FAK","t":2.0,"f":0,"r":0.0,"p20":4000,"f20":4700,"p40":"","f40":""},{"n":"GUANGDONG HUAN SHIPPING INTERNATIONAL LOGISTICS CO.,LTD","c":"CN348378","a":"CU-立联","ty":"Non-FAK","t":1.0,"f":0,"r":0.0,"p20":4000,"f20":4700,"p40":"","f40":""},{"n":"SHENZHEN DINGYUNTONG INTERNATIONAL TRANSPORATATION CO.,LTD","c":"CN442852","a":"UL-联合物流","ty":"Non-FAK","t":1.0,"f":0,"r":0.0,"p20":4000,"f20":4700,"p40":"","f40":""}]},{"c":"SAJED","n":"吉达","t":26,"f":14,"u":0,"r":53.8,"custs":[{"n":"HONG KONG ZHENGHE TRADING CO., LIMITED","c":"CN440806","a":"UL-联合物流","ty":"Non-FAK","t":12.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"SHENZHEN DINGYUNTONG INTERNATIONAL TRANSPORATATION CO.,LTD","c":"CN442852","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500}]},{"c":"SDPZU","n":"苏丹港","t":10,"f":10,"u":0,"r":100.0,"custs":[{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400}]}]},{"v":"CUHM2638W","rt":"REX WK41","e":"20261010","t":619,"f":523,"u":0,"r":84.5,"dels":[{"c":"SAJED","n":"吉达","t":617,"f":521,"u":0,"r":84.4,"custs":[{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":80.0,"f":80.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":27.0,"f":27.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"Non-FAK","t":32.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"WINCO GROUP LIMITED","c":"CN410418","a":"CU-立联","ty":"FAK","t":58.0,"f":58.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"UNICORN SUPPLY CHAIN (SHENZHEN) CO., LTD","c":"CN343647","a":"CU-立联","ty":"FAK","t":48.0,"f":48.0,"r":100.0,"p20":"","f20":"","p40":9075,"f40":8500},{"n":"GUANG DONG VAMA FURNITURETECHNOLOGY CO., LTD","c":"CN442855","a":"UL-联合物流","ty":"Non-FAK","t":46.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8270,"f40":8500},{"n":"GLORY INTERNATIONAL LOGISTICS LIMITED","c":"CN354263","a":"CU-立联","ty":"FAK","t":40.0,"f":40.0,"r":100.0,"p20":"","f20":"","p40":8710,"f40":8500},{"n":"GUANGDONG HUAN SHIPPING INTERNATIONAL LOGISTICS CO.,LTD","c":"CN348378","a":"CU-立联","ty":"FAK","t":39.0,"f":39.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"UIFF SHIPPING CO LTD","c":"CN333943","a":"CU-立联","ty":"FAK","t":36.0,"f":36.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"UNIBEST (GZ) INT'L LOGISTICS CO., LTD","c":"CN315985","a":"CU-立联","ty":"FAK","t":26.0,"f":26.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"SHENZHEN DINGYUNTONG INTERNATIONAL TRANSPORATATION CO.,LTD","c":"CN442852","a":"UL-联合物流","ty":"FAK","t":25.0,"f":25.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"SHENZHEN A&E CONTAINER TRANSPORTATION CO., LTD","c":"CN304547","a":"CU-立联","ty":"FAK","t":19.0,"f":19.0,"r":100.0,"p20":5200,"f20":5100,"p40":8700,"f40":8500},{"n":"HAVI FREIGHT MANAGEMENT LIMITED","c":"HK426333","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5100,"f20":5100,"p40":8400,"f40":8500},{"n":"HAVI FREIGHT MANAGEMENT LIMITED","c":"HK426333","a":"CU-立联","ty":"Non-FAK","t":18.0,"f":0,"r":0.0,"p20":5100,"f20":5100,"p40":8400,"f40":8500},{"n":"U.S.UNITED","c":"CN333696","a":"CU-立联","ty":"FAK","t":16.0,"f":16.0,"r":100.0,"p20":5900,"f20":5100,"p40":9025,"f40":8500},{"n":"SHENZHEN BODA LOGISTICS TECHNOLOGY CO., LTD","c":"CN361435","a":"CU-立联","ty":"FAK","t":15.0,"f":15.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"GUANGZHOU FOCUS GLOBAL LOGISTICS CORPORATION LTD","c":"CN306382","a":"CU-立联","ty":"FAK","t":14.0,"f":14.0,"r":100.0,"p20":"","f20":"","p40":8629,"f40":8500},{"n":"LONGSAIL SUPPLY CHAIN CO.,LTD","c":"CN323378","a":"CU-立联","ty":"FAK","t":12.0,"f":12.0,"r":100.0,"p20":5767,"f20":5100,"p40":9000,"f40":8500},{"n":"HACOS INT'L LOGISTICS CO.,LTD","c":"CN339441","a":"CU-立联","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"UNI-STAR INTERNATIONAL LOGISTICS SERVICE","c":"CN363244","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"FAR EAST INTERNATIONAL FORWARDING CO.LTD","c":"CN371792","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":5250,"f20":5100,"p40":"","f40":""},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":5.0,"f":5.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"ECU WORLDWIDE (GUANGZHOU) LIMITED","c":"CN318782","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":9000,"f40":8500},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"GUANGDONG AIR SEA TRANSPORT INC.","c":"CN400972","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"ASIACARGO GLOBAL LOGISTICS (GUANGZHOU) CO.,LTD","c":"CN401335","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":9100,"f40":8500},{"n":"CFI TRADING INT CO. , LTD","c":"CN440306","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":9000,"f40":8500},{"n":"YQN South-Logistics (Shanghai) Co., Ltd","c":"CN326957","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5250,"f20":5100,"p40":"","f40":""},{"n":"DI DI GLOBAL LOGISTICS CO.,LTD","c":"CN344294","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5250,"f20":5100,"p40":8800,"f40":8500},{"n":"KOSTAR INTERNATIONAL LOGISTICS (SHENZHEN) CO., LTD","c":"CN375011","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5250,"f20":5100,"p40":8800,"f40":8500},{"n":"PACIFIC STAR EXPRESS (CHINA) CO.,LTD","c":"CN300763","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"GUANGZHOU TOPJET INTERNATIONAL LOGISTICS CO.,LTD","c":"CN325486","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"GUANGZHOU SEA WORLD FREIGHT LIMITED","c":"CN377090","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":9200,"f40":8500},{"n":"ONTOP LOGISTICS CO.,LTD","c":"CN405212","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"SAILSPREAD SUPLY CHAIN CO.,LTD","c":"CN431401","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""},{"n":"BLUE WHALE SUPPLY CHAIN (SHENZHEN) CO.,LTD","c":"CN325822","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5200,"f20":5100,"p40":"","f40":""}]},{"c":"SDPZU","n":"苏丹港","t":2,"f":2,"u":0,"r":100.0,"custs":[{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":9120,"f40":7400}]}]},{"v":"MYTJ2642W","rt":"REX WK42","e":"20261012","t":664,"f":499,"u":0,"r":75.2,"dels":[{"c":"SAJED","n":"吉达","t":549,"f":384,"u":0,"r":69.9,"custs":[{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":94.0,"f":94.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":38.0,"f":38.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"Non-FAK","t":36.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"LONGSAIL SUPPLY CHAIN CO.,LTD","c":"CN323378","a":"CU-立联","ty":"Non-FAK","t":70.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8000,"f40":8500},{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":56.0,"f":56.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"GUANGDONG HUAN SHIPPING INTERNATIONAL LOGISTICS CO.,LTD","c":"CN348378","a":"CU-立联","ty":"FAK","t":36.0,"f":36.0,"r":100.0,"p20":5100,"f20":5100,"p40":8650,"f40":8500},{"n":"SHENZHEN DINGYUNTONG INTERNATIONAL TRANSPORATATION CO.,LTD","c":"CN442852","a":"UL-联合物流","ty":"FAK","t":30.0,"f":30.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"WINCO GROUP LIMITED","c":"CN410418","a":"CU-立联","ty":"Non-FAK","t":28.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8200,"f40":8500},{"n":"SANCO INTERNATIONAL LOGISTICS LTD","c":"CN305255","a":"CU-立联","ty":"FAK","t":26.0,"f":26.0,"r":100.0,"p20":"","f20":"","p40":8700,"f40":8500},{"n":"GUANG DONG VAMA FURNITURETECHNOLOGY CO., LTD","c":"CN442855","a":"UL-联合物流","ty":"Non-FAK","t":20.0,"f":0,"r":0.0,"p20":"","f20":"","p40":8200,"f40":8500},{"n":"U.S.UNITED","c":"CN333696","a":"CU-立联","ty":"FAK","t":16.0,"f":16.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"GUANGZHOU SEA WORLD FREIGHT LIMITED","c":"CN377090","a":"CU-立联","ty":"FAK","t":12.0,"f":12.0,"r":100.0,"p20":"","f20":"","p40":8600,"f40":8500},{"n":"UNICORN SUPPLY CHAIN (SHENZHEN) CO., LTD","c":"CN343647","a":"CU-立联","ty":"FAK","t":10.0,"f":10.0,"r":100.0,"p20":"","f20":"","p40":8540,"f40":8500},{"n":"ASIACARGO GLOBAL LOGISTICS (GUANGZHOU) CO.,LTD","c":"CN401335","a":"CU-立联","ty":"FAK","t":9.0,"f":9.0,"r":100.0,"p20":5150,"f20":5100,"p40":8600,"f40":8500},{"n":"GUANGDONG X-KIND INTERNATIONAL LOGISTICS CO.,LTD","c":"CN381202","a":"CU-立联","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"SHENZHEN A&E CONTAINER TRANSPORTATION CO., LTD","c":"CN304547","a":"CU-立联","ty":"FAK","t":7.0,"f":7.0,"r":100.0,"p20":5200,"f20":5100,"p40":8700,"f40":8500},{"n":"UIFF SHIPPING CO LTD","c":"CN333943","a":"CU-立联","ty":"FAK","t":7.0,"f":7.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"GUANGZHOU FOCUS GLOBAL LOGISTICS CORPORATION LTD","c":"CN306382","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":5100,"f20":5100,"p40":8500,"f40":8500},{"n":"UNI-STAR INTERNATIONAL LOGISTICS SERVICE","c":"CN363244","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"XIAMEN NANGANG STONE IMP. & EXP.CO., LTD","c":"CN444035","a":"UL-联合物流","ty":"Non-FAK","t":6.0,"f":0,"r":0.0,"p20":5000,"f20":5100,"p40":"","f40":""},{"n":"XIAMEN PARI STONE CO LTD","c":"CN444073","a":"UL-联合物流","ty":"Non-FAK","t":5.0,"f":0,"r":0.0,"p20":5000,"f20":5100,"p40":"","f40":""},{"n":"UNIBEST (GZ) INT'L LOGISTICS CO., LTD","c":"CN315985","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"FOSHAN HEYDAY FREIGHT CO.,LTD","c":"CN436225","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"BLUE WHALE SUPPLY CHAIN (SHENZHEN) CO.,LTD","c":"CN325822","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":5200,"f20":5100,"p40":8700,"f40":8500},{"n":"MILLENNIUM LOGISTICS (SHENZHEN) LTD","c":"CN313470","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8800,"f40":8500},{"n":"GLORY INTERNATIONAL LOGISTICS LIMITED","c":"CN354263","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"SHENZHEN BODA LOGISTICS TECHNOLOGY CO., LTD","c":"CN361435","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":5100,"f20":5100,"p40":"","f40":""},{"n":"ENERGY SHIPPING (SHENZHEN) CO.,LTD","c":"CN400249","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":9000,"f40":8500},{"n":"HONHANN SUPPLY CHAIN CO., LTD","c":"CN418031","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":8500,"f40":8500},{"n":"BHJ LOGISTICS LIMITED","c":"CN305654","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5300,"f20":5100,"p40":"","f40":""},{"n":"GUANGZHOU TOPJET INTERNATIONAL LOGISTICS CO.,LTD","c":"CN325486","a":"CU-立联","ty":"FAK","t":1.0,"f":1.0,"r":100.0,"p20":5150,"f20":5100,"p40":"","f40":""}]},{"c":"SDPZU","n":"苏丹港","t":80,"f":80,"u":0,"r":100.0,"custs":[{"n":"SUNTOP INTERNATIONAL LOGISTICS GUANGZHOU LIMITED","c":"CN362195","a":"CU-立联","ty":"FAK","t":21.0,"f":21.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":7400},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":15.0,"f":15.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":7400},{"n":"SINOOCEAN GROUP LTD","c":"CN300748","a":"CU-立联","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"SHENZHEN DINGYUNTONG INTERNATIONAL TRANSPORATATION CO.,LTD","c":"CN442852","a":"UL-联合物流","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"WORLDWIDE LOGISTICS CO.,LTD","c":"CN301319","a":"UL-联合物流","ty":"FAK","t":7.0,"f":7.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":7400},{"n":"GUANGZHOU KD INTL LOG LTD","c":"CN401456","a":"CU-立联","ty":"FAK","t":6.0,"f":6.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"GUANGDONG HUAN SHIPPING INTERNATIONAL LOGISTICS CO.,LTD","c":"CN348378","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":7400},{"n":"Shenzhen United Logistics Development Co.,Ltd","c":"CN362830","a":"UL-联合物流","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"UIFF SHIPPING CO LTD","c":"CN333943","a":"CU-立联","ty":"FAK","t":3.0,"f":3.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":7400},{"n":"UNITED OCEAN INTERNATIONAL LOGISTICS(GUANGZHOU)CO.,LTD","c":"CN300736","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"GUANGZHOU KEXINDE IMP&EXP TRADE CO.,LTD","c":"CN444009","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400}]},{"c":"YEADE","n":"亚丁","t":25,"f":25,"u":0,"r":100.0,"custs":[{"n":"SHENZHEN UFAN LOGISTICS CO.,LTD","c":"CN422653","a":"UL-联合物流","ty":"FAK","t":8.0,"f":8.0,"r":100.0,"p20":5000,"f20":4800,"p40":"","f40":""},{"n":"SHENZHEN DINGYUNTONG INTERNATIONAL TRANSPORATATION CO.,LTD","c":"CN442852","a":"UL-联合物流","ty":"FAK","t":7.0,"f":7.0,"r":100.0,"p20":4800,"f20":4800,"p40":7400,"f40":7400},{"n":"WORLDWIDE LOGISTICS CO.,LTD","c":"CN301319","a":"UL-联合物流","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":4800,"f20":4800,"p40":"","f40":""},{"n":"ONTOP LOGISTICS CO.,LTD","c":"CN405212","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":7400,"f40":7400}]},{"c":"EGSOK","n":"苏赫纳","t":10,"f":10,"u":0,"r":100.0,"custs":[{"n":"SUNTOP INTERNATIONAL LOGISTICS GUANGZHOU LIMITED","c":"CN362195","a":"CU-立联","ty":"FAK","t":4.0,"f":4.0,"r":100.0,"p20":"","f20":"","p40":6500,"f40":6500},{"n":"GUANGZHOU FOCUS GLOBAL LOGISTICS CORPORATION LTD","c":"CN306382","a":"CU-立联","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":6500,"f40":6500},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":"","f20":"","p40":6500,"f40":6500},{"n":"SHENZHEN DINGYUNTONG INTERNATIONAL TRANSPORATATION CO.,LTD","c":"CN442852","a":"UL-联合物流","ty":"FAK","t":2.0,"f":2.0,"r":100.0,"p20":4000,"f20":4000,"p40":"","f40":""}]}]},{"v":"GFPS2638W","rt":"AM1 WK42","e":"20261015","t":22,"f":0,"u":22,"r":0.0,"dels":[{"c":"SDPZU","n":"苏丹港","t":20,"f":0,"u":20,"r":0.0,"custs":[{"n":"TCL HOME APPLIANCES(HK)CO.,LTD","c":"CN444031","a":"UL-联合物流","ty":"FAK价格未录入","t":18.0,"f":0,"r":0.0,"p20":"","f20":"","p40":0,"f40":""},{"n":"SHENZHEN HUAGUANDA INTERNATIONAL FREIGHT FORWARDING CO., LIMITED","c":"CN333951","a":"UL-联合物流","ty":"FAK价格未录入","t":2.0,"f":0,"r":0.0,"p20":"","f20":"","p40":7400,"f40":""}]},{"c":"EGSOK","n":"苏赫纳","t":2,"f":0,"u":2,"r":0.0,"custs":[{"n":"SHENZHEN UNITED LOGISTICS DEVELOPMENT CO.,LTD","c":"CN332785","a":"UL-联合物流","ty":"FAK价格未录入","t":2.0,"f":0,"r":0.0,"p20":"","f20":"","p40":6500,"f40":""}]}]}]}}};
+const MODE = 'pol';
+const POL  = 'CNNAS';
+const $ = (s,r)=> (r||document).querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num = v => (v==null||v==='') ? '' : Number(v).toLocaleString('en-US',{maximumFractionDigits:0});
+const rate = (f,t) => t ? (f/t*100).toFixed(1) : '0.0';
+const cls  = r => r>=70 ? 'ok' : (r>=50 ? 'mid' : 'bad');
+const ccls = r => r>=70 ? 'ok' : (r>=50 ? 'warn' : 'warn');
+// 段价三态：数值=40'加权成交价；'NO40'=该段无40'箱量；null=有箱量但缺价
+const px = v => v==='NO40' ? ` · <span class="npx">无40'货量</span>`
+              : (v==null ? ` · <span class="npx">无40'价</span>` : ` · $${num(v)}`);
+const pxTip = v => v==='NO40' ? `无40'货量` : (v==null ? `无40'价` : `$${num(v)}`);
+
+function bar(t,f,u,label,cn){
+  const non = Math.max(0, t-f-u);
+  const p = v => t ? (v/t*100).toFixed(2)+'%' : '0%';
+  return `<div class="bar">
+    <div class="nm">${esc(label)}<span class="cn">${esc(cn||'')}</span></div>
+    <div class="tr"><i class="i-fak" style="width:${p(f)}"></i><i class="i-non" style="width:${p(non)}"></i><i class="i-unr" style="width:${p(u)}"></i></div>
+    <div class="vv">${num(t)} T · ${rate(f,t)}%</div></div>`;
+}
+
+function kpis(items){
+  return `<div class="kpis">${items.map(k=>
+    `<div class="kpi"><div class="l">${esc(k.l)}</div><div class="v ${k.c||''}">${esc(k.v)}</div></div>`
+  ).join('')}</div>`;
+}
+
+// ---- FAK 热力图 ----
+// 档位与页面 ok/mid/bad 语义对齐（70 / 50 为界），无量 -> null 渲染灰虚线格
+const hq = r => r>=90 ? 'q4' : (r>=70 ? 'q3' : (r>=50 ? 'q2' : (r>=25 ? 'q1' : 'q0')));
+
+function heatmap(title, cols, cells, rows){
+  if(!DATA.heat) return '';
+  let h = `<h2>${esc(title)}</h2><div class="hmbox">`;
+  h += `<div class="hmscroll"><table class="hm"><thead><tr><th></th>`;
+  cols.forEach(c=>{
+    h += `<th class="ch"><span class="cc">${esc(c.c)}</span>`
+       + (c.n ? `<span class="cn2">${esc(c.n)}</span>` : '')
+       + (c.rt ? `<span class="cn2">${esc(c.rt)}</span>` : '')
+       + `<span class="ct">${num(c.t)} T${c.r!=null?' · '+c.r+'%':''}</span></th>`;
+  });
+  h += `</tr></thead><tbody>`;
+    rows.forEach((p,i)=>{
+    // 行首只放 5 字口岸代码（货量在列头与格内已有，行首再写一遍是噪音）
+    h += `<tr><th class="rh"><a href="#/pol/${esc(p.c)}" class="polrow">${esc(p.c)}</a></th>`;
+    const line = cells[i] || [];
+    cols.forEach((c,j)=>{
+      const d = line[j];
+      if(d==null){ h += `<td><div class="hc na" title="${esc(p.c)} × ${esc(c.c)}：本期无货">-</div></td>`; return; }
+      const tip = `${esc(p.c)} × ${esc(c.c)}
+总 ${num(d.t)} T · FAK ${num(d.f)} T · 履行 ${d.r}%`
+        + `
+FAK段价 ${d.f>0?pxTip(d.fp):'-'} · NF段价 ${d.nf>0?pxTip(d.np):'-'}`
+        + (d.bp!=null ? `
+FAK基准价(40') ${pxTip(d.bp)}` : '')
+        + `
+未录入 ${num(d.u)} T（${d.ur}%）`;
+      // 整格 100% 未录入：当作「数据不存在」，与本期无货格同款（浅灰虚线「-」，不给明细）
+      if(d.u>0 && d.ur>=99.95){
+        h += `<td><div class="hc na" title="${esc(p.c)} × ${esc(c.c)}：FAK 价未录入（按无数据显示）">-</div></td>`;
+        return;
+      }
+      let body = '';
+      if(d.f>0) body += `<span class="ln">FAK ${d.r.toFixed(1)}% · ${num(d.f)}T${px(d.fp)}</span>`;
+      else if(d.bp!=null) body += `<span class="ln ref">FAK基准 $${num(d.bp)}</span>`;
+      if(d.nf>0) body += `<span class="ln">NF ${d.nr.toFixed(1)}% · ${num(d.nf)}T${px(d.np)}</span>`;
+      if(d.u>0) body += `<span class="ln dim">未录入 ${d.ur.toFixed(1)}% · ${num(d.u)}T</span>`;
+      h += `<td><div class="hc ${hq(d.r)}" title="${tip}">`
+         + (d.ur>=30 ? `<span class="gap"></span>` : '')
+         + body + `</div></td>`;
+    });
+    h += `</tr>`;
+  });
+  h += `</tbody></table></div>`;
+  return h;
+}
+
+function legend(){
+  return `<div class="lg">
+    <span>底色＝FAK履行率</span>
+    <span class="steps">
+      <i style="background:#cf3b3b"></i><i style="background:#d9801a"></i>
+      <i style="background:#c99a14"></i><i style="background:#2a8f63"></i><i style="background:#0f7a52"></i>
+    </span>
+    <span>低 0% → 25% → 50% → 70% → 90% 高</span>
+    <span style="margin-left:8px">格内：FAK / NF / 未录入 各段占比 · TEU · 40'加权成交价（只取40'，无40'箱量标注「无40'货量」，不再回退20'价）</span>
+    <span style="margin-left:8px">无 FAK 货量的格子首行显示该组合的 <b>FAK 基准价</b>（FAK Unit，40'），便于与实际成交价对照</span>
+    <span style="margin-left:8px"><span class="dot"></span>角标＝该格基准未录入占比 ≥30%</span>
+    <span style="margin-left:8px">虚线格＝本期该组合无货，或 FAK 价未录入（按无数据显示）</span>
+  </div>`;
+}
+
+function viewOverview(){
+  const m = DATA.meta;
+  let h = '';
+  h += kpis([
+    {l:'总货量', v:num(m.t)+' T'},
+    {l:'FAK 履行', v:num(m.f)+' T', c:'ok'},
+    {l:'FAK 履行率', v:m.r+'%', c:cls(m.r)},
+    {l:'基准未录入', v:num(m.u)+' T', c:m.u>0?'warn':'mute'},
+    {l:'船 / 口岸 / 客户', v:m.v+' / '+m.p+' / '+m.cust},
+  ]);
+
+  h += `<h2>目的港履行结构（${esc(DATA.meta.scope)}）</h2><div class="bars">`;
+  DATA.dels.forEach(d => h += bar(d.t,d.f,d.u,d.c,d.n));
+  h += `</div><div class="hint" style="margin-top:8px">绿=FAK履行 · 橙=Non-FAK · 灰=基准未录入</div>`;
+
+  h += `<h2>口岸排行</h2>
+  <table><thead><tr><th>口岸</th><th class="n">总TEU</th><th class="n">FAK</th><th class="n">履行率</th><th class="n">未录入</th><th class="n">船</th><th class="n">客户</th></tr></thead><tbody>`;
+  DATA.pols.forEach(p=>{
+    h += `<tr class="polrow" data-pol="${esc(p.c)}">
+      <td class="pc">${esc(p.c)}</td><td class="n">${num(p.t)}</td><td class="n">${num(p.f)}</td>
+      <td class="n"><span style="color:${p.r>=70?'#12785a':(p.r>=50?'#b45309':'#d93030')}">${p.r}%</span></td>
+      <td class="n">${num(p.u)}</td><td class="n">${p.v}</td><td class="n">${p.n}</td></tr>`;
+  });
+  h += `</tbody></table>`;
+
+  h += `<h2>点击查看口岸明细</h2><div class="grid">`;
+  DATA.pols.forEach(p=>{
+    h += `<a class="card" href="#/pol/${esc(p.c)}" data-pol="${esc(p.c)}">
+      <div class="top"><span class="pc">${esc(p.c)}</span><span class="rt ${cls(p.r)}">${p.r}%</span></div>
+      <div class="met">${num(p.t)} T · FAK ${num(p.f)} · 未录入 ${num(p.u)}</div>
+      <div class="mini">${bar(p.t,p.f,p.u,'','')}</div></a>`;
+  });
+  h += `</div>`;
+
+  // ---- 底部：FAK 热力图，按目的港拆分，一个 POD 一张「口岸 × 船(VVD)」 ----
+  if(DATA.heat && DATA.heat.pvDel && DATA.heat.pvDel.length){
+    DATA.heat.pvDel.forEach(d=>{
+      h += heatmap(
+        `${d.n}（${d.c}）· 口岸 × 船(VVD)　${num(d.t)} T · 履行 ${d.r}% · 未录入 ${num(d.u)} T`,
+        d.cols, d.cells, d.rows);
+      h += legend() + `</div>`;
+    });
+    h += `<div class="hint" style="margin-top:6px">每个目的港一张矩阵，行/列只保留该港有货的口岸与船；`
+      + `点击行首口岸代码可下钻到该口岸明细，鼠标悬停看该格 FAK / 未录入明细。`
+      + ((DATA.meta.skipPol && DATA.meta.skipPol.length)
+         ? `热力图不含小口岸 ${DATA.meta.skipPol.join(' / ')}，完整数据见口岸排行与各口岸页。`
+         : '')
+      + `</div>`;
+  }
+  return h;
+}
+
+function viewPol(pol){
+  const p = DATA.pols.find(x=>x.c===pol);
+  const d = DATA.byPol[pol];
+  if(!p || !d) return `<div class="empty">无该口岸数据</div>`;
+  let h = kpis([
+    {l:'口岸货量', v:num(p.t)+' T'},
+    {l:'FAK 履行', v:num(p.f)+' T', c:'ok'},
+    {l:'FAK 履行率', v:p.r+'%', c:cls(p.r)},
+    {l:'基准未录入', v:num(p.u)+' T', c:p.u>0?'warn':'mute'},
+    {l:'船 / 客户', v:p.v+' / '+p.n},
+  ]);
+
+  // 该口岸的目的港结构
+  const dm = {};
+  d.vvds.forEach(v=>v.dels.forEach(x=>{
+    const e = dm[x.c] = dm[x.c] || {n:x.n,t:0,f:0,u:0};
+    e.t+=x.t; e.f+=x.f; e.u+=x.u;
+  }));
+  h += `<h2>目的港结构</h2><div class="bars">`;
+  Object.entries(dm).sort((a,b)=>b[1].t-a[1].t).forEach(([c,e])=> h += bar(e.t,e.f,e.u,c,e.n));
+  h += `</div>`;
+
+  h += `<div class="tools"><input type="search" id="q" placeholder="搜索客户名称 / 客户代码 / 代理"><span class="hint" id="qh"></span></div>`;
+
+  h += `<h2>VVD 交叉分析（VVD → 目的港 → 客户）</h2>`;
+  d.vvds.forEach((v,i)=>{
+    h += `<details${i===0?' open':''}>
+      <summary><span class="mk">&#9654;</span><span class="vv">${esc(v.v)}</span>
+        <span class="rt">${esc(v.rt)} · ETD ${esc(v.e)}</span><span class="sp"></span>
+        <span class="mt">${num(v.t)} T · FAK ${num(v.f)} · <strong style="color:${v.r>=70?'#12785a':(v.r>=50?'#b45309':'#d93030')}">${v.r}%</strong> · 未录入 ${num(v.u)}</span></summary>
+      <div class="dl">`;
+    v.dels.forEach(dl=>{
+      h += `<div class="dlh"><strong>${esc(dl.c)}</strong><span class="cn">${esc(dl.n)}</span>
+        <span class="mt">${num(dl.t)} T · FAK ${num(dl.f)} (<strong style="color:${dl.r>=70?'#12785a':(dl.r>=50?'#b45309':'#d93030')}">${dl.r}%</strong>) · 未录入 ${num(dl.u)}</span></div>
+        <table><thead><tr><th>客户名称</th><th>客户代码</th><th>类型</th><th>对接代理</th>
+        <th class="n">TEU</th><th class="n">FAK TEU</th><th class="n">占比</th>
+        <th class="n">成交价20</th><th class="n">FAK20</th><th class="n">成交价40</th><th class="n">FAK40</th></tr></thead><tbody>`;
+      dl.custs.forEach(c=>{
+        const tk = c.ty==='FAK'?'t-fak':(c.ty==='Non-FAK'?'t-non':'t-unr');
+        const key = (c.n+' '+c.c+' '+c.a).toLowerCase();
+        const gap = (c.p40!=='' && c.f40!=='' && Number(c.p40)<Number(c.f40));
+        h += `<tr data-k="${esc(key)}"><td>${esc(c.n)}</td><td>${esc(c.c)}</td>
+          <td><span class="tag ${tk}">${esc(c.ty)}</span></td><td>${esc(c.a)}</td>
+          <td class="n">${num(c.t)}</td><td class="n">${num(c.f)}</td><td class="n">${c.r}%</td>
+          <td class="n">${num(c.p20)}</td><td class="n">${num(c.f20)}</td>
+          <td class="n ${gap?'neg':''}">${num(c.p40)}</td><td class="n">${num(c.f40)}</td></tr>`;
+      });
+      h += `</tbody></table>`;
+    });
+    h += `</div></details>`;
+  });
+  return h;
+}
+
+function render(){
+  const app = $('#app');
+  const parts = location.hash.replace(/^#\/?/,'').split('/');
+  let pol = null;
+  if(MODE==='pol') pol = POL;
+  else if(parts[0]==='pol' && parts[1]) pol = parts[1];
+
+  $('#hdrSub').textContent =
+    `口径：${DATA.meta.scope}｜${DATA.meta.p} 个中国口岸 · ${DATA.meta.v} 条船 · ${DATA.meta.bl} 票 · ${num(DATA.meta.t)} TEU`;
+
+  if(pol){
+    const p = DATA.pols.find(x=>x.c===pol);
+    $('#app').innerHTML =
+      `<div class="crumb">${MODE==='pol'?'<a href="../index.html">总览</a>':'<a href="#/">总览</a>'}<span>/</span>${esc(pol)}</div>`
+      + viewPol(pol);
+    document.title = `${pol} · 国庆红海货量及运价 FAK完船报告`;
+    $('#ftr').innerHTML = `${esc(pol)}｜共 ${p?p.v:0} 条船 · ${p?p.n:0} 家客户 · 数据来源 Local_Analytical_By_Vessel.xlsx（Shipper 口径）`;
+  }else{
+    $('#app').innerHTML = viewOverview();
+    document.title = '国庆红海货量及运价 FAK完船报告';
+    $('#ftr').innerHTML = `数据来源 Local_Analytical_By_Vessel.xlsx（Shipper 口径）｜口径：${esc(DATA.meta.scope)}`;
+  }
+  bind();
+}
+
+function bind(){
+  document.querySelectorAll('.polrow').forEach(tr=>{
+    tr.onclick = ()=>{ location.hash = '#/pol/' + tr.dataset.pol; };
+  });
+  const q = $('#q');
+  if(q){
+    q.oninput = ()=>{
+      const v = q.value.trim().toLowerCase();
+      let shown = 0, total = 0;
+      document.querySelectorAll('#app tbody tr[data-k]').forEach(tr=>{
+        total++;
+        const ok = !v || tr.dataset.k.indexOf(v) >= 0;
+        tr.style.display = ok ? '' : 'none';
+        if(ok) shown++;
+      });
+      document.querySelectorAll('#app details').forEach(d=>{ d.open = !!v; });
+      $('#qh').textContent = v ? `匹配 ${shown} / ${total} 行` : '';
+    };
+  }
+}
+
+window.addEventListener('hashchange', render);
+render();
+</script>
+</body>
+</html>
