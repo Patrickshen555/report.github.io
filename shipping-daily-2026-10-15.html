@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>航运日报 - 2026年10月15日（周四）</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e2e86 100%);
+      color: white;
+      padding: 32px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(26,86,219,0.25);
+    }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header .meta { font-size: 13.5px; opacity: 0.9; line-height: 1.7; }
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+    .alert-bar {
+      background: linear-gradient(90deg, #fee2e2 0%, #fef3c7 50%, #fee2e2 100%);
+      border-left: 4px solid #dc2626;
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13.5px;
+      box-shadow: 0 2px 8px rgba(220,38,38,0.15);
+    }
+    .alert-bar strong { color: #991b1b; }
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a56db;
+      margin-bottom: 14px;
+      padding-left: 12px;
+      border-left: 4px solid #1a56db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-left: 4px solid #e5e7eb;
+    }
+    .card.red { border-left-color: #ef4444; }
+    .card.orange { border-left-color: #f59e0b; }
+    .card.green { border-left-color: #10b981; }
+    .card.purple { border-left-color: #8b5cf6; }
+    .card.teal { border-left-color: #14b8a6; }
+    .card.darkred { border-left-color: #991b1b; background: #fef2f2; }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    .tag.red { background: #fef2f2; color: #dc2626; }
+    .tag.orange { background: #fffbeb; color: #d97706; }
+    .tag.green { background: #ecfdf5; color: #059669; }
+    .tag.purple { background: #f5f3ff; color: #7c3aed; }
+    .tag.blue { background: #eff6ff; color: #2563eb; }
+    .tag.critical { background: #7c2d12; color: #fff; }
+    .card-body {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.75;
+    }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
+    .card-body strong { color: #111827; }
+    .data-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .chip {
+      background: #f3f4f6;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #374151;
+    }
+    .chip b { color: #111827; }
+    .why {
+      background: #eff6ff;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #1e40af;
+      margin-top: 10px;
+    }
+    .why strong { color: #1d4ed8; }
+    .source-line {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed #e5e7eb;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .source-line a { color: #6b7280; text-decoration: none; margin-right: 10px; }
+    .source-line a:hover { color: #1a56db; text-decoration: underline; }
+    .market-strip {
+      background: #0e2e86;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      color: white;
+    }
+    .market-strip h3 { font-size: 14px; margin-bottom: 10px; opacity: 0.9; }
+    .market-items { display: flex; flex-wrap: wrap; gap: 10px; }
+    .m-item {
+      background: rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+    }
+    .m-item b { font-size: 13px; }
+    .up { color: #fca5a5; }
+    .down { color: #86efac; }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      padding: 20px 0 30px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>🚢 航运日报</h1>
+    <div class="meta">2026年10月15日 · 星期四 · 第70期<br>
+      今日聚焦：油轮"撤离富查伊拉"信号 · BDI八连跌 · 港口费11/9到期悬念 · 订单潮创17年新高</div>
+    <span class="badge">船司动态</span><span class="badge">港口&油运</span><span class="badge">贸易分析</span>
+  </header>
+
+  <div class="alert-bar">
+    ⚠️ <strong>今日核心信号：</strong>彭博船期数据显示至少10艘VLCC及多艘苏伊士型油轮在驶向富查伊拉途中停下或折返——"运费贵过火箭"也留不住船东，霍尔木兹原油接驳体系面临效率断点；同日干散货BDI八连跌至两个多月新低、海岬型日收益跌破$3万，油散"撕裂式分化"再度加深。
+  </div>
+
+  <div class="market-strip">
+    <h3>📊 市场快照（截至10/14收盘）</h3>
+    <div class="market-items">
+      <span class="m-item">布伦特 <b>$106.06</b> <span class="up">+0.35%</span></span>
+      <span class="m-item">WTI <b>$95.09</b> <span class="up">+1.01%</span></span>
+      <span class="m-item">BDI <b>2,667</b> <span class="down">-4.78% 八连跌</span></span>
+      <span class="m-item">BCI <b>3,630</b> <span class="down">-9.11%</span></span>
+      <span class="m-item">SCFI <b>3,664.11</b>（10/10）</span>
+      <span class="m-item">VLCC波斯湾-东亚 <b>~$140万/天</b></span>
+      <span class="m-item">美湾-亚洲VLCC包干 <b>~$8,000万</b></span>
+    </div>
+  </div>
+
+  <!-- ============ Section 1 船司动态 ============ -->
+  <div class="section">
+    <div class="section-title">① 船司动态</div>
+
+    <div class="card purple">
+      <div class="card-header">
+        <div class="card-title">全球集装箱船订单冲上2009年以来新高：马士基单月26艘大船、达飞拟再加12艘<span class="tag purple">运力军备赛</span></div>
+      </div>
+      <div class="card-body">
+        <p>Alphaliner数据显示，马士基9月<strong>单月订入26艘18,600TEU双燃料大船</strong>（20艘恒力重工+6艘新时代造船，2029-2030年交付），在手订单增至131艘、交付后船队将扩容16%；达飞据报再加订12艘24,000TEU超大型船——两家头部正围绕"全球第二"座次展开激进扩军，达飞高管已公开宣称明年超越马士基是"既定事实"。</p>
+        <p>Linerlytica统计：全球集装箱船订单已达<strong>1,925艘/约1,560万TEU，订单占现有船队比例超45%</strong>，创2009年以来新高；中远海运订单/船队比达52%、MSC与达飞约39%。另据信德海事，马士基最新一轮1.8万-2.2万TEU订单（6确定+6备选）锁定中国船厂，韩国HD现代/韩华报价高出约$3,000万落败，合同有望10月签署。</p>
+        <div class="why"><strong>值得关注：</strong>2029-2030年"新船集中交付+苏伊士复航释放绕航运力"将双向灌水亚欧线运力，当前"舱紧价高"不可线性外推；订单/船队比45%+已超过行业上一个繁荣-崩溃周期的高位，中长期供需与运价博弈格局需重新测算。</div>
+      </div>
+      <div class="source-line">信源：<a href="https://www.tkmmm.com/archives/21557">链美TK/Linerlytica</a><a href="https://k.sina.com.cn/article_5953740931_162dee083067041fcs.html">新浪财经·航运在线/Alphaliner</a><a href="https://www.sohu.com/a/944300195_175033">信德海事(搜狐)</a></div>
+    </div>
+
+    <div class="card teal">
+      <div class="card-header">
+        <div class="card-title">以星ZSL/ZMP服务退出调整、接连跳港盐田/宁波/上海；ONE波兰-埃及快线今日首航<span class="tag blue">航线调整</span></div>
+      </div>
+      <div class="card-body">
+        <p>以星两份客户通知显示：ZSL服务"MSC GREENWICH 9W"跳过盖梅/盐田/宁波/上海/釜山5港，货物改在新加坡卸船（预计10/28抵达）后转接"MSC ANCHORAGE 6E"；ZMP服务"ZIM EMERALD 13E"跳过青岛、宁波，发马尼拉货物改上海卸船（10/20）、其余改釜山（10/22）中转。</p>
+        <p>同期ONE宣布开通<strong>波兰-埃及快线（PEX）</strong>周班航线：格但斯克—不来梅哈芬—亚历山大（南行挂靠），首航"Synergy Antwerp"轮642S航次10/15-17挂格但斯克，加密波罗的海-北欧-埃及运力。</p>
+        <div class="why"><strong>值得关注：</strong>跳港+新加坡中转意味着已订舱货物多一道卸船等待衔接环节，货主交期面临变数、需逐票核实二程船期；欧洲区内航线加密亦反映红海复航后区域内运力再分配。</div>
+      </div>
+      <div class="source-line">信源：<a href="https://www.ccpitzj.gov.cn/col/col1229557691/art/2026/art_521dcffb20b04a2390558bbfec3d2b7a.html">浙江贸促会/维运网</a><a href="https://amzcm.com/daily/51724">AMZCM</a></div>
+    </div>
+  </div>
+
+  <!-- ============ Section 2 港口动态&油运市场 ============ -->
+  <div class="section">
+    <div class="section-title">② 港口动态 & 油运市场</div>
+
+    <div class="card darkred">
+      <div class="card-header">
+        <div class="card-title">VLCC集体"掉头"富查伊拉：油轮运费飙至60年最高，接驳体系现效率断点<span class="tag critical">油运核心</span></div>
+      </div>
+      <div class="card-body">
+        <p>彭博船期追踪显示，<strong>至少10艘VLCC和多艘苏伊士型油轮在驶向阿联酋富查伊拉途中停下或折返</strong>——此前全球约850艘VLCC中超40%已聚集波斯湾或两天航程内。伊朗袭船范围扩大至海峡之外（霍尔木兹南部通道及阿联酋近水域袭击增加），"只在海峡外接货"策略本身开始失守。</p>
+        <p>运费端，ING报告：一艘9月自沙特赴荷兰油轮折算<strong>每桶运输成本达$35</strong>（去年同期仅$2，超油价1/3）；美湾-亚洲VLCC包干约$8,000万（≈$40/桶）已致部分美油套利窗口关闭。经纪商称即便经通胀调整，运费也是<strong>1960年代VLCC问世以来最高</strong>。代价正在传导：西班牙Repsol三季度炼油利润$36/桶，10月已收窄至约$15/桶，市场警告临界点后炼厂或减产。</p>
+        <div class="why"><strong>值得关注：</strong>中东原油出口靠"穿梭接驳+船对船转运"恢复至战前约八成（Kpler 9月1,633万桶/日），但每多一次转运增加约一周航时、持续吞噬有效运力；若VLCC撤离从个案演变为行业行为，"原油没消失、运输能力才是瓶颈"将成为下一轮油价重估的导火索。中国船东（中远海能/招商轮船）明确不进湾内装货、转向阿曼湾外侧短驳，风险偏好分层加剧。</div>
+      </div>
+      <div class="source-line">信源：<a href="https://xnews.jin10.com/details/232299">金十数据(彭博/Signal Ocean)</a><a href="https://www.cnr.cn/newscenter/sq/20261012/t20261012_527839429.shtml">央广网(ING报告)</a><a href="https://news.qq.com/rain/a/20261013A02AJQ00">腾讯新闻/界面新闻</a></div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-header">
+        <div class="card-title">BDI八连跌创7月末以来新低：海岬型单日暴跌9.11%、日收益跌破$3万<span class="tag orange">干散承压</span></div>
+      </div>
+      <div class="card-body">
+        <p>10/14波罗的海干散货指数（BDI）收报<strong>2,667点，单日-134点（-4.78%）</strong>，创3/10以来最大单日跌幅、连续第8个交易日下跌，为7/29以来最低。BCI单日暴跌364点（-9.11%）至3,630点、创6月下旬以来新低，海岬型日均收入跌$3,302至<strong>$29,417/天，跌破$3万关口</strong>；BPI 2,409（-0.95%），BSI 1,845（+0.65%）小幅逆势。</p>
+        <p>驱动因素：中国钢厂高炉检修增多+大商所铁矿石期货走低，47港铁矿石库存高位压制补库意愿，海岬型可用运力充裕；黄金周后补库预期落空，"强预期"未能兑现为"强现实"。</p>
+        <div class="why"><strong>值得关注：</strong>油运与干散货"撕裂式分化"再度加深——VLCC创60年最高 vs BDI八连跌，同一个地缘溢价在原油端放大、在实体需求端失灵；四季度西芒杜发运旺季+冬储能否逆转海岬型颓势，是干散货布局的关键观察窗。</div>
+      </div>
+      <div class="source-line">信源：<a href="https://www.fx678.com/C/20261014/202610142304408815.html">汇通财经/波罗的海交易所</a><a href="https://www.steelmint.in/baltic-dry-index-falls-1-8-as-capesize-rates-extend-losing-streak-798716">SteelMint</a><a href="https://www.zhiguf.com/focusnews_detail/2347430">指股网</a></div>
+    </div>
+  </div>
+
+  <!-- ============ Section 3 国际海运贸易分析 ============ -->
+  <div class="section">
+    <div class="section-title">③ 国际海运贸易分析</div>
+
+    <div class="card darkred">
+      <div class="card-header">
+        <div class="card-title">中美船舶港口费暂停期11/9到期倒计时：209个行业协会致函USTR，联邦公报暂无展期公告<span class="tag critical">政策悬念</span></div>
+      </div>
+      <div class="card-body">
+        <p>USTR 301船舶港口费（中国拥有/运营船、中国建造船、外国造汽车船三类）暂停期将于<strong>美东时间11月9日晚11:59届满</strong>。尽管中美9月底釜山共识将贸易休兵延至2027/1/10，但截至10月上旬<strong>联邦公报（Federal Register）仍无任何展期通知</strong>——内阁声明不构成法律文书，承运人正按"白纸黑字的11/10恢复日"对风险定价。</p>
+        <p>209个美国及国际产业团体（含ICS、世界航运理事会）9月下旬联名致函USTR呼吁延长，警告恢复收费将推高航运/制造/农业/零售全链条成本；但参议员Warren与Kelly反向施压要求提前恢复。若按2026年档恢复：中国船东/运营商<strong>$80/净吨</strong>、中国造船<strong>$23/净吨或$153/箱孰高</strong>（费率爬坡未因暂停重置）；中方对等特别港务费同步恢复至<strong>¥640/净吨档</strong>。行业估算恢复后每箱总运输成本增加<strong>$600-900</strong>，头部班轮年成本敞口以数十亿美元计。</p>
+        <div class="why"><strong>值得关注：</strong>距到期不足一个月，Q4备货季跨太航线头程成本再添变量——若恢复，BAF/港口费附加大概率重新出现在跨太报价单上，中远/OOCL等以中国建造运力为主的班轮受冲击最直接；货主应提前与承运人书面确认恢复费用的计收方式。</div>
+      </div>
+      <div class="source-line">信源：<a href="https://www.ctee.com.tw/news/20261013700152-439901">工商时报</a><a href="https://tkfff.cn/news/1172.html">叁发未来/Tide Signal</a><a href="https://cargolinked.com/blog/trade-policy-and-customs-update-october-2026">CargoLinked/Federal Register</a></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-header">
+        <div class="card-title">苏伊士复航冲刺：PA联盟10/19压轴回归、大型箱船周通行将破50艘次，Drewry上调预测至2027年2月恢复80%<span class="tag green">格局重估</span></div>
+      </div>
+      <div class="card-body">
+        <p>卓越联盟（ONE/HMM/长荣）FE1航线10/19自林查班首航苏伊士——<strong>最后一个头部联盟回归</strong>，四大联盟+MSC至此全部恢复定期亚欧西行苏伊士航线。Linerlytica 10/13报告：经苏伊士的4,000TEU以上大型箱船<strong>即将突破每周50艘次</strong>，预计2027Q1全面复航；Drewry同日上调预测：至<strong>2027年2月苏伊士集装箱通行量恢复至改道前80%</strong>。9月曼德海峡通行314艘（同比+64.4%危机以来最高），但其中139次为关闭AIS"暗航"（占44%），苏伊士1-8月集装箱净吨7,210万吨（+54.2%）。</p>
+        <p>与复航并行的运价博弈：四大船司统一挂10/19宣涨亚欧FAK至$4,200-4,500/FEU，但现货已连跌13周、较7月累计-60%+，Linerlytica市场晴雨表1月以来首次转负。德路里测算2.4万TEU大船取道苏伊士每往返仅省约$100万（摊$43/箱位），而战争险若达船价1%将额外多掏$450万——复航本质是"竞争压力+船期效率"驱动的风险试探而非安全确认。</p>
+        <div class="why"><strong>值得关注：</strong>复航释放的绕航运力+新船交付构成运价中长期下行双击，"苏伊士恢复之日或集运价格战重启之时"；但红海安全并未根本改善（胡塞10/14称遭沙特联军42次空袭含曼德迈云岛、10/15凌晨打击吉达北部沙特阿美配送设施），全面复航进程仍可能被地缘事件随时打断。另IEA 10/14月报：中东/俄柴油出口受阻，全球柴油供应紧张将持续至2027年。</div>
+      </div>
+      <div class="source-line">信源：<a href="https://www.hangyun365.com/news/967.html">明日数航/Alphaliner</a><a href="https://www.163.com/dy/article/L9724MJE0514HF9T.html">最航运/Linerlytica</a><a href="https://www.cnss.com.cn/html/cnss/finance/article/2026/b060e4e4288f4c53b5a358c5d131a9fe.html">海事服务网/Drewry</a><a href="https://www.163.com/dy/article/L98J0LN405346RC6.html">新华社(IEA月报)</a></div>
+    </div>
+  </div>
+
+  <footer>
+    航运日报 · 每日筛选3-5条航运领域重要动态（船司与港口动态 + 国际海运贸易分析）<br>
+    数据截至 2026-10-15 09:00 GMT+8 · 本报告由 AI 自动化生成，仅供参考，不构成投资建议<br>
+    在线阅读：<a href="https://patrickshen555.github.io/report.github.io/shipping-daily-2026-10-15.html" style="color:#6b7280;">GitHub Pages</a>
+  </footer>
+
+</div>
+</body>
+</html>
