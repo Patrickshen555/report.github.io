@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中东航线 Booking Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="Dashboard/dashboard_data.js"></script>
+<script src="Dashboard/ops_wk_map.js"></script>
+<style>
+  :root{
+    --cul-green:#8CC63F; --cul-green-dk:#5C9E31; --cul-blue:#0085AD; --cul-navy:#16324F;
+    --page-bg:#EEF2F5; --card-bd:#D9E2E8; --txt:#1E2A36;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Segoe UI","Microsoft YaHei",sans-serif; background:var(--page-bg); color:var(--txt); padding:24px; }
+  .header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; }
+  .header h1 { font-size:26px; color:var(--cul-navy); font-weight:800; letter-spacing:-.3px; }
+  .header .sub { font-size:13px; color:#5B6B77; margin-top:4px; }
+  .header-right { display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+  .week-box { border:1px solid var(--card-bd); background:#fff; border-radius:8px; padding:8px 16px; text-align:center; box-shadow:0 1px 2px rgba(22,50,79,.05); }
+  .week-box b { display:block; font-size:14px; color:var(--cul-navy); font-weight:800; }
+  .week-box span { font-size:11.5px; color:#5B6B77; }
+  .lang-switch { display:flex; border:1px solid var(--card-bd); border-radius:8px; overflow:hidden; background:#fff; }
+  .lang-switch button { border:none; background:#fff; padding:6px 14px; font-size:12px; font-weight:700; color:#5B6B77; cursor:pointer; }
+  .lang-switch button.on { background:var(--cul-blue); color:#fff; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-bottom:20px; }
+  .kpi { background:#fff; border-radius:10px; padding:16px 18px; border:1px solid var(--card-bd); border-top:3px solid var(--cul-green); }
+  .kpi .label { font-size:12px; color:#5B6B77; font-weight:600; }
+  .kpi .value { font-size:26px; font-weight:800; margin-top:6px; color:var(--cul-navy); }
+  .kpi .pct { font-size:13px; font-weight:600; margin-top:4px; }
+  .section-title { font-size:16px; font-weight:800; color:var(--cul-navy); padding-left:10px; border-left:4px solid var(--cul-green); margin:4px 0 12px; }
+  .section-title .st-sub { font-size:12px; font-weight:500; color:#5B6B77; margin-left:10px; }
+  /* 标题行：标题左 + VVD 下拉框右 */
+  .detail-head { display:flex; justify-content:space-between; align-items:center; margin:4px 0 12px; }
+  .detail-head .section-title { margin:0; }
+  .vvd-select { position:relative; width:240px; }
+  .vvd-select input { width:100%; padding:8px 30px 8px 12px; border:1px solid var(--card-bd); border-radius:8px;
+                      font-size:13px; font-weight:600; color:var(--cul-navy); background:#fff; outline:none; }
+  .vvd-select input:focus { border-color:var(--cul-blue); box-shadow:0 0 0 2px rgba(0,133,173,.12); }
+  .vvd-select .vs-caret { position:absolute; right:10px; top:50%; transform:translateY(-50%); color:#5B6B77; pointer-events:none; font-size:12px; }
+  .vvd-select .vs-list { display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:50;
+                         background:#fff; border:1px solid var(--card-bd); border-radius:8px; max-height:240px; overflow:auto;
+                         box-shadow:0 6px 16px rgba(22,50,79,.12); }
+  .vvd-select.open .vs-list { display:block; }
+  .vvd-select .vs-item { padding:8px 12px; font-size:13px; font-weight:600; color:#334155; cursor:pointer; }
+  .vvd-select .vs-item:hover { background:#E6F4F8; }
+  .vvd-select .vs-item.cur { color:var(--cul-blue); background:#F0F9FC; }
+  .vvd-select .vs-empty { padding:10px 12px; font-size:12px; color:#94a3b8; text-align:center; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+  .card { background:#fff; border-radius:10px; padding:18px; border:1px solid var(--card-bd); box-shadow:0 1px 2px rgba(22,50,79,.04); }
+  .card h3 { font-size:15px; margin-bottom:12px; color:var(--cul-navy); font-weight:800; padding-left:10px; border-left:4px solid var(--cul-green); line-height:1.3; }
+  .chart-box { position:relative; height:320px; }
+  .chart-box.tall { height:420px; }
+  .pie-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; max-height:420px; overflow:auto; padding:2px; }
+  .pie-item { text-align:center; }
+  .pie-item .p-title { font-size:13px; font-weight:700; color:#0f172a; }
+  .pie-item .p-sub { font-size:11px; color:#64748b; margin-bottom:4px; }
+  .pie-item .p-box { position:relative; height:120px; }
+  .pie-item .empty { height:120px; display:flex; align-items:center; justify-content:center; color:#cbd5e1; font-size:12px; background:#f8fafc; border-radius:8px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { background:#F4F7F9; color:var(--cul-navy); text-align:right; padding:8px 10px; border-bottom:2px solid var(--cul-green); font-weight:700; position:sticky; top:0; }
+  th:first-child, td:first-child { text-align:left; }
+  td { padding:6px 10px; border-bottom:1px solid #EAF0F3; text-align:right; font-variant-numeric:tabular-nums; }
+  tr.pol-row td { background:#E6F4F8; font-weight:700; border-top:1px solid #CBE6EF; color:var(--cul-navy); }
+  tr.del-row td:first-child { padding-left:28px; color:#64748b; }
+  tr.del-row td { color:#334155; }
+  /* AEKLF&AEASJ 公用 Allocation 合并单元格：底色+居中+「共用」标注 */
+  #detailTable td.amerge { background:#F4F9FB; vertical-align:middle; font-weight:800; color:var(--cul-navy);
+                           border-left:1px solid #D8E6EE; border-right:1px solid #D8E6EE; }
+  #detailTable td.amerge .omit-txt { font-weight:600; font-size:12px; color:#8A99A5; }
+  tr.total-row td { background:var(--cul-navy); color:#fff; font-weight:700; }
+  .zero { color:#cbd5e1; }
+  .legend-inline { display:flex; gap:16px; font-size:12px; color:#475569; margin-bottom:10px; flex-wrap:wrap; }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:middle; }
+  .overview-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:16px; margin-bottom:20px; }
+  .vcard { background:#fff; border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .vcard h2 { font-size:16px; margin-bottom:4px; }
+  .vcard .alloc { font-size:13px; color:#64748b; margin-bottom:12px; }
+  .bar-row { display:flex; align-items:center; gap:8px; margin:6px 0; font-size:13px; }
+  .bar-row .bl { width:130px; color:#475569; }
+  .bar-row .btrack { flex:1; background:#f1f5f9; border-radius:6px; height:22px; position:relative; }
+  .bar-row .bfill { height:100%; border-radius:6px; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; color:#fff; font-size:12px; font-weight:600; min-width:34px; }
+  .ratio-tag { display:inline-block; padding:2px 10px; border-radius:20px; font-size:12px; font-weight:700; }
+  /* BSA 完成度进度条 */
+  .alloc-list { display:flex; flex-direction:column; gap:10px; max-height:420px; overflow:auto; padding:2px; }
+  .arow { display:grid; grid-template-columns:64px 1fr 170px; align-items:center; gap:12px; }
+  .arow .apol { font-weight:800; font-size:12.5px; color:var(--cul-navy); text-align:right; }
+  .arow .atrack { height:20px; background:#EEF2F5; border:1px solid #E3EAEF; border-radius:6px; overflow:hidden; }
+  .arow .afill { height:100%; background:#D93025; border-radius:5px 0 0 5px; transition:width .3s; }
+  .arow .afill.warn { background:#F09C90; }
+  .arow .afill.over { background:#16324F; }
+  .arow .afill.na { background:#AEBFC9; }
+  .arow .ameta { font-size:12.5px; color:#475569; text-align:left; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .arow .ameta b { color:var(--cul-navy); font-weight:800; }
+  .arow .ameta .warn { color:#C95546; font-weight:700; }
+  .arow .ameta .over { color:#16324F; font-weight:800; }
+  .arow .ameta .na, .arow .ameta .omit-tag { color:#94A3B8; }
+  .sched-wrap { background:#fff; border-radius:10px; border:1px solid var(--card-bd); box-shadow:0 1px 2px rgba(22,50,79,.04); margin-bottom:20px; overflow-x:auto; }
+  .sched { border-collapse:collapse; width:100%; min-width:1560px; font-size:12px; }
+  .sched th, .sched td { border:1px solid #E3EAEF; padding:6px 8px; vertical-align:top; }
+  .sched thead th { background:var(--cul-navy); color:#fff; font-weight:700; text-align:center; white-space:nowrap; }
+  .sched thead th:nth-child(2) { text-align:left; }
+  .sched .wk-cell { width:64px; font-weight:800; font-size:14px; text-align:center; vertical-align:middle; color:#fff; white-space:nowrap; }
+  .sched .wk-cell .wk-dates { font-size:10px; font-weight:500; opacity:.85; white-space:normal; margin-top:2px; line-height:1.2; }
+  .sched .vsl-cell { min-width:132px; width:168px; padding:6px 10px; }
+  .sched .vsl-cell .vvd { font-weight:800; font-size:12px; color:#0f172a; white-space:nowrap; }
+  .sched .vsl-cell .vnm { font-size:10.5px; color:#475569; white-space:nowrap; }
+  .sched .vsl-cell .vmeta { font-size:10.5px; color:#64748b; margin-top:2px; white-space:nowrap; }
+  .sched .vsl-cell .vmeta.vpol { white-space:normal; }
+  .sched .vsl-cell .vmeta.vpol { color:#94a3b8; font-size:10px; white-space:normal; line-height:1.35; }
+  .sched .vsl-cell .vmeta b.neg, .sched .vsl-cell .vmeta .neg { color:#dc2626; font-weight:700; }
+  .sched .vsl-cell .vmeta b.pos, .sched .vsl-cell .vmeta .pos { color:#0d9488; font-weight:700; }
+  .sched th .th-sub { display:block; font-size:9px; font-weight:500; opacity:.72; letter-spacing:.2px; margin-top:1px; }
+  /* ── 单元格数字排版：数字右对齐 + 占比标签等宽，形成整齐的纵向数字列 ── */
+  .sched .pcell { text-align:center; min-width:76px; padding:7px 7px 6px; vertical-align:top; }
+  .sched .acell { min-width:108px; padding:7px 9px 6px; text-align:center; background:#F2F8FB; border-left:2px solid #CFE3EC; vertical-align:top; }
+  .sched .bcell { min-width:112px; padding:7px 9px 6px; text-align:center; background:#EAF5FA; vertical-align:top; }
+  .sched .pline { height:21px; display:flex; align-items:center; justify-content:center; gap:7px; white-space:nowrap; }
+  .sched .pline.r1 { border-bottom:1px dashed #D3E1EA; }
+  .sched .pqty, .sched .aqty, .sched .bqty {
+    font-weight:800; font-size:14px; line-height:1.2; color:#16324F;
+    font-variant-numeric:tabular-nums; letter-spacing:-.2px;
+    min-width:48px; text-align:right;
+  }
+  .sched .aqty, .sched .bqty { font-size:14.5px; }
+  .sched .pqty { min-width:40px; text-align:center; }
+  .sched .pqty.over, .sched .aqty.over, .sched .bqty.over { color:#D93025; }
+  .sched .plabel { font-size:9px; font-weight:700; letter-spacing:.2px; }
+  .sched .acell .plabel { min-width:64px; text-align:right; }
+  .sched .plabel.j { color:#0085AD; }
+  .sched .plabel.k { color:#5C9E31; }
+  /* 占比标签：小号等宽、柔和配色，与数字形成两列 */
+  .sched .ppct { display:inline-block; min-width:44px; text-align:center; padding:1px 5px; border-radius:5px;
+                 font-size:10.5px; font-weight:700; font-variant-numeric:tabular-nums; line-height:1.45;
+                 background:#EEF3F7; color:#5B6B77; }
+  .sched .ppct.warn { background:#FDF1D8; color:#B45309; }
+  .sched .ppct.over { background:#FCE6E3; color:#D93025; }
+  /* 满舱=藏青，未满=红色 */
+  .sched .ppct.full { background:#E3EDF5; color:#16324F; }
+  .sched .ppct.short { background:#FCE6E3; color:#D93025; }
+  .sched .bqty.short, .sched .pqty.short { color:#D93025; }
+  .sched .bqty.full, .sched .pqty.full { color:#16324F; }
+  .sched .pqty.na, .sched .bqty.na { color:#8A99A5; font-weight:600; }
+  .sched .pnone { color:#B9C7D1; font-size:13px; }
+  .sched .pcell.today { background:#fffbeb; }
+  .sched-note { font-size:13px; color:#5B6B77; padding:9px 14px; border-top:1px dashed var(--card-bd); background:#FAFCFD; }
+  .sched .empty-row td { color:#94a3b8; text-align:center; padding:10px; }
+  .sched .vrow:hover td { background:#f8fafc; cursor:pointer; }
+  .sched .vrow.active td { background:#E6F4F8; }
+  .footer { display:flex; justify-content:space-between; align-items:flex-end; margin-top:8px; padding-top:14px; border-top:1px solid var(--card-bd); }
+  .footer .fleft { font-size:11px; color:#8A99A5; }
+  .cul-logo { display:flex; align-items:center; gap:8px; }
+  .cul-logo .wordmark { font-size:20px; font-weight:800; letter-spacing:.5px; color:var(--cul-blue); }
+  .cul-logo .wordmark em { font-style:normal; color:var(--cul-green); }
+  .cul-logo .tagline { font-size:11px; font-style:italic; font-weight:600; color:var(--cul-green-dk); margin-left:6px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1 id="h1Title">中东航线 Booking Dashboard</h1>
+    <div class="sub">XPBL / LION · Middle East Booking vs Allocation</div>
+  </div>
+  <div class="header-right">
+    <div class="lang-switch">
+      <button id="btnZh" class="on">中文</button><button id="btnEn">EN</button>
+    </div>
+    <div class="week-box" id="weekBox"></div>
+  </div>
+</div>
+
+<!-- 排船表总览：WK 从上到下，列为口岸 -->
+<div class="sched-wrap"><table class="sched" id="schedTable"></table></div>
+
+<!-- 当前船 KPI -->
+<div class="detail-head">
+  <div class="section-title" id="vvdTitle"></div>
+  <div class="vvd-select" id="vvdSelect">
+    <input id="vvdInput" placeholder="搜索 / 选择 VVD" autocomplete="off" spellcheck="false">
+    <span class="vs-caret">▾</span>
+    <div class="vs-list" id="vvdList"></div>
+  </div>
+</div>
+<div class="kpis" id="kpis"></div>
+
+<div class="grid2">
+  <div class="card">
+    <h3 id="pieTitle">各口岸 Booking 结构（占比）</h3>
+    <div class="legend-inline">
+      <span><span class="dot" style="background:#0085AD"></span>AEJEA</span>
+      <span><span class="dot" style="background:#8CC63F"></span>AEKLF&amp;AEASJ</span>
+      <span><span class="dot" style="background:#AEBFC9"></span>Others (AE*&amp;SADMM)</span>
+    </div>
+    <div class="pie-grid" id="pieGrid"></div>
+  </div>
+  <div class="card">
+    <h3 id="bsaTitle">各口岸 BSA 完成情况（Booking / Allocation）</h3>
+    <div class="legend-inline" id="bsaLegend"></div>
+    <div class="alloc-list" id="allocBars"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h3 id="detailTitle">口岸明细</h3>
+  <div style="max-height:560px; overflow:auto; border:1px solid #e2e8f0; border-radius:8px;">
+    <table id="detailTable"></table>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="fleft">Data source: OPS schedule &amp; booking summary · For internal use only</div>
+  <div class="cul-logo">
+    <img src="Dashboard/SLOGAN signature.png" alt="CULINES · See You Worldwide" style="height:46px; width:auto;">
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   数据区：新增船时在此按下方格式添加一段即可
+   （Tab / 总览卡片 / KPI / 图表 / 明细表 全部自动生成）
+   格式：rows 每行 = [DEL, AEJEA, AEKLF&AEASJ, Others]
+         alloc 为该 POL 的 Allocation；无则填 null；omit 填 "omit"
+   示例（留空模板）：
+   "XXXXnnnnW/E": {
+     total: { alloc:0, aej:0, aek:0, oth:0 },
+     ports: [
+       { pol:"CNSHK", alloc:0, rows:[["AEJEA",0,null,null]] }
+     ]
+   },
+   ============================================================ */
+const FALLBACK_DATA = {
+  "XPBL2640W/E": {
+    total: { alloc:4694, aej:4745, aek:1431, oth:321 },
+    ports: [
+      { pol:"CNDAL", alloc:null, aA:0, aK:null, rows:[["AEJEA",5,null,null]] },
+      { pol:"CNNAS", alloc:1045, aA:522.5, aK:522.5, rows:[["AEASJ",null,113,null],["AEJEA",1006,null,null],["AEKLF",null,226,null],["SADMM",null,null,68]] },
+      { pol:"CNNGB", alloc:1045, aA:522.5, aK:522.5, rows:[["AEASJ",null,72,null],["AEJEA",631,null,null],["AEKLF",null,320,null]] },
+      { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEJEA",376,null,null],["AEKLF",null,94,null],["SADMM",null,null,106]] },
+      { pol:"CNSHK", alloc:1045, aA:522.5, aK:522.5, rows:[["AEASJ",null,63,null],["AEJEA",1267,null,null],["AEKLF",null,239,null],["SADMM",null,null,54]] },
+      { pol:"CNSWA", alloc:100, aA:50, aK:50, rows:[["AEJEA",101,null,null],["AEKLF",null,2,null],["SADMM",null,null,2]] },
+      { pol:"CNTAO", alloc:925, aA:462.5, aK:462.5, rows:[["AEASJ",null,31,null],["AEJEA",763,null,null],["AEKLF",null,129,null],["SADMM",null,null,63]] },
+      { pol:"CNXGG", alloc:213, aA:106.5, aK:106.5, rows:[["AEASJ",null,5,null],["AEJEA",129,null,null],["AEKLF",null,64,null],["SADMM",null,null,10]] },
+      { pol:"CNXMN", alloc:120, aA:60, aK:60, rows:[["AEASJ",null,2,null],["AEJEA",259,null,null],["AEKLF",null,27,null],["SADMM",null,null,18]] },
+      { pol:"TW", alloc:200, aA:100, aK:100, rows:[["AEJEA",208,null,null],["AEKLF",null,44,null]] }
+    ]
+  },
+  "LION2644W/E": {
+    total: { alloc:3350, aej:1235, aek:692, oth:6 },
+    ports: [
+      { pol:"CNDAL", alloc:null, aA:null, aK:null, rows:[["AEJEA",93,null,null],["AEKLF",null,56,null]] },
+      { pol:"CNNAS", alloc:717, aA:358, aK:359, rows:[] },
+      { pol:"CNNGB", alloc:708, aA:353, aK:355, rows:[["AEASJ",null,27,null],["AEJEA",213,null,null],["AEKLF",null,31,null]] },
+      { pol:"CNSHA", alloc:"omit", aA:"omit", aK:null, rows:[["AEASJ",null,5,null],["AEJEA",197,null,null],["AEKLF",null,93,null],["AESHJ",null,null,2]] },
+      { pol:"CNSHK", alloc:717, aA:358, aK:359, rows:[["AEKLF",null,2,null]] },
+      { pol:"CNSWA", alloc:50, aA:25, aK:25, rows:[["AEJEA",8,null,null]] },
+      { pol:"CNTAO", alloc:708, aA:353, aK:355, rows:[["AEASJ",null,48,null],["AEJEA",392,null,null],["AEKLF",null,237,null]] },
+      { pol:"CNXGG", alloc:150, aA:75, aK:75, rows:[["AEASJ",null,23,null],["AEJEA",93,null,null],["AEKLF",null,85,null],["AESHJ",null,null,4]] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",57,null,null],["AEKLF",null,54,null]] },
+      { pol:"TW", alloc:200, aA:100, aK:100, rows:[["AEJEA",182,null,null],["AEKLF",null,31,null]] }
+    ]
+  },
+  "CUHC2645W": {
+    total: { alloc:848, aej:490, aek:175, oth:2 },
+    ports: [
+      { pol:"CNDAL", alloc:63, aA:63, aK:null, rows:[["AEJEA",63,null,null]] },
+      { pol:"CNNGB", alloc:392, aA:196, aK:196, rows:[["AEJEA",222,null,null],["AEKLF",null,35,null],["AEASJ",null,27,null]] },
+      { pol:"CNSHA", alloc:393, aA:196, aK:197, rows:[["AEJEA",205,null,null],["AEASJ",null,9,null],["AEKLF",null,104,null],["AESHJ",null,null,2]] }
+    ]
+  }
+};
+
+// 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
+const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
+
+const C_AEJ="#0085AD", C_AEK="#8CC63F", C_OTH="#AEBFC9", C_ALLOC="#D5DEE4";
+let curV="XPBL2640W/E", pieCharts=[];
+
+/* ============================ 中英文文案 ============================ */
+let LANG="zh";
+const T={
+  zh:{
+    docTitle:"中东航线 Booking Dashboard",
+    h1:"中东航线 Booking Dashboard",
+    week:"Week", date:"Date",
+    pie:"各口岸 Booking 结构（占比）",
+    bsa:"各口岸 BSA 完成情况（Booking / Allocation）",
+    detail:"口岸明细",
+    vvdTitle:"VVD 数据明细：", firstPort:"首港",
+    lgProgress:"进行中（<80%）", lgNear:"接近满舱（80-100%）", lgFull:"订满（>100%）", lgNA:"无 Allocation",
+    ph:"搜索 / 选择 VVD", noMatch:"无匹配的 VVD", noBooking:"无 booking", noSailing:"暂无排船",
+    colDel:"POL / DEL", colAlloc:"Allocation", colOth:"Others (AE*&SADMM)", total:"Total",
+    note:`各 POL 单元格：上行对应 AEJEA、下行对应 AEKLF&AEASJ（虚线分隔，与 ALLOCATION 列同高对应）　·　颜色：<b style="color:#16324F">■ 藏青 = 已满（≥ Alloc）</b>　<b style="color:#D93025">■ 红 = 未满（&lt; Alloc）</b>　<b style="color:#8A99A5">■ 灰 = 无 Allocation</b>`,
+    updated:"更新", wkMap:"WK映射"
+  },
+  en:{
+    docTitle:"Middle East Service Booking Dashboard",
+    h1:"Middle East Booking Dashboard",
+    week:"Week", date:"Date",
+    pie:"Booking Structure by Port (Share)",
+    bsa:"BSA Fulfilment by Port (Booking / Allocation)",
+    detail:"Port-wise Booking Details",
+    vvdTitle:"VVD Details: ", firstPort:"First port",
+    lgProgress:"In progress (<80%)", lgNear:"Nearly full (80-100%)", lgFull:"Fully booked (>100%)", lgNA:"No Allocation",
+    ph:"Search / select VVD", noMatch:"No matching VVD", noBooking:"No booking", noSailing:"No sailing",
+    colDel:"POL / DEL", colAlloc:"Allocation", colOth:"Others (AE*&SADMM)", total:"Total",
+    note:`Each POL cell: top row = AEJEA, bottom row = AEKLF&AEASJ (dashed divider aligned with the ALLOCATION column)　·　Colours: <b style="color:#16324F">■ Navy = Full (≥ Alloc)</b>　<b style="color:#D93025">■ Red = Not full (&lt; Alloc)</b>　<b style="color:#8A99A5">■ Grey = No Allocation</b>`,
+    updated:"Updated", wkMap:"WK mapping"
+  }
+};
+const L=()=>T[LANG];   // 注意：不可命名为 t，renderTable / renderKpis 里有同名局部变量 t
+
+function sumPort(p){ let aej=0,aek=0,oth=0; p.rows.forEach(r=>{ aej+=r[1]||0; aek+=r[2]||0; oth+=r[3]||0; }); return {aej,aek,oth,total:aej+aek+oth}; }
+function fmt(n){ return n==null?"—":n.toLocaleString(); }
+function pct(n,d){ return d? (n/d*100).toFixed(1)+"%" : "—"; }
+
+// 口岸统一排序：DAL→XGG→TAO→SHA→NGB→SHK→NAS→XMN→SWA→TW（未收录的排在最后）
+function sortedPorts(v){
+  return [...DATA[v].ports].sort((a,b)=>{
+    const ia=POL_ORDER.indexOf(a.pol), ib=POL_ORDER.indexOf(b.pol);
+    return (ia<0?999:ia)-(ib<0?999:ib);
+  });
+}
+function voyKey(v){ return v.replace("/","").slice(0,8); }
+function fmtMD(d){ return (d.getMonth()+1)+"/"+d.getDate(); }
+function isoWeekNum(d){
+  const t=new Date(d); t.setHours(0,0,0,0);
+  t.setDate(t.getDate()+3-((t.getDay()+6)%7));   // 移到该 ISO 周的周四
+  const week1=new Date(t.getFullYear(),0,4);
+  return 1+Math.round(((t-week1)/86400000-3+((week1.getDay()+6)%7))/7);
+}
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const VESSEL_NAMES={ XPBL:"EXPRESS BERLIN" };   // 4位船码 → 船名，未收录的只显示代码
+// POL 列顺序（用户指定）：DAL → XGG → TAO → SHA → NGB → SHK → NAS → XMN → SWA → TW
+const POL_ORDER=["CNDAL","CNXGG","CNTAO","CNSHA","CNNGB","CNSHK","CNNAS","CNXMN","CNSWA","TW","CNQZH","CNZPU"];
+
+function renderOverview(){
+  const table=document.getElementById("schedTable");
+  const wkMap=window.OPS_WK_MAP||{};
+  const today=new Date();
+  const monday=new Date(today); monday.setDate(today.getDate()-((today.getDay()+6)%7)); monday.setHours(0,0,0,0);
+
+  // 列 = POL（所有船出现过的 POL，按固定顺序排列，TW 等排在最后）
+  const polSet=new Set();
+  Object.keys(DATA).forEach(v=>DATA[v].ports.forEach(p=>polSet.add(p.pol)));
+  const polCols=[...polSet].sort((a,b)=>{
+    const ia=POL_ORDER.indexOf(a), ib=POL_ORDER.indexOf(b);
+    return (ia<0?999:ia)-(ib<0?999:ib);
+  });
+
+  // 百分比药丸（qty / 该分组对应 Alloc）：≥100% 满舱=藏青，<100% 未满=红色
+  const pctPill=(qty,alloc)=>{
+    if(typeof alloc!=="number"||!alloc) return "";
+    const p=Math.round(qty/alloc*100);
+    const cls=p>=100?"full":"short";
+    return `<span class="ppct ${cls}">${p}%</span>`;
+  };
+  // 数值行内容：仅货量；满舱（≥ Alloc）= 藏青，未满 = 红色，无 Allocation = 灰色；无数据给 –，保证两行高度一致
+  const grpVal=(qty,alloc)=>{
+    if(!qty) return `<span class="pnone">–</span>`;
+    const cls=(typeof alloc==="number"&&alloc)?(qty>=alloc?" full":" short"):" na";
+    return `<span class="pqty${cls}">${qty.toLocaleString()}</span>`;
+  };
+  // POL 单元格：上行 = AEJEA（% of AEJEA Alloc），下行 = AEKLF&AEASJ（% of 公用 Alloc），虚线分隔与 ALLOCATION 列对齐
+  const polCell=(v,pol)=>{
+    const p=DATA[v].ports.find(x=>x.pol===pol);
+    let aej=0,aek=0;
+    if(p) p.rows.forEach(r=>{ aej+=r[1]||0; aek+=r[2]||0; });
+    return `<td class="pcell"><div class="pline r1">${grpVal(aej,p?p.aA:null)}</div><div class="pline r2">${grpVal(aek,p?p.aK:null)}</div></td>`;
+  };
+
+  // 该船 AEJEA / AEKLF&AEASJ 的 Alloc 汇总（omit / null 不计入）
+  const allocCell=(v)=>{
+    let aA=0,aK=0;
+    DATA[v].ports.forEach(p=>{
+      if(typeof p.aA==="number") aA+=p.aA;
+      if(typeof p.aK==="number") aK+=p.aK;
+    });
+    const line=(label,cls,n,pos)=>`<div class="pline ${pos}"><span class="plabel ${cls}">${label}</span><span class="aqty">${Math.round(n).toLocaleString()}</span></div>`;
+    return `<td class="acell">${line("AEJEA","j",aA,"r1")}${line("AEKLF&AEASJ","k",aK,"r2")}</td>`;
+  };
+
+  // Booking 列：上行 AEJEA（Booking / AEJEA Alloc）、下行 AEKLF&AEASJ（Booking / 公用 Alloc）
+  const bookingCell=(v)=>{
+    const t=DATA[v].total;
+    let aA=0,aK=0;
+    DATA[v].ports.forEach(p=>{ if(typeof p.aA==="number") aA+=p.aA; if(typeof p.aK==="number") aK+=p.aK; });
+    const line=(qty,alloc,pos)=>{
+      // 满舱（Booking ≥ Alloc）= 藏青；未满 = 红色
+      const cls=(typeof alloc==="number"&&alloc)?(qty>=alloc?" full":" short"):"";
+      return `<div class="pline ${pos}"><span class="bqty${cls}">${qty.toLocaleString()}</span>${pctPill(qty,alloc)}</div>`;
+    };
+    return `<td class="bcell">${line(t.aej||0,aA,"r1")}${line(t.aek||0,aK,"r2")}</td>`;
+  };
+
+  let html=`<thead><tr><th>WK</th><th>Voyage / port</th><th>ALLOCATION</th><th>Booking<span class="th-sub">% of Alloc</span></th>${polCols.map(pol=>`<th>${pol}</th>`).join("")}</tr></thead><tbody>`;
+  for(let i=-1;i<=2;i++){
+    const colStart=new Date(monday); colStart.setDate(monday.getDate()+i*7);
+    const colEnd=new Date(colStart); colEnd.setDate(colStart.getDate()+6);
+    const wkNum=isoWeekNum(colStart);
+    const wkBg=i===0?"#16324F":"#7A8B99";
+
+    const vessels=Object.keys(DATA).filter(v=>{
+      const info=wkMap[voyKey(v)];
+      return info?info.wk===wkNum:i===0;   // 无周次信息的船放当前周
+    });
+
+    if(!vessels.length){
+      html+=`<tr class="empty-row"><td class="wk-cell" style="background:${wkBg}">WK${wkNum}<div class="wk-dates">${fmtMD(colStart)}-${fmtMD(colEnd)}</div></td><td colspan="${polCols.length+3}">${L().noSailing}</td></tr>`;
+      continue;
+    }
+    vessels.forEach(v=>{
+      const info=wkMap[voyKey(v)];
+      const voy=voyKey(v);
+      // 该船有订舱量的 POL 列表（hover 提示用）
+      const polsWithBooking=DATA[v].ports.filter(p=>p.rows.some(r=>((r[1]||0)+(r[2]||0)+(r[3]||0))>0)).map(p=>p.pol);
+      const cells=polCols.map(pol=>polCell(v,pol));
+      // 首港信息（原POL挂港日期，保留在船信息里）
+      const firstPort=info?info.firstPort:"";
+      const firstEta=info?info.firstEta:"";
+      let fpTxt="";
+      if(firstPort&&firstEta){ const d=new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)); fpTxt=` · ⚓ ${firstPort} ${MONTHS[d.getMonth()]}-${d.getDate()}`; }
+      html+=`<tr class="vrow ${v===curV?'active':''}" onclick="switchV('${v}')">
+        ${vessels.indexOf(v)===0?`<td class="wk-cell" style="background:${wkBg}" rowspan="${vessels.length}">WK${wkNum}<div class="wk-dates">${fmtMD(colStart)}-${fmtMD(colEnd)}</div></td>`:""}
+        <td class="vsl-cell" title="${L().firstPort} ${firstPort||"-"} ${firstEta||""}｜POL: ${polsWithBooking.join(" ")}">
+          <div class="vvd">🚢 ${v}</div>
+          <div class="vmeta">⚓ ${firstPort||"–"}${firstPort&&firstEta?` ${MONTHS[new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getMonth()]}-${new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getDate()}`:""}</div>
+        </td>
+        ${allocCell(v)}
+        ${bookingCell(v)}
+        ${cells.join("")}
+      </tr>`;
+    });
+  }
+  html+="</tbody>";
+  table.innerHTML=html;
+
+  // Others 构成说明（日历下方小字）
+  const wrap=table.parentElement;
+  let note=wrap.querySelector(".sched-note");
+  if(!note){ note=document.createElement("div"); note.className="sched-note"; wrap.appendChild(note); }
+  note.innerHTML=L().note;
+}
+
+
+function renderKpis(){
+  const t=DATA[curV].total;
+  const info=(window.OPS_WK_MAP||{})[voyKey(curV)];
+  document.getElementById("vvdTitle").innerHTML=
+    `${L().vvdTitle}${curV}`+(info&&info.wk?`<span class="st-sub">WK${info.wk} · ${L().firstPort} ${info.firstPort||"–"}</span>`:"");
+  document.getElementById("kpis").innerHTML=`
+    <div class="kpi"><div class="label">Allocation</div><div class="value">${fmt(t.alloc)}</div><div class="pct" style="color:#64748b">TEU</div></div>
+    <div class="kpi"><div class="label">AEJEA Booking</div><div class="value" style="color:${C_AEJ}">${fmt(t.aej)}</div><div class="pct" style="color:${t.aej>t.alloc?'#dc2626':'#5C9E31'}">${pct(t.aej,t.alloc)} of Allocation</div></div>
+    <div class="kpi"><div class="label">AEKLF&amp;AEASJ Booking</div><div class="value" style="color:${C_AEK}">${fmt(t.aek)}</div><div class="pct" style="color:#5C9E31">${pct(t.aek,t.alloc)} of Allocation</div></div>
+    <div class="kpi"><div class="label">Others (AE*&amp;SADMM)</div><div class="value" style="color:#475569">${fmt(t.oth)}</div><div class="pct" style="color:#64748b">${pct(t.oth,t.alloc)} of Allocation</div></div>`;
+}
+
+function renderPies(){
+  pieCharts.forEach(c=>c.destroy()); pieCharts=[];
+  const grid=document.getElementById("pieGrid");
+  grid.innerHTML="";
+  sortedPorts(curV).forEach(p=>{
+    const s=sumPort(p);
+    const item=document.createElement("div");
+    item.className="pie-item";
+    item.innerHTML=`<div class="p-title">${p.pol}</div><div class="p-sub">${s.total?s.total+" TEU":""}</div>`;
+    if(!s.total){
+      item.innerHTML+=`<div class="empty">${L().noBooking}</div>`;
+    } else {
+      const cv=document.createElement("div");
+      cv.className="p-box";
+      cv.innerHTML='<canvas></canvas>';
+      item.appendChild(cv);
+    }
+    grid.appendChild(item);
+    if(s.total){
+      const ch=new Chart(item.querySelector("canvas"),{
+        type:"doughnut",
+        data:{ labels:["AEJEA","AEKLF&AEASJ","Others"], datasets:[{
+          data:[s.aej||0,s.aek||0,s.oth||0],
+          backgroundColor:[C_AEJ,C_AEK,C_OTH],
+          borderWidth:1, borderColor:"#fff"
+        }]},
+        plugins:[ChartDataLabels],
+        options:{ responsive:true, maintainAspectRatio:false, cutout:"45%",
+          plugins:{ legend:{display:false},
+            datalabels:{ color:"#fff", font:{weight:"700",size:11},
+              textStrokeColor:"rgba(22,50,79,.35)", textStrokeWidth:2,
+              formatter:(v,ctx)=>{ const p=v/s.total; return v>0&&p>=0.07 ? v : ""; } },
+            tooltip:{ callbacks:{ label:c=>`${c.label}: ${c.raw} TEU (${(c.raw/s.total*100).toFixed(1)}%)` } } } }
+      });
+      pieCharts.push(ch);
+    }
+  });
+}
+
+function renderAlloc(){
+  const box=document.getElementById("allocBars"); box.innerHTML="";
+  const ports=sortedPorts(curV);
+  const maxTotal=Math.max(...ports.map(p=>sumPort(p).total),1);
+  ports.forEach(p=>{
+    const s=sumPort(p);
+    const omit=p.alloc==="omit";
+    const alloc=typeof p.alloc==="number"?p.alloc:null;
+    const pr=alloc? s.total/alloc : null;
+    const cls=pr==null?"na":(pr>1?"over":(pr>=0.8?"warn":""));
+    const fillPct=pr!=null? Math.min(pr*100,100) : (s.total? s.total/maxTotal*100 : 0);
+    let meta;
+    if(omit) meta=`<b>${fmt(s.total)}</b> / <span class="omit-tag">Omit</span>`;
+    else if(alloc!=null) meta=`<b>${fmt(s.total)}</b> / ${fmt(alloc)} · <span class="${cls}">${Math.round(pr*100)}%</span>`;
+    else meta=`<b>${fmt(s.total)}</b> / <span class="na">—</span>`;
+    const row=document.createElement("div");
+    row.className="arow";
+    row.innerHTML=`
+      <div class="apol">${p.pol}</div>
+      <div class="atrack"><div class="afill ${cls}" style="width:${fillPct.toFixed(1)}%"></div></div>
+      <div class="ameta">${meta}</div>`;
+    box.appendChild(row);
+  });
+}
+
+function renderTable(){
+  const ports=sortedPorts(curV);
+  let html=`<thead><tr><th>${L().colDel}</th><th>${L().colAlloc}</th><th>AEJEA</th><th>AEKLF&amp;AEASJ</th><th>Others (AE*&amp;SADMM)</th></tr></thead><tbody>`;
+  const aTxt=v=>v==null?"":(v==="omit"?"Omit":Math.round(v).toLocaleString());
+  ports.forEach(p=>{
+    const s=sumPort(p);
+    html+=`<tr class="pol-row"><td>${p.pol}</td><td>${typeof p.alloc==="number"?p.alloc.toLocaleString():(p.alloc||"")}</td><td>${s.aej||""}</td><td>${s.aek||""}</td><td>${s.oth||""}</td></tr>`;
+    // Allocation 明细下放到 DEL 行：AEJEA 行显示 AEJEA Alloc；AEKLF/AEASJ 公用 Alloc 合并单元格
+    // 行序调整：AEJEA 在前，AEKLF/AEASJ 相邻（保证公用 Alloc 合并单元格不错位），其余在后
+    const dOrder=d=>d==="AEJEA"?0:(d==="AEKLF"||d==="AEASJ")?1:2;
+    const vis=p.rows.filter(r=>(r[1]||0)+(r[2]||0)+(r[3]||0)>0)
+      .sort((a,b)=>dOrder(a[0])-dOrder(b[0]));
+    const kCount=vis.filter(r=>r[0]==="AEKLF"||r[0]==="AEASJ").length;
+    let kMerged=false;
+    vis.forEach(r=>{
+      let allocCell="";
+      if(r[0]==="AEJEA") allocCell=`<td>${aTxt(p.aA)}</td>`;
+      else if(r[0]==="AEKLF"||r[0]==="AEASJ"){
+        if(kMerged) allocCell="";   // 已被上方合并单元格覆盖
+        else { const av=aTxt(p.aK); allocCell=`<td rowspan="${kCount}" class="amerge">${av==="Omit"?'<span class="omit-txt">Omit</span>':av}</td>`; kMerged=true; }
+      }
+      const cell=(v)=>v?`<td>${v}</td>`:'<td class="zero">·</td>';
+      html+=`<tr class="del-row"><td>${r[0]}</td>${allocCell}${cell(r[1])}${cell(r[2])}${cell(r[3])}</tr>`;
+    });
+  });
+  const t=DATA[curV].total;
+  html+=`<tr class="total-row"><td>${L().total}</td><td>${fmt(t.alloc)}</td><td style="color:#9CD4E8">${fmt(t.aej)}</td><td style="color:#B7DF8B">${fmt(t.aek)}</td><td style="color:#D9E2E8">${fmt(t.oth)}</td></tr></tbody>`;
+  document.getElementById("detailTable").innerHTML=html;
+  document.getElementById("detailTitle").textContent=`${L().detail} — ${curV}`;
+}
+
+/* VVD 下拉选择框（支持模糊搜索，新增船自动进列表） */
+const vsBox=document.getElementById("vvdSelect"), vsInput=document.getElementById("vvdInput"), vsList=document.getElementById("vvdList");
+function renderVvdList(kw=""){
+  const items=Object.keys(DATA).filter(v=>v.toLowerCase().includes(kw.toLowerCase()));
+  if(!items.length){ vsList.innerHTML=`<div class="vs-empty">${L().noMatch}</div>`; return; }
+  vsList.innerHTML=items.map(v=>`<div class="vs-item ${v===curV?"cur":""}" data-v="${v}">${v}</div>`).join("");
+  vsList.querySelectorAll(".vs-item").forEach(el=>el.onclick=()=>{ switchV(el.dataset.v); closeVs(); });
+}
+function openVs(){ vsBox.classList.add("open"); }
+function closeVs(){ vsBox.classList.remove("open"); }
+vsInput.addEventListener("focus",()=>{ renderVvdList(""); vsInput.select(); openVs(); });
+vsInput.addEventListener("input",()=>{ renderVvdList(vsInput.value); openVs(); });
+vsInput.addEventListener("keydown",e=>{ if(e.key==="Escape") closeVs(); });
+document.addEventListener("click",e=>{ if(!vsBox.contains(e.target)) closeVs(); });
+
+function switchV(v){
+  curV=v;
+  if(document.activeElement!==vsInput) vsInput.value=v;
+  renderOverview(); renderKpis(); renderPies(); renderAlloc(); renderTable();
+}
+
+/* ============================ 语言切换 ============================ */
+function updateWeekBox(){
+  const now=new Date();
+  const wb=document.getElementById("weekBox");
+  if(wb) wb.innerHTML=`<b>${L().week} WK${isoWeekNum(now)}</b><span>${L().date} ${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}</span>`;
+}
+function updateSub(){
+  const m=window.DASHBOARD_META, w=window.OPS_WK_META;
+  const sub=document.querySelector(".header .sub");
+  let txt=`${[...new Set(Object.keys(DATA).map(v=>v.slice(0,4)))].join(" / ")} · Middle East Booking vs Allocation`;
+  if(m) txt+=` · Booking @ ${m.generatedAt}`+(m.warnings&&m.warnings.length?" ⚠"+m.warnings.length:"");
+  if(w) txt+=` · ${L().wkMap} @ ${w.generatedAt}`;
+  sub.textContent=txt;
+}
+function applyLang(){
+  document.title=L().docTitle;
+  document.getElementById("h1Title").textContent=L().h1;
+  document.getElementById("pieTitle").textContent=L().pie;
+  document.getElementById("bsaTitle").textContent=L().bsa;
+  document.getElementById("bsaLegend").innerHTML=`
+      <span><span class="dot" style="background:#D93025"></span>${L().lgProgress}</span>
+      <span><span class="dot" style="background:#F09C90"></span>${L().lgNear}</span>
+      <span><span class="dot" style="background:#16324F"></span>${L().lgFull}</span>
+      <span><span class="dot" style="background:#AEBFC9"></span>${L().lgNA}</span>`;
+  vsInput.placeholder=L().ph;
+  updateWeekBox(); updateSub();
+  renderOverview(); renderKpis(); renderPies(); renderAlloc(); renderTable(); renderVvdList(vsInput.value);
+}
+function setLang(l){
+  LANG=l;
+  document.getElementById("btnZh").classList.toggle("on",l==="zh");
+  document.getElementById("btnEn").classList.toggle("on",l==="en");
+  applyLang();
+}
+document.getElementById("btnZh").onclick=()=>setLang("zh");
+document.getElementById("btnEn").onclick=()=>setLang("en");
+
+applyLang();
+switchV(curV);
+</script>
+</body>
+</html>
