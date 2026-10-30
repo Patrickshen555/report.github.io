@@ -271,7 +271,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-10-30 10:51"};
+window.DASHBOARD_META = {"generatedAt": "2026-10-30 11:08"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
@@ -584,8 +584,7 @@ function updateSub(){
   const m=window.DASHBOARD_META, w=window.OPS_WK_META;
   const sub=document.querySelector(".header .sub");
   let txt=`${[...new Set(Object.keys(DATA).map(v=>v.slice(0,4)))].join(" / ")} · Middle East Booking vs Allocation`;
-  if(m) txt+=` · Booking @ ${m.generatedAt}`+(m.warnings&&m.warnings.length?" ⚠"+m.warnings.length:"");
-  if(w) txt+=` · ${L().wkMap} @ ${w.generatedAt}`;
+  if(m) txt+=` · Update Time: ${m.generatedAt}`;
   sub.textContent=txt;
 }
 function applyLang(){
