@@ -101,10 +101,11 @@
   .sched { border-collapse:collapse; width:100%; min-width:1560px; font-size:12px; }
   .sched th, .sched td { border:1px solid #E3EAEF; padding:6px 8px; vertical-align:top; }
   .sched thead th { background:var(--cul-navy); color:#fff; font-weight:700; text-align:center; white-space:nowrap; }
-  .sched thead th:nth-child(2) { text-align:left; }
+  .sched thead th:nth-child(2) { text-align:center; }
   .sched .wk-cell { width:64px; font-weight:800; font-size:14px; text-align:center; vertical-align:middle; color:#fff; white-space:nowrap; }
   .sched .wk-cell .wk-dates { font-size:10px; font-weight:500; opacity:.85; white-space:normal; margin-top:2px; line-height:1.2; }
-  .sched .vsl-cell { min-width:132px; width:168px; padding:6px 10px; vertical-align:middle; }
+  .sched .vsl-cell { min-width:132px; width:168px; padding:6px 10px; vertical-align:middle; text-align:center; }
+  .sched .vsl-cell > div { display:block; }
   .sched .vsl-cell .vvd { font-weight:800; font-size:12px; color:#0f172a; white-space:nowrap; }
   .sched .vsl-cell .vnm { font-size:10.5px; color:#475569; white-space:nowrap; }
   .sched .vsl-cell .vmeta { font-size:10.5px; color:#64748b; margin-top:2px; white-space:nowrap; }
@@ -270,7 +271,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-10-30 18:15", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-10-30 20:48", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
@@ -324,6 +325,8 @@ function sortedPorts(v){
   });
 }
 function voyKey(v){ return v.replace("/","").slice(0,8); }
+// 展示用航次名：去掉航向后缀（如 XPBL2640W/E → XPBL2640W）
+function dispV(v){ const i=(v||"").indexOf("/"); return i>0?v.slice(0,i):v; }
 function fmtMD(d){ return (d.getMonth()+1)+"/"+d.getDate(); }
 function isoWeekNum(d){
   const t=new Date(d); t.setHours(0,0,0,0);
@@ -425,7 +428,7 @@ function renderOverview(){
       html+=`<tr class="vrow ${v===curV?'active':''}" onclick="switchV('${v}')">
         ${vessels.indexOf(v)===0?`<td class="wk-cell" style="background:${wkBg}" rowspan="${vessels.length}">WK${wkNum}<div class="wk-dates">${fmtMD(colStart)}-${fmtMD(colEnd)}</div></td>`:""}
         <td class="vsl-cell" title="${L().firstPort} ${firstPort||"-"} ${firstEta||""}｜POL: ${polsWithBooking.join(" ")}">
-          <div class="vvd">🚢 ${v}</div>
+          <div class="vvd">🚢 ${dispV(v)}</div>
           <div class="vmeta">⚓ ${firstPort||"–"}${firstPort&&firstEta?` ${MONTHS[new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getMonth()]}-${new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getDate()}`:""}</div>
         </td>
         ${allocCell(v)}
@@ -449,7 +452,7 @@ function renderKpis(){
   const t=DATA[curV].total;
   const info=(window.OPS_WK_MAP||{})[voyKey(curV)];
   document.getElementById("vvdTitle").innerHTML=
-    `${L().vvdTitle}${curV}`+(info&&info.wk?`<span class="st-sub">WK${info.wk} · ${L().firstPort} ${info.firstPort||"–"}</span>`:"");
+    `${L().vvdTitle}${dispV(curV)}`+(info&&info.wk?`<span class="st-sub">WK${info.wk} · ${L().firstPort} ${info.firstPort||"–"}</span>`:"");
   document.getElementById("kpis").innerHTML=`
     <div class="kpi"><div class="label">Allocation</div><div class="value">${fmt(t.alloc)}</div><div class="pct" style="color:#64748b">TEU</div></div>
     <div class="kpi"><div class="label">AEJEA Booking</div><div class="value" style="color:${C_AEJ}">${fmt(t.aej)}</div><div class="pct" style="color:${t.aej>t.alloc?'#dc2626':'#5C9E31'}">${pct(t.aej,t.alloc)} of Allocation</div></div>
@@ -550,7 +553,7 @@ function renderTable(){
   const t=DATA[curV].total;
   html+=`<tr class="total-row"><td>${L().total}</td><td>${fmt(t.alloc)}</td><td style="color:#9CD4E8">${fmt(t.aej)}</td><td style="color:#B7DF8B">${fmt(t.aek)}</td><td style="color:#D9E2E8">${fmt(t.oth)}</td></tr></tbody>`;
   document.getElementById("detailTable").innerHTML=html;
-  document.getElementById("detailTitle").textContent=`${L().detail} — ${curV}`;
+  document.getElementById("detailTitle").textContent=`${L().detail} — ${dispV(curV)}`;
 }
 
 /* VVD 下拉选择框（支持模糊搜索，新增船自动进列表） */
@@ -558,7 +561,7 @@ const vsBox=document.getElementById("vvdSelect"), vsInput=document.getElementByI
 function renderVvdList(kw=""){
   const items=Object.keys(DATA).filter(v=>v.toLowerCase().includes(kw.toLowerCase()));
   if(!items.length){ vsList.innerHTML=`<div class="vs-empty">${L().noMatch}</div>`; return; }
-  vsList.innerHTML=items.map(v=>`<div class="vs-item ${v===curV?"cur":""}" data-v="${v}">${v}</div>`).join("");
+  vsList.innerHTML=items.map(v=>`<div class="vs-item ${v===curV?"cur":""}" data-v="${v}">${dispV(v)}</div>`).join("");
   vsList.querySelectorAll(".vs-item").forEach(el=>el.onclick=()=>{ switchV(el.dataset.v); closeVs(); });
 }
 function openVs(){ vsBox.classList.add("open"); }
@@ -570,7 +573,7 @@ document.addEventListener("click",e=>{ if(!vsBox.contains(e.target)) closeVs(); 
 
 function switchV(v){
   curV=v;
-  if(document.activeElement!==vsInput) vsInput.value=v;
+  if(document.activeElement!==vsInput) vsInput.value=dispV(v);
   renderOverview(); renderKpis(); renderPies(); renderAlloc(); renderTable();
 }
 
