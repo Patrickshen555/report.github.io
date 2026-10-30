@@ -104,7 +104,7 @@
   .sched thead th:nth-child(2) { text-align:left; }
   .sched .wk-cell { width:64px; font-weight:800; font-size:14px; text-align:center; vertical-align:middle; color:#fff; white-space:nowrap; }
   .sched .wk-cell .wk-dates { font-size:10px; font-weight:500; opacity:.85; white-space:normal; margin-top:2px; line-height:1.2; }
-  .sched .vsl-cell { min-width:132px; width:168px; padding:6px 10px; }
+  .sched .vsl-cell { min-width:132px; width:168px; padding:6px 10px; vertical-align:middle; }
   .sched .vsl-cell .vvd { font-weight:800; font-size:12px; color:#0f172a; white-space:nowrap; }
   .sched .vsl-cell .vnm { font-size:10.5px; color:#475569; white-space:nowrap; }
   .sched .vsl-cell .vmeta { font-size:10.5px; color:#64748b; margin-top:2px; white-space:nowrap; }
@@ -277,7 +277,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-10-30 17:48", "cls": "CUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-10-30 18:00", "cls": "CUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
