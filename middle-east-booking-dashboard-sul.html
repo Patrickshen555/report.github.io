@@ -114,9 +114,9 @@
   .sched .vsl-cell .vmeta b.pos, .sched .vsl-cell .vmeta .pos { color:#0d9488; font-weight:700; }
   .sched th .th-sub { display:block; font-size:9px; font-weight:500; opacity:.72; letter-spacing:.2px; margin-top:1px; }
   /* ── 单元格数字排版：数字右对齐 + 占比标签等宽，形成整齐的纵向数字列 ── */
-  .sched .pcell { text-align:center; min-width:76px; padding:7px 7px 6px; vertical-align:top; }
-  .sched .acell { min-width:108px; padding:7px 9px 6px; text-align:center; background:#F2F8FB; border-left:2px solid #CFE3EC; vertical-align:top; }
-  .sched .bcell { min-width:112px; padding:7px 9px 6px; text-align:center; background:#EAF5FA; vertical-align:top; }
+  .sched .pcell { text-align:center; min-width:76px; padding:7px 7px 6px; vertical-align:middle; }
+  .sched .acell { min-width:108px; padding:7px 9px 6px; text-align:center; background:#F2F8FB; border-left:2px solid #CFE3EC; vertical-align:middle; }
+  .sched .bcell { min-width:112px; padding:7px 9px 6px; text-align:center; background:#EAF5FA; vertical-align:middle; }
   .sched .pline { height:21px; display:flex; align-items:center; justify-content:center; gap:7px; white-space:nowrap; }
   .sched .pline.r1 { border-bottom:1px dashed #D3E1EA; }
   .sched .pqty, .sched .aqty, .sched .bqty {
@@ -270,7 +270,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-10-30 18:00", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-10-30 18:15", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
