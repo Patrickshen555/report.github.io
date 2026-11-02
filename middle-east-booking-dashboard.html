@@ -278,7 +278,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-02 08:41", "cls": "CUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-02 09:02", "cls": "CUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
@@ -406,7 +406,19 @@ function renderOverview(){
   };
 
   let html=`<thead><tr><th>WK</th><th>Voyage / port</th><th>ALLOCATION</th><th>Booking<span class="th-sub">% of Alloc</span></th>${polCols.map(pol=>`<th>${pol}</th>`).join("")}</tr></thead><tbody>`;
-  for(let i=-1;i<=2;i++){
+  // 周窗口：默认「上周 ~ 后两周」；若仍有窗口外的航次（如已开航的 XPBL2640W / WK43），自动向外扩展，
+  // 保证 Excel 里登记的所有航次都能在船期表中看到（固定显示，不因时间推移而消失）
+  const vesselWks=[];
+  Object.keys(DATA).forEach(v=>{ const inf=wkMap[voyKey(v)]; if(inf&&typeof inf.wk==="number") vesselWks.push(inf.wk); });
+  let lo=-1, hi=2;
+  if(vesselWks.length){
+    const offsetOf=(wk)=>{          // 按周次找相对本周的偏移（跨年也可用）
+      for(let k=-30;k<=30;k++){ const d=new Date(monday); d.setDate(monday.getDate()+k*7); if(isoWeekNum(d)===wk) return k; }
+      return null;
+    };
+    vesselWks.forEach(wk=>{ const k=offsetOf(wk); if(k!==null){ lo=Math.min(lo,k); hi=Math.max(hi,k); } });
+  }
+  for(let i=lo;i<=hi;i++){
     const colStart=new Date(monday); colStart.setDate(monday.getDate()+i*7);
     const colEnd=new Date(colStart); colEnd.setDate(colStart.getDate()+6);
     const wkNum=isoWeekNum(colStart);
