@@ -234,7 +234,7 @@
    ============================================================ */
 const FALLBACK_DATA = {
   "XPBL2640W/E": {
-    total: { alloc:3893, aej:3687, aek:991, oth:123 },
+    total: { alloc:3991, aej:3946, aek:1020, oth:123 },
     ports: [
       { pol:"CNDAL", alloc:null, aA:null, aK:null, rows:[["AEJEA",5,null,null]] },
       { pol:"CNNAS", alloc:870.0, aA:435.0, aK:435.0, rows:[["AEJEA",724,null,null], ["AEKLF",null,151,null], ["AEASJ",null,79,null], ["SADMM",null,null,60]] },
@@ -243,12 +243,12 @@ const FALLBACK_DATA = {
       { pol:"CNSHK", alloc:870.0, aA:435.0, aK:435.0, rows:[["AEJEA",1136,null,null], ["AEKLF",null,185,null], ["AEASJ",null,57,null]] },
       { pol:"CNSWA", alloc:100.0, aA:50.0, aK:50.0, rows:[["AEJEA",101,null,null], ["AEKLF",null,2,null]] },
       { pol:"CNTAO", alloc:890.0, aA:445.0, aK:445.0, rows:[["AEJEA",666,null,null], ["AEKLF",null,124,null], ["AEASJ",null,31,null], ["SADMM",null,null,63]] },
-      { pol:"CNXMN", alloc:101.0, aA:50.0, aK:51.0, rows:[] },
+      { pol:"CNXMN", alloc:199.0, aA:99.0, aK:100.0, rows:[["AEJEA",259,null,null], ["AEKLF",null,27,null], ["AEASJ",null,2,null]] },
       { pol:"TW", alloc:192.0, aA:96.0, aK:96.0, rows:[["AEJEA",208,null,null], ["AEKLF",null,44,null]] }
     ]
   },
   "LION2644W/E": {
-    total: { alloc:1925, aej:1973, aek:1462, oth:0 },
+    total: { alloc:2025, aej:2059, aek:1486, oth:0 },
     ports: [
       { pol:"CNDAL", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEJEA",89,null,null], ["AEKLF",null,46,null]] },
       { pol:"CNNGB", alloc:420.0, aA:168.0, aK:252.0, rows:[["AEJEA",477,null,null], ["AEKLF",null,56,null], ["AEASJ",null,80,null]] },
@@ -258,7 +258,7 @@ const FALLBACK_DATA = {
       { pol:"CNTAO", alloc:503.0, aA:201.0, aK:302.0, rows:[["AEJEA",242,null,null], ["AEKLF",null,429,null], ["AEASJ",null,141,null]] },
       { pol:"TW", alloc:null, aA:null, aK:null, rows:[["AEJEA",147,null,null], ["AEKLF",null,78,null]] },
       { pol:"CNNAS", alloc:427.0, aA:171.0, aK:256.0, rows:[["AEJEA",300,null,null], ["AEKLF",null,150,null], ["AEASJ",null,51,null]] },
-      { pol:"CNXMN", alloc:100.0, aA:50.0, aK:50.0, rows:[] }
+      { pol:"CNXMN", alloc:200.0, aA:100.0, aK:100.0, rows:[["AEJEA",86,null,null], ["AEKLF",null,24,null]] }
     ]
   },
   "CUHC2645W": {
@@ -278,7 +278,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-04 09:12", "cls": "CUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-04 10:40", "cls": "CUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
