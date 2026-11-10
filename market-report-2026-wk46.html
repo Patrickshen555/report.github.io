@@ -127,7 +127,7 @@
 
 </style>
 </head>
-<body data-ver="drr-wk46-4">
+<body data-ver="drr-wk46-5">
 <div class="page">
 
   <div class="banner">
@@ -335,7 +335,7 @@ var heatBg = function(r){ return r>=80 ? "#2E7D32" : r>=60 ? "#66BB6A" : r>=40 ?
    renderHeat() 每次加载都从 HEAT_VVDS 重建表头，所以编辑必须落到这份覆盖表里才能持久。
    覆盖值来源优先级：① 文件内 baked-in（导出时会把当前改动写回这里）→ ② localStorage 自动草稿。 */
 var HEAT_KEY = "mkt-report-heat:" + (location.pathname.split("/").pop() || "index.html") + ":" + (document.body.getAttribute("data-ver") || "");
-var HEAT_OVR = /*__HEAT_OVR_START__*/{"0":{"vvd":"GFPS2638W (T/S)","date":null},"1":{"vvd":"MYTJ2642W (Direct)","date":null},"2":{"vvd":"ZGNC2641W (T/S)","date":null},"3":{"vvd":"ZG182640W (Direct)","date":null},"4":{"vvd":"ZGU82642W (Direct)","date":null},"5":{"vvd":"GLBN2642W (T/S)","date":null}}/*__HEAT_OVR_END__*/;
+var HEAT_OVR = /*__HEAT_OVR_START__*/{"0":{"vvd":"GFPS2638W (T/S)","date":null},"1":{"vvd":"MYTJ2642W (Direct)","date":null},"2":{"vvd":"ZGNC2641W (T/S)","date":null},"3":{"vvd":"ZG182640W (Direct)","date":null},"4":{"vvd":"ZGU82642W (Direct)","date":null},"5":{"vvd":"GLBN2642W (T/S)","date":null},"6":{"vvd":"H8112642W (T/S)","date":null},"7":{"vvd":"ZGHA2644W (T/S)","date":null},"8":{"vvd":"XPBL2640W (T/S)","date":null},"9":{"vvd":"ZGU92643W (Direct)","date":null},"10":{"vvd":"RACE2638W (T/S)","date":null}}/*__HEAT_OVR_END__*/;
 try{ if(!Object.keys(HEAT_OVR).length){ HEAT_OVR = JSON.parse(localStorage.getItem(HEAT_KEY) || "{}") || {}; } }catch(e){ HEAT_OVR = {}; }
 function applyHeatOvr(o){
   HEAT_VVDS.forEach(function(h,i){
