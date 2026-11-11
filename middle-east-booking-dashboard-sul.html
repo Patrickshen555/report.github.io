@@ -25,6 +25,22 @@
   .lang-switch { display:flex; border:1px solid var(--card-bd); border-radius:8px; overflow:hidden; background:#fff; }
   .lang-switch button { border:none; background:#fff; padding:6px 14px; font-size:12px; font-weight:700; color:#5B6B77; cursor:pointer; }
   .lang-switch button.on { background:var(--cul-blue); color:#fff; }
+  /* ── 视角切换（全船 / 头程船）：与语言切换同排，胶囊风 ── */
+  .switch-row { display:flex; gap:10px; align-items:center; }
+  .view-switch { display:flex; border:1px solid var(--card-bd); border-radius:8px; overflow:hidden; background:#fff; }
+  .view-switch button { border:none; border-left:1px solid var(--card-bd); background:#fff; padding:6px 14px;
+                         font-size:12px; font-weight:700; color:#5B6B77; cursor:pointer; white-space:nowrap; }
+  .view-switch button:first-child { border-left:none; }
+  .view-switch button.on { background:var(--cul-navy); color:#fff; }
+  .view-switch button:disabled { opacity:.45; cursor:default; }
+  /* KPI 标题后的视角胶囊：全船=灰，头程=红底白字 */
+  .vchip { display:inline-block; margin-left:8px; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:700; vertical-align:middle; }
+  .vchip.all { background:#EEF3F7; color:#5B6B77; }
+  .vchip.first { background:#D93025; color:#fff; }
+  /* KPI 卡片里「含中转货 / 中转货已剔除」小字 */
+  .kpi .tsnote { font-size:11px; color:#8A99A5; margin-top:3px; font-weight:600; }
+  /* 排船表船格里的 ↻ 中转 小字 */
+  .sched .vsl-cell .vmeta.tsline { color:#B45309; font-weight:700; }
   .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-bottom:20px; }
   .kpi { background:#fff; border-radius:10px; padding:16px 18px; border:1px solid var(--card-bd); border-top:3px solid var(--cul-green); }
   .kpi .label { font-size:12px; color:#5B6B77; font-weight:600; }
@@ -166,8 +182,13 @@
     <div class="sub">XPBL / LION · Middle East Booking vs Allocation</div>
   </div>
   <div class="header-right">
-    <div class="lang-switch">
-      <button id="btnZh" class="on">中文</button><button id="btnEn">EN</button>
+    <div class="switch-row">
+      <div class="view-switch">
+        <button id="btnAll" class="on">全船视角</button><button id="btnFirst">头程船视角</button>
+      </div>
+      <div class="lang-switch">
+        <button id="btnZh" class="on">中文</button><button id="btnEn">EN</button>
+      </div>
     </div>
     <div class="week-box" id="weekBox"></div>
   </div>
@@ -246,15 +267,15 @@ const FALLBACK_DATA = {
     ]
   },
   "LION2644W/E": {
-    total: { alloc:655, aej:323, aek:408, oth:0 },
+    total: { alloc:655, aej:323, aek:401, oth:0 },
     ports: [
       { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEKLF",null,3,null]] },
       { pol:"CNTAO", alloc:105.0, aA:40.0, aK:65.0, rows:[["AEJEA",40,null,null]] },
       { pol:"CNXGG", alloc:155.0, aA:75.0, aK:80.0, rows:[["AEJEA",93,null,null], ["AEKLF",null,90,null], ["AEASJ",null,25,null]] },
-      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",80,null,null], ["AEKLF",null,79,null]] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",80,null,null], ["AEKLF",null,70,null]] },
       { pol:"CNNGB", alloc:105.0, aA:40.0, aK:65.0, rows:[["AEJEA",58,null,null], ["AEKLF",null,111,null]] },
       { pol:"CNSHK", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",46,null,null], ["AEKLF",null,48,null]] },
-      { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",6,null,null], ["AEKLF",null,46,null], ["AEASJ",null,6,null]] }
+      { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",6,null,null], ["AEKLF",null,46,null], ["AEASJ",null,8,null]] }
     ]
   },
   "CUHC2645W": {
@@ -264,17 +285,80 @@ const FALLBACK_DATA = {
     ]
   },
   "EVHA2646W": {
-    total: { alloc:85, aej:52, aek:100, oth:0 },
+    total: { alloc:85, aej:52, aek:102, oth:0 },
     ports: [
       { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[["AEJEA",46,null,null], ["AEKLF",null,48,null]] },
-      { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[["AEJEA",6,null,null], ["AEKLF",null,46,null], ["AEASJ",null,6,null]] }
+      { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[["AEJEA",6,null,null], ["AEKLF",null,46,null], ["AEASJ",null,8,null]] }
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-11 15:57", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-11 16:16", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
-const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
+// 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
+let FALLBACK_FIRST = {
+  "XPBL2640W/E": {
+    total: { alloc:800, aej:304, aek:184, oth:0 },
+    ports: [
+      { pol:"CNNAS", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",39,null,null], ["AEKLF",null,57,null], ["AEASJ",null,24,null]] },
+      { pol:"CNNGB", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",95,null,null], ["AEKLF",null,38,null]] },
+      { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[] },
+      { pol:"CNSHK", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",73,null,null], ["AEKLF",null,54,null], ["AEASJ",null,6,null]] },
+      { pol:"CNTAO", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",97,null,null], ["AEKLF",null,5,null]] },
+      { pol:"CNXGG", alloc:200.0, aA:100.0, aK:100.0, rows:[] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[] }
+    ]
+  },
+  "LION2644W/E": {
+    total: { alloc:655, aej:98, aek:111, oth:0 },
+    ports: [
+      { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[] },
+      { pol:"CNTAO", alloc:105.0, aA:40.0, aK:65.0, rows:[["AEJEA",40,null,null]] },
+      { pol:"CNXGG", alloc:155.0, aA:75.0, aK:80.0, rows:[] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[] },
+      { pol:"CNNGB", alloc:105.0, aA:40.0, aK:65.0, rows:[["AEJEA",58,null,null], ["AEKLF",null,111,null]] },
+      { pol:"CNSHK", alloc:95.0, aA:35.0, aK:60.0, rows:[] },
+      { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[] }
+    ]
+  },
+  "CUHC2645W": {
+    total: { alloc:5, aej:0, aek:3, oth:0 },
+    ports: [
+      { pol:"CNSHA", alloc:5.0, aA:null, aK:5.0, rows:[["AEKLF",null,3,null]] }
+    ]
+  },
+  "EVHA2646W": {
+    total: { alloc:85, aej:52, aek:102, oth:0 },
+    ports: [
+      { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[["AEJEA",46,null,null], ["AEKLF",null,48,null]] },
+      { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[["AEJEA",6,null,null], ["AEKLF",null,46,null], ["AEASJ",null,8,null]] }
+    ]
+  }
+};;
+const VIEW_ALL   = window.DASHBOARD_BOOKING || FALLBACK_DATA;
+const VIEW_FIRST = window.DASHBOARD_BOOKING_FIRST || FALLBACK_FIRST || null;
+let   VIEW_MODE  = "all";      // "all" | "first"
+let   DATA       = VIEW_ALL;   // 所有渲染函数只读 DATA，视角切换时整体重指
+
+// 该船中转量 = 全船总订舱 − 头程总订舱（无头程数据或头程缺该船时为 0）
+function tsQty(v){
+  if(!VIEW_FIRST || !VIEW_FIRST[v]) return 0;
+  const ta=VIEW_ALL[v].total, tf=VIEW_FIRST[v].total;
+  return (ta.aej+ta.aek+ta.oth)-(tf.aej+tf.aek+tf.oth);
+}
+function setViewMode(m){
+  if(m==="first" && !VIEW_FIRST) return;   // 无头程数据：按钮禁用，切不过去
+  VIEW_MODE=m;
+  if(m==="first"){
+    // 头程数据缺船时用全船数据补齐，避免切过去空白
+    DATA={}; Object.keys(VIEW_ALL).forEach(v=>{ DATA[v]=VIEW_FIRST[v]||VIEW_ALL[v]; });
+  } else {
+    DATA=VIEW_ALL;
+  }
+  document.getElementById("btnAll").classList.toggle("on",m==="all");
+  document.getElementById("btnFirst").classList.toggle("on",m==="first");
+  applyLang();      // 复用整体重绘入口（排船表/KPI/饼图/BSA/明细表全部联动）
+}
 
 const C_AEJ="#0085AD", C_AEK="#8CC63F", C_OTH="#AEBFC9", C_ALLOC="#D5DEE4";
 let curV="XPBL2640W/E", pieCharts=[];
@@ -293,7 +377,10 @@ const T={
     lgProgress:"进行中（<80%）", lgNear:"接近满舱（80-100%）", lgFull:"订满（>100%）", lgNA:"无 Allocation",
     ph:"搜索 / 选择 VVD", noMatch:"无匹配的 VVD", noBooking:"无 booking", noSailing:"暂无排船",
     colDel:"POL / DEL", colAlloc:"Allocation", colOth:"Others (AE*&SADMM)", total:"Total",
-    note:`各 POL 单元格：上行对应 AEJEA、下行对应 AEKLF&AEASJ（虚线分隔，与 ALLOCATION 列同高对应）　·　颜色：<b style="color:#16324F">■ 藏青 = 已满（≥ Alloc）</b>　<b style="color:#D93025">■ 红 = 未满（&lt; Alloc）</b>　<b style="color:#8A99A5">■ 灰 = 无 Allocation</b>`,
+    viewAll:"全船视角", viewFirst:"头程船视角",
+    tsDrop:"中转货已剔除", tsShort:"中转", tsKeep:"含中转货",
+    noteAll:`各 POL 单元格：上行对应 AEJEA、下行对应 AEKLF&AEASJ（虚线分隔，与 ALLOCATION 列同高对应）　·　颜色：<b style="color:#16324F">■ 藏青 = 已满（≥ Alloc）</b>　<b style="color:#D93025">■ 红 = 未满（&lt; Alloc）</b>　<b style="color:#8A99A5">■ 灰 = 无 Allocation</b><br>全船视角：统计该 VVD 上的全部订舱，包含由他船转运过来、在本船中转后再出运的货`,
+    noteFirst:`各 POL 单元格：上行对应 AEJEA、下行对应 AEKLF&AEASJ（虚线分隔，与 ALLOCATION 列同高对应）　·　颜色：<b style="color:#16324F">■ 藏青 = 已满（≥ Alloc）</b>　<b style="color:#D93025">■ 红 = 未满（&lt; Alloc）</b>　<b style="color:#8A99A5">■ 灰 = 无 Allocation</b><br>头程船视角：仅统计本船为该票货 <b>1st Vessel</b> 的订舱，中转货不计入——此口径的 Booking 才与 Allocation 同口径比较`,
     updated:"更新", wkMap:"WK映射"
   },
   en:{
@@ -307,7 +394,10 @@ const T={
     lgProgress:"In progress (<80%)", lgNear:"Nearly full (80-100%)", lgFull:"Fully booked (>100%)", lgNA:"No Allocation",
     ph:"Search / select VVD", noMatch:"No matching VVD", noBooking:"No booking", noSailing:"No sailing",
     colDel:"POL / DEL", colAlloc:"Allocation", colOth:"Others (AE*&SADMM)", total:"Total",
-    note:`Each POL cell: top row = AEJEA, bottom row = AEKLF&AEASJ (dashed divider aligned with the ALLOCATION column)　·　Colours: <b style="color:#16324F">■ Navy = Full (≥ Alloc)</b>　<b style="color:#D93025">■ Red = Not full (&lt; Alloc)</b>　<b style="color:#8A99A5">■ Grey = No Allocation</b>`,
+    viewAll:"All on board", viewFirst:"1st Vessel",
+    tsDrop:"transshipped cargo excluded", tsShort:"T/S", tsKeep:"incl. transshipped",
+    noteAll:`Each POL cell: top row = AEJEA, bottom row = AEKLF&AEASJ (dashed divider aligned with the ALLOCATION column)　·　Colours: <b style="color:#16324F">■ Navy = Full (≥ Alloc)</b>　<b style="color:#D93025">■ Red = Not full (&lt; Alloc)</b>　<b style="color:#8A99A5">■ Grey = No Allocation</b><br>All on board: all bookings on this VVD, including cargo transshipped from other vessels and re-shipped after transhipment on this vessel`,
+    noteFirst:`Each POL cell: top row = AEJEA, bottom row = AEKLF&AEASJ (dashed divider aligned with the ALLOCATION column)　·　Colours: <b style="color:#16324F">■ Navy = Full (≥ Alloc)</b>　<b style="color:#D93025">■ Red = Not full (&lt; Alloc)</b>　<b style="color:#8A99A5">■ Grey = No Allocation</b><br>1st Vessel: only bookings where this vessel is the <b>first vessel</b> of the shipment; transshipped cargo excluded — only this Booking is comparable with Allocation`,
     updated:"Updated", wkMap:"WK mapping"
   }
 };
@@ -345,9 +435,10 @@ function renderOverview(){
   const today=new Date();
   const monday=new Date(today); monday.setDate(today.getDate()-((today.getDay()+6)%7)); monday.setHours(0,0,0,0);
 
-  // 列 = POL（所有船出现过的 POL，按固定顺序排列，TW 等排在最后）
+  // 列 = POL（两视角并集，按固定顺序排列；切换视角时列集合不变，列不跳动）
   const polSet=new Set();
-  Object.keys(DATA).forEach(v=>DATA[v].ports.forEach(p=>polSet.add(p.pol)));
+  Object.keys(VIEW_ALL).forEach(v=>VIEW_ALL[v].ports.forEach(p=>polSet.add(p.pol)));
+  if(VIEW_FIRST) Object.keys(VIEW_FIRST).forEach(v=>VIEW_FIRST[v].ports.forEach(p=>polSet.add(p.pol)));
   const polCols=[...polSet].sort((a,b)=>{
     const ia=POL_ORDER.indexOf(a), ib=POL_ORDER.indexOf(b);
     return (ia<0?999:ia)-(ib<0?999:ib);
@@ -441,6 +532,7 @@ function renderOverview(){
         ${vessels.indexOf(v)===0?`<td class="wk-cell" style="background:${wkBg}" rowspan="${vessels.length}">WK${wkNum}<div class="wk-dates">${fmtMD(colStart)}-${fmtMD(colEnd)}</div></td>`:""}
         <td class="vsl-cell" title="${L().firstPort} ${firstPort||"-"} ${firstEta||""}｜POL: ${polsWithBooking.join(" ")}">
           <div class="vvd">🚢 ${dispV(v)}</div>
+          ${tsQty(v)>0?`<div class="vmeta tsline">↻ ${L().tsShort} ${tsQty(v).toLocaleString()}</div>`:""}
           <div class="vmeta">⚓ ${firstPort||"–"}${firstPort&&firstEta?` ${MONTHS[new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getMonth()]}-${new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getDate()}`:""}</div>
         </td>
         ${allocCell(v)}
@@ -456,7 +548,7 @@ function renderOverview(){
   const wrap=table.parentElement;
   let note=wrap.querySelector(".sched-note");
   if(!note){ note=document.createElement("div"); note.className="sched-note"; wrap.appendChild(note); }
-  note.innerHTML=L().note;
+  note.innerHTML=(VIEW_MODE==="first")?L().noteFirst:L().noteAll;
 }
 
 
@@ -464,11 +556,15 @@ function renderKpis(){
   const t=DATA[curV].total;
   const info=(window.OPS_WK_MAP||{})[voyKey(curV)];
   document.getElementById("vvdTitle").innerHTML=
-    `${L().vvdTitle}${dispV(curV)}`+(info&&info.wk?`<span class="st-sub">WK${info.wk} · ${L().firstPort} ${info.firstPort||"–"}</span>`:"");
+    `${L().vvdTitle}${dispV(curV)}`+(info&&info.wk?`<span class="st-sub">WK${info.wk} · ${L().firstPort} ${info.firstPort||"–"}</span>`:"")
+    +`<span class="vchip ${VIEW_MODE==="first"?"first":"all"}">${VIEW_MODE==="first"?L().viewFirst:L().viewAll}</span>`;
+  // Booking 卡片小字：全船=「含中转货 X」，头程=「中转货已剔除 X」
+  const tsNote=(VIEW_FIRST&&tsQty(curV)>0)
+    ?`<div class="tsnote">${VIEW_MODE==="first"?L().tsDrop:L().tsKeep} ${tsQty(curV).toLocaleString()}</div>`:"";
   document.getElementById("kpis").innerHTML=`
     <div class="kpi"><div class="label">Allocation</div><div class="value">${fmt(t.alloc)}</div><div class="pct" style="color:#64748b">TEU</div></div>
-    <div class="kpi"><div class="label">AEJEA Booking</div><div class="value" style="color:${C_AEJ}">${fmt(t.aej)}</div><div class="pct" style="color:${t.aej>t.alloc?'#dc2626':'#5C9E31'}">${pct(t.aej,t.alloc)} of Allocation</div></div>
-    <div class="kpi"><div class="label">AEKLF&amp;AEASJ Booking</div><div class="value" style="color:${C_AEK}">${fmt(t.aek)}</div><div class="pct" style="color:#5C9E31">${pct(t.aek,t.alloc)} of Allocation</div></div>
+    <div class="kpi"><div class="label">AEJEA Booking</div><div class="value" style="color:${C_AEJ}">${fmt(t.aej)}</div><div class="pct" style="color:${t.aej>t.alloc?'#dc2626':'#5C9E31'}">${pct(t.aej,t.alloc)} of Allocation</div>${tsNote}</div>
+    <div class="kpi"><div class="label">AEKLF&amp;AEASJ Booking</div><div class="value" style="color:${C_AEK}">${fmt(t.aek)}</div><div class="pct" style="color:#5C9E31">${pct(t.aek,t.alloc)} of Allocation</div>${tsNote}</div>
     <div class="kpi"><div class="label">Others (AE*&amp;SADMM)</div><div class="value" style="color:#475569">${fmt(t.oth)}</div><div class="pct" style="color:#64748b">${pct(t.oth,t.alloc)} of Allocation</div></div>`;
 }
 
@@ -627,6 +723,9 @@ function setLang(l){
 }
 document.getElementById("btnZh").onclick=()=>setLang("zh");
 document.getElementById("btnEn").onclick=()=>setLang("en");
+document.getElementById("btnAll").onclick=()=>setViewMode("all");
+document.getElementById("btnFirst").onclick=()=>setViewMode("first");
+if(!VIEW_FIRST){ document.getElementById("btnFirst").disabled=true; }   // 旧数据无头程：按钮置灰禁用
 
 applyLang();
 switchV(curV);
