@@ -39,8 +39,6 @@
   .vchip.first { background:#D93025; color:#fff; }
   /* KPI 卡片里「含中转货 / 中转货已剔除」小字 */
   .kpi .tsnote { font-size:11px; color:#8A99A5; margin-top:3px; font-weight:600; }
-  /* 排船表船格里的 ↻ 中转 小字 */
-  .sched .vsl-cell .vmeta.tsline { color:#B45309; font-weight:700; }
   .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin-bottom:20px; }
   .kpi { background:#fff; border-radius:10px; padding:16px 18px; border:1px solid var(--card-bd); border-top:3px solid var(--cul-green); }
   .kpi .label { font-size:12px; color:#5B6B77; font-weight:600; }
@@ -292,7 +290,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-11 16:16", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-11 16:44", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 // 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
@@ -378,6 +376,7 @@ const T={
     ph:"搜索 / 选择 VVD", noMatch:"无匹配的 VVD", noBooking:"无 booking", noSailing:"暂无排船",
     colDel:"POL / DEL", colAlloc:"Allocation", colOth:"Others (AE*&SADMM)", total:"Total",
     viewAll:"全船视角", viewFirst:"头程船视角",
+    btnAll:"全船视角", btnFirst:"头程船视角",
     tsDrop:"中转货已剔除", tsShort:"中转", tsKeep:"含中转货",
     noteAll:`各 POL 单元格：上行对应 AEJEA、下行对应 AEKLF&AEASJ（虚线分隔，与 ALLOCATION 列同高对应）　·　颜色：<b style="color:#16324F">■ 藏青 = 已满（≥ Alloc）</b>　<b style="color:#D93025">■ 红 = 未满（&lt; Alloc）</b>　<b style="color:#8A99A5">■ 灰 = 无 Allocation</b><br>全船视角：统计该 VVD 上的全部订舱，包含由他船转运过来、在本船中转后再出运的货`,
     noteFirst:`各 POL 单元格：上行对应 AEJEA、下行对应 AEKLF&AEASJ（虚线分隔，与 ALLOCATION 列同高对应）　·　颜色：<b style="color:#16324F">■ 藏青 = 已满（≥ Alloc）</b>　<b style="color:#D93025">■ 红 = 未满（&lt; Alloc）</b>　<b style="color:#8A99A5">■ 灰 = 无 Allocation</b><br>头程船视角：仅统计本船为该票货 <b>1st Vessel</b> 的订舱，中转货不计入——此口径的 Booking 才与 Allocation 同口径比较`,
@@ -395,6 +394,7 @@ const T={
     ph:"Search / select VVD", noMatch:"No matching VVD", noBooking:"No booking", noSailing:"No sailing",
     colDel:"POL / DEL", colAlloc:"Allocation", colOth:"Others (AE*&SADMM)", total:"Total",
     viewAll:"All on board", viewFirst:"1st Vessel",
+    btnAll:"Whole Vessel", btnFirst:"First Leg",
     tsDrop:"transshipped cargo excluded", tsShort:"T/S", tsKeep:"incl. transshipped",
     noteAll:`Each POL cell: top row = AEJEA, bottom row = AEKLF&AEASJ (dashed divider aligned with the ALLOCATION column)　·　Colours: <b style="color:#16324F">■ Navy = Full (≥ Alloc)</b>　<b style="color:#D93025">■ Red = Not full (&lt; Alloc)</b>　<b style="color:#8A99A5">■ Grey = No Allocation</b><br>All on board: all bookings on this VVD, including cargo transshipped from other vessels and re-shipped after transhipment on this vessel`,
     noteFirst:`Each POL cell: top row = AEJEA, bottom row = AEKLF&AEASJ (dashed divider aligned with the ALLOCATION column)　·　Colours: <b style="color:#16324F">■ Navy = Full (≥ Alloc)</b>　<b style="color:#D93025">■ Red = Not full (&lt; Alloc)</b>　<b style="color:#8A99A5">■ Grey = No Allocation</b><br>1st Vessel: only bookings where this vessel is the <b>first vessel</b> of the shipment; transshipped cargo excluded — only this Booking is comparable with Allocation`,
@@ -530,9 +530,8 @@ function renderOverview(){
       if(firstPort&&firstEta){ const d=new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)); fpTxt=` · ⚓ ${firstPort} ${MONTHS[d.getMonth()]}-${d.getDate()}`; }
       html+=`<tr class="vrow ${v===curV?'active':''}" onclick="switchV('${v}')">
         ${vessels.indexOf(v)===0?`<td class="wk-cell" style="background:${wkBg}" rowspan="${vessels.length}">WK${wkNum}<div class="wk-dates">${fmtMD(colStart)}-${fmtMD(colEnd)}</div></td>`:""}
-        <td class="vsl-cell" title="${L().firstPort} ${firstPort||"-"} ${firstEta||""}｜POL: ${polsWithBooking.join(" ")}">
+        <td class="vsl-cell" title="${polsWithBooking.join(" ")}">
           <div class="vvd">🚢 ${dispV(v)}</div>
-          ${tsQty(v)>0?`<div class="vmeta tsline">↻ ${L().tsShort} ${tsQty(v).toLocaleString()}</div>`:""}
           <div class="vmeta">⚓ ${firstPort||"–"}${firstPort&&firstEta?` ${MONTHS[new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getMonth()]}-${new Date(firstEta.slice(0,4),+firstEta.slice(4,6)-1,firstEta.slice(6,8)).getDate()}`:""}</div>
         </td>
         ${allocCell(v)}
@@ -712,6 +711,8 @@ function applyLang(){
       <span><span class="dot" style="background:#16324F"></span>${L().lgFull}</span>
       <span><span class="dot" style="background:#AEBFC9"></span>${L().lgNA}</span>`;
   vsInput.placeholder=L().ph;
+  document.getElementById("btnAll").textContent=L().btnAll;
+  document.getElementById("btnFirst").textContent=L().btnFirst;
   updateWeekBox(); updateSub();
   renderOverview(); renderKpis(); renderPies(); renderAlloc(); renderTable(); renderVvdList(vsInput.value);
 }
