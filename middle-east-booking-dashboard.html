@@ -248,17 +248,21 @@ const FALLBACK_DATA = {
     ]
   },
   "LION2644W/E": {
-    total: { alloc:2137, aej:2087, aek:2257, oth:0 },
+    total: { alloc:2687, aej:2137, aek:2272, oth:0 },
     ports: [
       { pol:"CNDAL", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEJEA",93,null,null], ["AEKLF",null,56,null]] },
-      { pol:"CNNGB", alloc:474.0, aA:222.0, aK:252.0, rows:[["AEJEA",622,null,null], ["AEKLF",null,191,null], ["AEASJ",null,175,null]] },
+      { pol:"CNNGB", alloc:474.0, aA:222.0, aK:252.0, rows:[["AEJEA",622,null,null], ["AEKLF",null,195,null], ["AEASJ",null,177,null]] },
       { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEJEA",197,null,null], ["AEKLF",null,155,null], ["AEASJ",null,37,null]] },
-      { pol:"CNSHK", alloc:479.0, aA:224.0, aK:255.0, rows:[["AEJEA",353,null,null], ["AEKLF",null,342,null], ["AEASJ",null,126,null]] },
+      { pol:"CNSHK", alloc:479.0, aA:224.0, aK:255.0, rows:[["AEJEA",419,null,null], ["AEKLF",null,352,null], ["AEASJ",null,126,null]] },
       { pol:"CNSWA", alloc:50.0, aA:25.0, aK:25.0, rows:[["AEJEA",53,null,null]] },
-      { pol:"CNTAO", alloc:503.0, aA:201.0, aK:302.0, rows:[["AEJEA",191,null,null], ["AEKLF",null,345,null], ["AEASJ",null,173,null]] },
-      { pol:"TW", alloc:50.0, aA:50.0, aK:0.0, rows:[["AEJEA",189,null,null], ["AEKLF",null,60,null]] },
-      { pol:"CNNAS", alloc:481.0, aA:225.0, aK:256.0, rows:[["AEJEA",309,null,null], ["AEKLF",null,352,null], ["AEASJ",null,166,null]] },
-      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",80,null,null], ["AEKLF",null,79,null]] }
+      { pol:"CNTAO", alloc:503.0, aA:201.0, aK:302.0, rows:[["AEJEA",191,null,null], ["AEKLF",null,345,null], ["AEASJ",null,171,null]] },
+      { pol:"TW", alloc:50.0, aA:50.0, aK:0.0, rows:[["AEJEA",175,null,null], ["AEKLF",null,58,null]] },
+      { pol:"CNNAS", alloc:481.0, aA:225.0, aK:256.0, rows:[["AEJEA",307,null,null], ["AEKLF",null,355,null], ["AEASJ",null,166,null]] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",80,null,null], ["AEKLF",null,79,null]] },
+      { pol:"VNHPH", alloc:100.0, aA:50.0, aK:50.0, rows:[] },
+      { pol:"VNSGN", alloc:25.0, aA:0.0, aK:25.0, rows:[] },
+      { pol:"ID", alloc:25.0, aA:0.0, aK:25.0, rows:[] },
+      { pol:"TH", alloc:400.0, aA:174.0, aK:226.0, rows:[] }
     ]
   },
   "CUHC2645W": {
@@ -270,15 +274,15 @@ const FALLBACK_DATA = {
     ]
   },
   "EVHA2646W": {
-    total: { alloc:715, aej:618, aek:683, oth:0 },
+    total: { alloc:715, aej:620, aek:684, oth:0 },
     ports: [
-      { pol:"CNSHK", alloc:335.0, aA:167.0, aK:168.0, rows:[["AEJEA",261,null,null], ["AEKLF",null,179,null], ["AEASJ",null,85,null]] },
+      { pol:"CNSHK", alloc:335.0, aA:167.0, aK:168.0, rows:[["AEJEA",265,null,null], ["AEKLF",null,179,null], ["AEASJ",null,85,null]] },
       { pol:"CNSWA", alloc:50.0, aA:25.0, aK:25.0, rows:[["AEJEA",51,null,null], ["AEASJ",null,14,null]] },
-      { pol:"CNNAS", alloc:330.0, aA:162.0, aK:168.0, rows:[["AEJEA",306,null,null], ["AEKLF",null,266,null], ["AEASJ",null,139,null]] }
+      { pol:"CNNAS", alloc:330.0, aA:162.0, aK:168.0, rows:[["AEJEA",304,null,null], ["AEKLF",null,267,null], ["AEASJ",null,139,null]] }
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-11 09:07", "cls": "CUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-11 12:03", "cls": "CUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 const DATA = window.DASHBOARD_BOOKING || FALLBACK_DATA;
