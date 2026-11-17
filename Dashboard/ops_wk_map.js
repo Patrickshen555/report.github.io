@@ -1,5 +1,5 @@
 // 自动生成：fetch_wk_cdp.py（VVD→WK 映射，首港ETA口径，ISO周）
-// 生成时间: 2026-11-17 11:38
+// 生成时间: 2026-11-17 16:09
 window.OPS_WK_MAP = {
  "XPBL2640": {
   "wk": 43,
@@ -173,14 +173,14 @@ window.OPS_WK_MAP = {
    }
   ]
  },
- "EVHA2646": {
+ "THMY2647": {
   "wk": 47,
   "wkMonday": "2026-11-16",
   "firstEta": "202611172000",
   "firstPort": "CNSHK",
   "legs": [
-   "EVHA2646E",
-   "EVHA2646W"
+   "THMY2647E",
+   "THMY2647W"
   ],
   "cnPorts": [
    "CNNAS",
@@ -189,39 +189,46 @@ window.OPS_WK_MAP = {
   ],
   "portCalls": [
    {
-    "vvd": "EVHA2646W",
+    "vvd": "THMY2647W",
     "eta": "202611172000",
     "etb": "202611181200",
     "etd": "202611190800",
     "port": "CNSHK"
    },
    {
-    "vvd": "EVHA2646W",
+    "vvd": "THMY2647W",
     "eta": "202611191900",
     "etb": "202611192100",
     "etd": "202611201200",
     "port": "CNSWA"
    },
    {
-    "vvd": "EVHA2646W",
+    "vvd": "THMY2647W",
     "eta": "202611210000",
     "etb": "202611210200",
     "etd": "202611212200",
     "port": "CNNAS"
    },
    {
-    "vvd": "EVHA2646W",
+    "vvd": "THMY2647W",
     "eta": "202611260100",
     "etb": "202611260300",
-    "etd": "202611270100",
+    "etd": "202611270300",
     "port": "MYPKG"
    },
    {
-    "vvd": "EVHA2646E",
+    "vvd": "THMY2647E",
     "eta": "202612090500",
     "etb": "202612090700",
     "etd": "202612110700",
     "port": "EGSOK"
+   },
+   {
+    "vvd": "THMY2647E",
+    "eta": "202612230900",
+    "etb": "202612231100",
+    "etd": "202612241100",
+    "port": "MYPKG"
    }
   ]
  },
@@ -283,4 +290,4 @@ window.OPS_WK_MAP = {
   ]
  }
 };
-window.OPS_WK_META = {"generatedAt": "2026-11-17 11:38", "warnings": []};
+window.OPS_WK_META = {"generatedAt": "2026-11-17 16:09", "warnings": []};

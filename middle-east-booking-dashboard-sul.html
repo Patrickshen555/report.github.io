@@ -282,15 +282,15 @@ const FALLBACK_DATA = {
       { pol:"CNSHA", alloc:5.0, aA:null, aK:5.0, rows:[["AEKLF",null,5,null]] }
     ]
   },
-  "EVHA2646W": {
-    total: { alloc:85, aej:0, aek:0, oth:0 },
+  "THMY2647W": {
+    total: { alloc:85, aej:30, aek:96, oth:0 },
     ports: [
-      { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[] },
-      { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[] }
+      { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[["AEJEA",26,null,null], ["AEKLF&AEASJ",null,30,null]] },
+      { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[["AEJEA",4,null,null], ["AEKLF&AEASJ",null,66,null]] }
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-17 15:04", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-17 16:10", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 // 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
@@ -325,11 +325,11 @@ let FALLBACK_FIRST = {
       { pol:"CNSHA", alloc:5.0, aA:null, aK:5.0, rows:[["AEKLF",null,5,null]] }
     ]
   },
-  "EVHA2646W": {
-    total: { alloc:85, aej:0, aek:0, oth:0 },
+  "THMY2647W": {
+    total: { alloc:85, aej:30, aek:96, oth:0 },
     ports: [
-      { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[] },
-      { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[] }
+      { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[["AEJEA",26,null,null], ["AEKLF&AEASJ",null,30,null]] },
+      { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[["AEJEA",4,null,null], ["AEKLF&AEASJ",null,66,null]] }
     ]
   }
 };;
