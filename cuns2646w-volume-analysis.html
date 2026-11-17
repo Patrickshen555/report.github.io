@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUNS2646W 货量分析 · Booking Office 口径</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --navy:#12324f; --ink:#1b2733; --sub:#64748b; --line:#e6eaef;
+    --bg:#f4f6f8; --card:#fff;
+    --teal:#1a7f7a; --orange:#d9822b; --red:#c0392b; --purple:#6b5b95;
+  }
+  body{ font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif; background:var(--bg); color:var(--ink); line-height:1.62; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:26px 22px 56px; }
+
+  header{ background:linear-gradient(135deg,#12324f 0%,#1d4f73 62%,#24657f 100%); border-radius:14px; padding:26px 30px; color:#fff; position:relative; overflow:hidden; }
+  header::after{ content:""; position:absolute; right:-60px; top:-70px; width:300px; height:300px; border-radius:50%; background:rgba(255,255,255,.06); }
+  header .tag{ display:inline-block; font-size:11px; letter-spacing:.16em; text-transform:uppercase; background:rgba(255,255,255,.14); padding:3px 10px; border-radius:20px; margin-bottom:12px; }
+  header h1{ font-size:27px; font-weight:700; letter-spacing:.5px; }
+  header h1 span{ font-weight:400; opacity:.72; font-size:17px; margin-left:10px; }
+  header .meta{ margin-top:10px; font-size:12.5px; opacity:.8; display:flex; gap:20px; flex-wrap:wrap; }
+  header .v2{ position:absolute; right:26px; top:24px; font-size:11px; background:#d9822b; padding:3px 9px; border-radius:4px; letter-spacing:.08em; }
+
+  .kpis{ display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:16px; }
+  .kpi{ background:var(--card); border:1px solid var(--line); border-radius:11px; padding:15px 16px 13px; }
+  .kpi .lb{ font-size:11.5px; color:var(--sub); }
+  .kpi .vl{ font-size:26px; font-weight:700; color:var(--navy); line-height:1.25; margin-top:2px; font-variant-numeric:tabular-nums; }
+  .kpi .vl em{ font-size:12px; font-weight:400; color:var(--sub); font-style:normal; margin-left:3px; }
+  .kpi .sp{ font-size:11.5px; color:var(--sub); }
+  .kpi.hl{ border-color:#cfdde8; background:linear-gradient(180deg,#fbfdff,#fff); }
+
+  section{ margin-top:26px; }
+  .sec-h{ display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
+  .sec-h .num{ font-size:11px; font-weight:700; color:#fff; background:var(--navy); width:20px; height:20px; border-radius:5px; display:flex; align-items:center; justify-content:center; transform:translateY(-2px); }
+  .sec-h h2{ font-size:17px; font-weight:700; color:var(--navy); }
+  .sec-h .note{ font-size:11.5px; color:var(--sub); margin-left:auto; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; }
+
+  .prow{ display:grid; grid-template-columns:108px 1fr 128px; align-items:center; gap:14px; padding:9px 0; }
+  .prow + .prow{ border-top:1px dashed #eef1f5; }
+  .pname{ font-size:13px; font-weight:600; }
+  .pname small{ display:block; font-size:10.5px; color:var(--sub); font-weight:400; letter-spacing:.04em; }
+  .bar{ height:26px; border-radius:5px; overflow:hidden; display:flex; background:#f1f4f7; }
+  .bar i{ display:block; height:100%; }
+  .seg-f{ background:linear-gradient(90deg,#1a7f7a,#2fa39b); }
+  .seg-s{ background:linear-gradient(90deg,#e0954a,#d9822b); }
+  .pval{ text-align:right; font-size:13px; font-variant-numeric:tabular-nums; }
+  .pval b{ font-size:15px; color:var(--navy); }
+  .pval small{ color:var(--sub); font-size:11px; margin-left:4px; }
+  .legend{ display:flex; gap:18px; font-size:11.5px; color:var(--sub); margin-top:12px; padding-top:12px; border-top:1px solid #f0f3f7; flex-wrap:wrap; }
+  .legend span{ display:flex; align-items:center; gap:6px; }
+  .dot{ width:9px; height:9px; border-radius:2px; display:inline-block; }
+
+  table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  th,td{ padding:9px 10px; text-align:right; font-variant-numeric:tabular-nums; }
+  th{ font-size:11.5px; color:var(--sub); font-weight:600; border-bottom:1.5px solid #e3e9ef; background:#fafbfc; }
+  td:first-child,th:first-child{ text-align:left; font-weight:600; }
+  tbody tr + tr td{ border-top:1px solid #f2f4f7; }
+  tbody tr:hover td{ background:#fafcfe; }
+  .col-nas{ background:rgba(26,127,122,.055); }
+  th.col-nas{ background:rgba(26,127,122,.1); color:#146862; }
+  .dn{ color:#1a7f7a; font-weight:600; }
+  td.l{ text-align:left; font-weight:400; }
+  td.l b{ font-weight:600; }
+
+  .duel{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .dcard{ border:1px solid var(--line); border-radius:11px; padding:16px 18px; background:#fff; }
+  .dcard .t{ font-size:12px; color:var(--sub); }
+  .dcard .big{ font-size:30px; font-weight:700; color:var(--red); line-height:1.2; margin:6px 0 2px; font-variant-numeric:tabular-nums; }
+  .dcard .big small{ font-size:13px; color:var(--sub); font-weight:400; }
+  .dcard .cmp{ font-size:12px; margin-top:8px; padding-top:8px; border-top:1px dashed #edf0f4; }
+  .dcard .cmp b{ color:var(--navy); }
+  .dcard .cmp .vs{ color:#b6c1cc; margin:0 5px; font-size:11px; }
+  .dcard.plain .big{ color:var(--navy); }
+
+  .chart{ display:flex; align-items:flex-end; gap:26px; height:200px; padding:14px 6px 0; border-bottom:1px solid #e6eaef; }
+  .grp{ flex:1; display:flex; align-items:flex-end; justify-content:center; gap:5px; height:100%; }
+  .grp .col{ width:26px; border-radius:3px 3px 0 0; position:relative; }
+  .grp .col span{ position:absolute; top:-17px; left:50%; transform:translateX(-50%); font-size:10.5px; color:var(--sub); }
+  .xaxis{ display:flex; gap:26px; padding:8px 6px 0; }
+  .xaxis div{ flex:1; text-align:center; font-size:11.5px; color:var(--sub); }
+  .c-nas{ background:#1a7f7a; } .c-shk{ background:#d9822b; } .c-ngb{ background:#7f93a8; }
+
+  .ins{ border-left:3px solid #d9822b; background:#fffaf3; padding:13px 16px; border-radius:0 8px 8px 0; font-size:12.5px; }
+  .ins + .ins{ margin-top:10px; }
+  .ins b{ color:var(--navy); }
+
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
+  .fact{ display:grid; grid-template-columns:84px 1fr; gap:10px; padding:8px 0; font-size:12.5px; border-bottom:1px dashed #eef1f5; }
+  .fact:last-child{ border:none; }
+  .fact .k{ color:var(--sub); }
+  .fact .v b{ color:var(--navy); }
+  .mini{ display:flex; height:30px; border-radius:6px; overflow:hidden; font-size:11px; color:#fff; margin:8px 0 4px; }
+  .mini div{ display:flex; align-items:center; justify-content:center; }
+
+  .concl{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .cc{ background:#fff; border:1px solid var(--line); border-radius:11px; padding:15px 16px; }
+  .cc h4{ font-size:13px; color:var(--navy); margin-bottom:7px; display:flex; gap:6px; align-items:center; }
+  .cc h4 i{ width:18px; height:18px; border-radius:4px; background:#d9ede9; color:#146862; font-style:normal; font-size:11px; display:flex; align-items:center; justify-content:center; font-weight:700; }
+  .cc p{ font-size:12px; color:#41505f; }
+  .cc p + p{ margin-top:6px; }
+
+  footer{ margin-top:28px; font-size:11px; color:#9aa6b2; border-top:1px solid #e6eaef; padding-top:12px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  @media (max-width:900px){
+    .kpis{ grid-template-columns:repeat(2,1fr); } .duel,.concl,.two{ grid-template-columns:1fr; }
+    .prow{ grid-template-columns:80px 1fr 96px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="v2">数据已更新</div>
+    <div class="tag">Volume Analysis · Booking Office Cut</div>
+    <h1>CUNS2646W<span>货量分析（按 Booking Office 划分口岸）</span></h1>
+    <div class="meta">
+      <span>数据源：excelsave.xlsx · Sheet1（516 订舱票 / 1,665 TEU）</span>
+      <span>Sheet3 透视合计 1,665 TEU 已核对一致</span>
+      <span>POD：SAJED 98.8%</span>
+      <span>货量口径 · 含 BSA / FAK / SPOT 申请批复价</span>
+    </div>
+  </header>
+
+
+  <!-- 1 -->
+  <section>
+    <div class="sec-h"><div class="num">1</div><h2>口岸结构：按订舱办公室归属</h2><div class="note">单位：TEU</div></div>
+    <div class="card">
+      <div class="prow">
+        <div class="pname">南沙<small>CUGGZ + ULSNZ</small></div>
+        <div class="bar"><i class="seg-f" style="width:53.6%"></i></div>
+        <div class="pval"><b>892</b><small>53.6%</small></div>
+      </div>
+      <div class="prow">
+        <div class="pname">宁波<small>CUNGB + CUYIW</small></div>
+        <div class="bar"><i class="seg-f" style="width:21.0%"></i></div>
+        <div class="pval"><b>349</b><small>21.0%</small></div>
+      </div>
+      <div class="prow">
+        <div class="pname">蛇口<small>CUSNZ + ULSNZ</small></div>
+        <div class="bar"><i class="seg-f" style="width:14.4%"></i></div>
+        <div class="pval"><b>240</b><small>14.4%</small></div>
+      </div>
+      <div class="prow">
+        <div class="pname">天津<small>ULTNJ</small></div>
+        <div class="bar"><i class="seg-f" style="width:7.8%"></i></div>
+        <div class="pval"><b>130</b><small>7.8%</small></div>
+      </div>
+      <div class="prow">
+        <div class="pname">海外/中转<small>5 offices</small></div>
+        <div class="bar"><i class="seg-f" style="width:3.2%"></i></div>
+        <div class="pval"><b>54</b><small>3.2%</small></div>
+      </div>
+      <div class="legend">
+        <span style="margin-left:auto">海外/中转：SDGTH 泰国 26 · CUHPH 海防 14 · CUKWA 8 · CUTPE 4 · CUHCM 2</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <table>
+        <thead><tr><th>口岸</th><th>归属 Booking Office（TEU）</th><th>TEU</th><th>占比</th><th>票数</th><th>平均单票</th><th>最大票</th></tr></thead>
+        <tbody>
+          <tr><td>南沙</td><td class="l">CUGGZ 842 + ULSNZ 50</td><td><b>892</b></td><td>53.6%</td><td>228</td><td>3.91</td><td><b>130</b></td></tr>
+          <tr><td>宁波</td><td class="l">CUNGB 303 + CUYIW 44 + ULNGB 2</td><td>349</td><td>21.0%</td><td>149</td><td>2.34</td><td>15</td></tr>
+          <tr><td>蛇口</td><td class="l">CUSNZ 208 + ULSNZ 32</td><td>240</td><td>14.4%</td><td>75</td><td>3.20</td><td>18</td></tr>
+          <tr><td>天津</td><td class="l">ULTNJ 130</td><td>130</td><td>7.8%</td><td>46</td><td>2.83</td><td>13</td></tr>
+          <tr><td>海外/中转</td><td class="l">SDGTH / CUHPH / CUKWA / CUTPE / CUHCM</td><td>54</td><td>3.2%</td><td>18</td><td>3.00</td><td>8</td></tr>
+        </tbody>
+      </table>
+      <div class="ins" style="margin-top:14px">
+        <b>口径说明：</b>按订舱办公室归属口岸，<b>ULSNZ（联合物流深圳）</b>同时订南沙与蛇口，按实际 POL 拆分为南沙 50 TEU / 蛇口 32 TEU；<b>CUYIW（义乌）</b>货走宁波，并入宁波口岸。
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="sec-h"><div class="num">2</div><h2>南沙 vs 蛇口：SPOT 申请 / 批复</h2><div class="note">申请价 vs 批复价 · 单位 USD</div></div>
+    <div class="card" style="margin-top:0">
+      <table style="font-size:12.5px;vertical-align:middle">
+        <thead><tr>
+          <th style="text-align:left">OFFICE</th><th style="text-align:center">Booking</th><th style="text-align:center">BSA</th><th style="text-align:center">申请SPOT</th><th style="text-align:center">批复SPOT</th><th style="text-align:center">FAK/40'</th><th style="text-align:left">VVD</th><th style="text-align:center">POD</th><th style="text-align:center">Volume</th>
+        </tr></thead>
+        <tbody>
+          <tr><td rowspan="2" style="text-align:left;font-weight:600">CUNAS</td><td rowspan="2" style="text-align:center">842</td><td rowspan="2" style="text-align:center"><b>500</b></td><td style="text-align:center">7000</td><td style="text-align:center">7200</td><td rowspan="2" style="text-align:center"><b>8200</b></td><td style="text-align:left">H8112646W / CUNS2646W</td><td style="text-align:center">SAJED</td><td style="text-align:center" style="font-weight:600">100*40'</td></tr>
+          <tr><td style="text-align:center">7200(T/S) / 7500(Direct)</td><td style="text-align:center">未批复</td><td style="text-align:left">LION2644W / H8112646W / CUNS2646W / MGSH2647W</td><td style="text-align:center">SAJED</td><td style="text-align:center" style="font-weight:600">132*40'</td></tr>
+          <tr><td rowspan="2" style="text-align:left;font-weight:600">CUNGB</td><td rowspan="2" style="text-align:center">303</td><td rowspan="2" style="text-align:center"><b>542</b></td><td style="text-align:center">7700</td><td style="text-align:center">7700</td><td rowspan="2" style="text-align:center"><b>8000</b></td><td style="text-align:left">CUNS2646W</td><td style="text-align:center">SAJED</td><td style="text-align:center" style="font-weight:600">26*40'</td></tr>
+          <tr><td style="text-align:center">7200</td><td style="text-align:center">8000</td><td style="text-align:left">CUNS2646W</td><td style="text-align:center">SAJED</td><td style="text-align:center" style="font-weight:600">70*40'</td></tr>
+          <tr><td style="text-align:left;font-weight:600">CUSHK</td><td style="text-align:center">208</td><td style="text-align:center"><b>350</b></td><td style="text-align:center">7800</td><td style="text-align:center">未批复</td><td style="text-align:center"><b>8200</b></td><td style="text-align:left">CUNS2646W</td><td style="text-align:center">SAJED</td><td style="text-align:center" style="font-weight:600">17*40'</td></tr>
+          <tr><td style="text-align:left">ULNGB</td><td style="text-align:center">2</td><td style="text-align:center">60</td><td></td><td></td><td></td><td style="text-align:left"></td><td></td><td></td></tr>
+          <tr><td style="text-align:left">ULSHK</td><td style="text-align:center">32</td><td style="text-align:center">40</td><td></td><td></td><td></td><td style="text-align:left"></td><td></td><td></td></tr>
+          <tr><td style="text-align:left">ULNAS</td><td style="text-align:center">50</td><td style="text-align:center">50</td><td></td><td></td><td></td><td style="text-align:left"></td><td></td><td></td></tr>
+        </tbody>
+      </table>    </div>
+  </section>
+
+<!-- 4 -->
+  <section>
+    <div class="sec-h"><div class="num">3</div><h2>大票货 TOP 10</h2><div class="note">按单票 TEU 排序 · 含货主</div></div>
+    <div class="card">
+      <table>
+        <thead><tr><th>#</th><th class="l">BKG No.</th><th class="l">Booking Office</th><th class="l">货主 / Shipper</th><th>TEU</th><th>占全船</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="l">CULVNAS2661614</td><td class="l">CUGGZ</td><td class="l">LONGSAIL SUPPLY CHAIN</td><td><b>130</b></td><td>7.8%</td></tr>
+          <tr><td>2</td><td class="l">CULVNAS2661613</td><td class="l">CUGGZ</td><td class="l">LONGSAIL SUPPLY CHAIN</td><td><b>66</b></td><td>4.0%</td></tr>
+          <tr><td>3</td><td class="l">CULVNAS2661610</td><td class="l">CUGGZ</td><td class="l">LONGSAIL SUPPLY CHAIN</td><td>28</td><td>1.7%</td></tr>
+          <tr><td>4</td><td class="l">CULVNAS2660511</td><td class="l">CUGGZ</td><td class="l">PATENT INTERNATIONAL LOG.</td><td>26</td><td>1.6%</td></tr>
+          <tr><td>5</td><td class="l">CULVNAS2657866</td><td class="l">CUGGZ</td><td class="l">PATENT INTERNATIONAL LOG.</td><td>24</td><td>1.4%</td></tr>
+          <tr><td>6</td><td class="l">CULVNAS2661608</td><td class="l">CUGGZ</td><td class="l">LONGSAIL SUPPLY CHAIN</td><td>20</td><td>1.2%</td></tr>
+          <tr><td>7</td><td class="l">CULVNAS2661609</td><td class="l">CUGGZ</td><td class="l">LONGSAIL SUPPLY CHAIN</td><td>20</td><td>1.2%</td></tr>
+          <tr><td>8</td><td class="l">CULVSHK2657116</td><td class="l">CUSNZ</td><td class="l">T.A. INTERNATIONAL TRANSPORT</td><td>18</td><td>1.1%</td></tr>
+          <tr><td>9</td><td class="l">CULVSHK2657147</td><td class="l">CUSNZ</td><td class="l">OCEAN WAY SUPPLY CHAIN</td><td>18</td><td>1.1%</td></tr>
+          <tr><td>10</td><td class="l">CULVNAS2660525</td><td class="l">CUGGZ</td><td class="l">PATENT INTERNATIONAL LOG.</td><td>16</td><td>1.0%</td></tr>
+        </tbody>
+      </table>
+      </div>
+  </section>
+
+<footer>
+    <span>口径：口岸 = Booking Office 归属（ULSNZ 按实际 POL 拆分）；TEU 按 20'=1、40'=2；SPOT = Contract No. 为 TEMP*；订舱状态 Firm 92 票 / Waiting 424 票，本版为订舱口径而非完船口径。<b>货量为订舱口径；SPOT/FAK 价格为口岸申请与批复口径，非实际成交价。</b></span>
+    <span>CUNS2646W · 更新于 2026-11-17</span>
+  </footer>
+</div>
+</body>
+</html>
