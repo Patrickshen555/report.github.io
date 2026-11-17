@@ -265,15 +265,15 @@ const FALLBACK_DATA = {
     ]
   },
   "LION2644W/E": {
-    total: { alloc:712, aej:319, aek:560, oth:0 },
+    total: { alloc:712, aej:319, aek:564, oth:0 },
     ports: [
       { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEKLF",null,5,null]] },
       { pol:"CNTAO", alloc:122.0, aA:40.0, aK:82.0, rows:[["AEJEA",40,null,null]] },
       { pol:"CNXGG", alloc:155.0, aA:75.0, aK:80.0, rows:[["AEJEA",93,null,null], ["AEKLF",null,90,null], ["AEASJ",null,25,null]] },
       { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",84,null,null], ["AEKLF",null,70,null]] },
-      { pol:"CNNGB", alloc:145.0, aA:40.0, aK:105.0, rows:[["AEJEA",44,null,null], ["AEKLF",null,113,null], ["AEASJ",null,18,null]] },
+      { pol:"CNNGB", alloc:145.0, aA:40.0, aK:105.0, rows:[["AEJEA",44,null,null], ["AEKLF",null,113,null], ["AEASJ",null,12,null]] },
       { pol:"CNSHK", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",39,null,null], ["AEKLF",null,111,null]] },
-      { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",19,null,null], ["AEKLF",null,108,null], ["AEASJ",null,20,null]] }
+      { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",19,null,null], ["AEKLF",null,118,null], ["AEASJ",null,20,null]] }
     ]
   },
   "CUHC2645W": {
@@ -288,9 +288,15 @@ const FALLBACK_DATA = {
       { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[["AEJEA",26,null,null], ["AEKLF&AEASJ",null,30,null]] },
       { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[["AEJEA",4,null,null], ["AEKLF&AEASJ",null,66,null]] }
     ]
+  },
+  "CMSR2648W": {
+    total: { alloc:50, aej:16, aek:36, oth:0 },
+    ports: [
+      { pol:"CNTAO", alloc:50.0, aA:24.0, aK:26.0, rows:[["AEJEA",16,null,null], ["AEKLF&AEASJ",null,36,null]] }
+    ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-17 16:10", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-17 17:17", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 // 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
@@ -308,15 +314,15 @@ let FALLBACK_FIRST = {
     ]
   },
   "LION2644W/E": {
-    total: { alloc:712, aej:112, aek:274, oth:0 },
+    total: { alloc:712, aej:112, aek:278, oth:0 },
     ports: [
       { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[] },
       { pol:"CNTAO", alloc:122.0, aA:40.0, aK:82.0, rows:[["AEJEA",40,null,null]] },
       { pol:"CNXGG", alloc:155.0, aA:75.0, aK:80.0, rows:[] },
       { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[] },
-      { pol:"CNNGB", alloc:145.0, aA:40.0, aK:105.0, rows:[["AEJEA",44,null,null], ["AEKLF",null,113,null], ["AEASJ",null,18,null]] },
+      { pol:"CNNGB", alloc:145.0, aA:40.0, aK:105.0, rows:[["AEJEA",44,null,null], ["AEKLF",null,113,null], ["AEASJ",null,12,null]] },
       { pol:"CNSHK", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",13,null,null], ["AEKLF",null,81,null]] },
-      { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",15,null,null], ["AEKLF",null,62,null]] }
+      { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",15,null,null], ["AEKLF",null,72,null]] }
     ]
   },
   "CUHC2645W": {
@@ -330,6 +336,12 @@ let FALLBACK_FIRST = {
     ports: [
       { pol:"CNSHK", alloc:55.0, aA:26.0, aK:29.0, rows:[["AEJEA",26,null,null], ["AEKLF&AEASJ",null,30,null]] },
       { pol:"CNNAS", alloc:30.0, aA:17.0, aK:13.0, rows:[["AEJEA",4,null,null], ["AEKLF&AEASJ",null,66,null]] }
+    ]
+  },
+  "CMSR2648W": {
+    total: { alloc:50, aej:16, aek:36, oth:0 },
+    ports: [
+      { pol:"CNTAO", alloc:50.0, aA:24.0, aK:26.0, rows:[["AEJEA",16,null,null], ["AEKLF&AEASJ",null,36,null]] }
     ]
   }
 };;
