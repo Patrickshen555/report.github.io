@@ -296,30 +296,30 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-18 17:08", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-18 17:17", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 // 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
 let FALLBACK_FIRST = {
   "XPBL2640W/E": {
-    total: { alloc:800, aej:304, aek:184, oth:0 },
+    total: { alloc:500, aej:304, aek:184, oth:0 },
     ports: [
       { pol:"CNNAS", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",39,null,null], ["AEKLF",null,57,null], ["AEASJ",null,24,null]] },
       { pol:"CNNGB", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",95,null,null], ["AEKLF",null,38,null]] },
-      { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[] },
+      { pol:"CNSHA", alloc:null, aA:null, aK:null, rows:[] },
       { pol:"CNSHK", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",73,null,null], ["AEKLF",null,54,null], ["AEASJ",null,6,null]] },
       { pol:"CNTAO", alloc:125.0, aA:62.0, aK:63.0, rows:[["AEJEA",97,null,null], ["AEKLF",null,5,null]] },
-      { pol:"CNXGG", alloc:200.0, aA:100.0, aK:100.0, rows:[] },
-      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[] }
+      { pol:"CNXGG", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"CNXMN", alloc:null, aA:null, aK:null, rows:[] }
     ]
   },
   "LION2644W/E": {
-    total: { alloc:712, aej:130, aek:273, oth:0 },
+    total: { alloc:457, aej:130, aek:273, oth:0 },
     ports: [
-      { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[] },
+      { pol:"CNSHA", alloc:null, aA:null, aK:null, rows:[] },
       { pol:"CNTAO", alloc:122.0, aA:40.0, aK:82.0, rows:[["AEJEA",40,null,null]] },
-      { pol:"CNXGG", alloc:155.0, aA:75.0, aK:80.0, rows:[] },
-      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[] },
+      { pol:"CNXGG", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"CNXMN", alloc:null, aA:null, aK:null, rows:[] },
       { pol:"CNNGB", alloc:145.0, aA:40.0, aK:105.0, rows:[["AEJEA",18,null,null], ["AEKLF",null,111,null], ["AEASJ",null,8,null]] },
       { pol:"CNSHK", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",37,null,null], ["AEKLF",null,80,null]] },
       { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",35,null,null], ["AEKLF",null,74,null]] }
