@@ -290,20 +290,20 @@ const FALLBACK_DATA = {
     ]
   },
   "CMSR2648W": {
-    total: { alloc:50, aej:20, aek:44, oth:0 },
+    total: { alloc:50, aej:20, aek:36, oth:0 },
     ports: [
-      { pol:"CNTAO", alloc:50.0, aA:24.0, aK:26.0, rows:[["AEJEA",20,null,null], ["AEKLF&AEASJ",null,44,null]] }
+      { pol:"CNTAO", alloc:50.0, aA:24.0, aK:26.0, rows:[["AEJEA",20,null,null], ["AEKLF&AEASJ",null,36,null]] }
     ]
   },
   "H7282649W": {
-    total: { alloc:180, aej:0, aek:0, oth:0 },
+    total: { alloc:180, aej:0, aek:30, oth:0 },
     ports: [
-      { pol:"CNNGB", alloc:90.0, aA:45.0, aK:45.0, rows:[] },
+      { pol:"CNNGB", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEKLF&AEASJ",null,30,null]] },
       { pol:"CNSHK", alloc:90.0, aA:45.0, aK:45.0, rows:[] }
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-23 15:20", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-24 09:22", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 // 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
@@ -346,15 +346,15 @@ let FALLBACK_FIRST = {
     ]
   },
   "CMSR2648W": {
-    total: { alloc:50, aej:20, aek:44, oth:0 },
+    total: { alloc:50, aej:20, aek:36, oth:0 },
     ports: [
-      { pol:"CNTAO", alloc:50.0, aA:24.0, aK:26.0, rows:[["AEJEA",20,null,null], ["AEKLF&AEASJ",null,44,null]] }
+      { pol:"CNTAO", alloc:50.0, aA:24.0, aK:26.0, rows:[["AEJEA",20,null,null], ["AEKLF&AEASJ",null,36,null]] }
     ]
   },
   "H7282649W": {
-    total: { alloc:0, aej:0, aek:0, oth:0 },
+    total: { alloc:90, aej:0, aek:30, oth:0 },
     ports: [
-      { pol:"CNNGB", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"CNNGB", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEKLF&AEASJ",null,30,null]] },
       { pol:"CNSHK", alloc:null, aA:null, aK:null, rows:[] }
     ]
   }
