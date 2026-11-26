@@ -307,21 +307,43 @@ const FALLBACK_DATA = {
     ]
   },
   "CMSR2648W": {
-    total: { alloc:750, aej:345, aek:580, oth:0 },
+    total: { alloc:750, aej:345, aek:581, oth:0 },
     ports: [
-      { pol:"CNTAO", alloc:750.0, aA:375.0, aK:375.0, rows:[["AEJEA",345,null,null], ["AEKLF&AEASJ",null,580,null]] }
+      { pol:"CNTAO", alloc:750.0, aA:375.0, aK:375.0, rows:[["AEJEA",345,null,null], ["AEKLF&AEASJ",null,581,null]] }
     ]
   },
   "H7282649W": {
-    total: { alloc:1520, aej:270, aek:901, oth:0 },
+    total: { alloc:1520, aej:282, aek:944, oth:0 },
     ports: [
-      { pol:"CNNGB", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",154,null,null], ["AEKLF&AEASJ",null,694,null]] },
-      { pol:"CNSHK", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",116,null,null], ["AEKLF&AEASJ",null,207,null]] },
+      { pol:"CNNGB", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",156,null,null], ["AEKLF&AEASJ",null,732,null]] },
+      { pol:"CNSHK", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",126,null,null], ["AEKLF&AEASJ",null,212,null]] },
       { pol:"CNSWA", alloc:30.0, aA:15.0, aK:15.0, rows:[] }
+    ]
+  },
+  "HGR72650W": {
+    total: { alloc:200, aej:225, aek:236, oth:0 },
+    ports: [
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",85,null,null], ["AEKLF&AEASJ",null,69,null]] },
+      { pol:"CNNAS", alloc:100.0, aA:50.0, aK:50.0, rows:[["AEJEA",140,null,null], ["AEKLF&AEASJ",null,167,null]] }
+    ]
+  },
+  "XPBL2648W": {
+    total: { alloc:5640, aej:700, aek:667, oth:0 },
+    ports: [
+      { pol:"CNTAO", alloc:1160.0, aA:580.0, aK:580.0, rows:[["AEJEA",190,null,null], ["AEKLF&AEASJ",null,258,null]] },
+      { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEJEA",148,null,null], ["AEKLF&AEASJ",null,48,null]] },
+      { pol:"CNNGB", alloc:1160.0, aA:580.0, aK:580.0, rows:[["AEJEA",22,null,null], ["AEKLF&AEASJ",null,42,null]] },
+      { pol:"CNSHK", alloc:1160.0, aA:580.0, aK:580.0, rows:[["AEJEA",8,null,null], ["AEKLF&AEASJ",null,63,null]] },
+      { pol:"CNNAS", alloc:1160.0, aA:580.0, aK:580.0, rows:[["AEJEA",140,null,null], ["AEKLF&AEASJ",null,167,null]] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",85,null,null], ["AEKLF&AEASJ",null,71,null]] },
+      { pol:"CNSWA", alloc:50.0, aA:25.0, aK:25.0, rows:[] },
+      { pol:"VNHPH", alloc:200.0, aA:100.0, aK:100.0, rows:[["AEJEA",106,null,null], ["AEKLF&AEASJ",null,4,null]] },
+      { pol:"TW", alloc:250.0, aA:125.0, aK:125.0, rows:[["AEKLF&AEASJ",null,6,null]] },
+      { pol:"TH", alloc:400.0, aA:200.0, aK:200.0, rows:[["AEJEA",1,null,null], ["AEKLF&AEASJ",null,8,null]] }
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-26 09:07", "cls": "CUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-26 09:50", "cls": "CUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 // 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
@@ -381,17 +403,39 @@ let FALLBACK_FIRST = {
     ]
   },
   "CMSR2648W": {
-    total: { alloc:750, aej:345, aek:580, oth:0 },
+    total: { alloc:750, aej:345, aek:581, oth:0 },
     ports: [
-      { pol:"CNTAO", alloc:750.0, aA:375.0, aK:375.0, rows:[["AEJEA",345,null,null], ["AEKLF&AEASJ",null,580,null]] }
+      { pol:"CNTAO", alloc:750.0, aA:375.0, aK:375.0, rows:[["AEJEA",345,null,null], ["AEKLF&AEASJ",null,581,null]] }
     ]
   },
   "H7282649W": {
-    total: { alloc:1490, aej:270, aek:901, oth:0 },
+    total: { alloc:1490, aej:282, aek:944, oth:0 },
     ports: [
-      { pol:"CNNGB", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",154,null,null], ["AEKLF&AEASJ",null,694,null]] },
-      { pol:"CNSHK", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",116,null,null], ["AEKLF&AEASJ",null,207,null]] },
+      { pol:"CNNGB", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",156,null,null], ["AEKLF&AEASJ",null,732,null]] },
+      { pol:"CNSHK", alloc:745.0, aA:365.0, aK:380.0, rows:[["AEJEA",126,null,null], ["AEKLF&AEASJ",null,212,null]] },
       { pol:"CNSWA", alloc:null, aA:null, aK:null, rows:[] }
+    ]
+  },
+  "HGR72650W": {
+    total: { alloc:200, aej:225, aek:236, oth:0 },
+    ports: [
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",85,null,null], ["AEKLF&AEASJ",null,69,null]] },
+      { pol:"CNNAS", alloc:100.0, aA:50.0, aK:50.0, rows:[["AEJEA",140,null,null], ["AEKLF&AEASJ",null,167,null]] }
+    ]
+  },
+  "XPBL2648W": {
+    total: { alloc:1260, aej:88, aek:152, oth:0 },
+    ports: [
+      { pol:"CNTAO", alloc:1160.0, aA:580.0, aK:580.0, rows:[["AEJEA",88,null,null], ["AEKLF&AEASJ",null,150,null]] },
+      { pol:"CNSHA", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"CNNGB", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"CNSHK", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"CNNAS", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEKLF&AEASJ",null,2,null]] },
+      { pol:"CNSWA", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"VNHPH", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"TW", alloc:null, aA:null, aK:null, rows:[] },
+      { pol:"TH", alloc:null, aA:null, aK:null, rows:[] }
     ]
   }
 };;
