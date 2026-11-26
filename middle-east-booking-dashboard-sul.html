@@ -265,12 +265,12 @@ const FALLBACK_DATA = {
     ]
   },
   "LION2644W/E": {
-    total: { alloc:712, aej:314, aek:510, oth:0 },
+    total: { alloc:712, aej:300, aek:460, oth:0 },
     ports: [
       { pol:"CNSHA", alloc:"omit", aA:"omit", aK:"omit", rows:[["AEKLF",null,5,null]] },
       { pol:"CNTAO", alloc:122.0, aA:40.0, aK:82.0, rows:[["AEJEA",40,null,null]] },
       { pol:"CNXGG", alloc:155.0, aA:75.0, aK:80.0, rows:[["AEJEA",93,null,null], ["AEKLF",null,90,null], ["AEASJ",null,25,null]] },
-      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",84,null,null], ["AEKLF",null,70,null]] },
+      { pol:"CNXMN", alloc:100, aA:50, aK:50, rows:[["AEJEA",70,null,null], ["AEKLF",null,20,null]] },
       { pol:"CNNGB", alloc:145.0, aA:40.0, aK:105.0, rows:[["AEJEA",18,null,null], ["AEKLF",null,109,null], ["AEASJ",null,8,null]] },
       { pol:"CNSHK", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",57,null,null], ["AEKLF",null,67,null], ["AEASJ",null,20,null]] },
       { pol:"CNNAS", alloc:95.0, aA:35.0, aK:60.0, rows:[["AEJEA",22,null,null], ["AEKLF",null,90,null], ["AEASJ",null,26,null]] }
@@ -296,10 +296,10 @@ const FALLBACK_DATA = {
     ]
   },
   "H7282649W": {
-    total: { alloc:180, aej:78, aek:167, oth:0 },
+    total: { alloc:180, aej:76, aek:171, oth:0 },
     ports: [
-      { pol:"CNNGB", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEJEA",78,null,null], ["AEKLF&AEASJ",null,167,null]] },
-      { pol:"CNSHK", alloc:90.0, aA:45.0, aK:45.0, rows:[] }
+      { pol:"CNNGB", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEJEA",76,null,null], ["AEKLF&AEASJ",null,169,null]] },
+      { pol:"CNSHK", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEKLF&AEASJ",null,2,null]] }
     ]
   },
   "XPBL2648W": {
@@ -313,7 +313,7 @@ const FALLBACK_DATA = {
     ]
   }
 };
-window.DASHBOARD_META = {"generatedAt": "2026-11-26 12:12", "cls": "SUL"};
+window.DASHBOARD_META = {"generatedAt": "2026-11-26 15:07", "cls": "SUL"};
 
 // 数据源优先级：OPS 自动抓取（Dashboard/dashboard_data.js） > 内置手工数据（FALLBACK_DATA）
 // 头程船视角：外部 js 的 window.DASHBOARD_BOOKING_FIRST 优先，缺省时用内联 FALLBACK_FIRST（inject 注入）
@@ -362,10 +362,10 @@ let FALLBACK_FIRST = {
     ]
   },
   "H7282649W": {
-    total: { alloc:90, aej:78, aek:167, oth:0 },
+    total: { alloc:180, aej:76, aek:171, oth:0 },
     ports: [
-      { pol:"CNNGB", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEJEA",78,null,null], ["AEKLF&AEASJ",null,167,null]] },
-      { pol:"CNSHK", alloc:null, aA:null, aK:null, rows:[] }
+      { pol:"CNNGB", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEJEA",76,null,null], ["AEKLF&AEASJ",null,169,null]] },
+      { pol:"CNSHK", alloc:90.0, aA:45.0, aK:45.0, rows:[["AEKLF&AEASJ",null,2,null]] }
     ]
   },
   "XPBL2648W": {
